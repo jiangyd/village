@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+{{template "public/header.html" .}}
+<title>测试君|测试</title>
+</head>
+<body>
+
+
+{{template "public/nav.html" .}}
+
+
+<div class="main layui-clear">
+  <h2 class="page-title">注册</h2>
+  <div class="layui-form layui-form-pane">
+    <form method="post">
+      <div class="layui-form-item">
+        <label for="L_email" class="layui-form-label">邮箱</label>
+        <div class="layui-input-inline">
+          <input type="text" id="L_email" name="email" required lay-verify="email" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">将会成为您唯一的登入名</div>
+      </div>
+      <div class="layui-form-item">
+        <label for="L_nickname" class="layui-form-label">昵称</label>
+        <div class="layui-input-inline">
+          <input type="text" id="L_nickname" name="nickname" required lay-verify="nickname" autocomplete="off" class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label for="L_pass" class="layui-form-label">密码</label>
+        <div class="layui-input-inline">
+          <input type="password" id="L_pass" name="password" required lay-verify="password" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">6到16个字符</div>
+      </div>
+      <div class="layui-form-item">
+        <label for="L_repass" class="layui-form-label">确认密码</label>
+        <div class="layui-input-inline">
+          <input type="password" id="L_repass" name="repassword" required lay-verify="password" autocomplete="off" class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label for="L_vercode" class="layui-form-label">验证码</label>
+        <div class="layui-input-inline">
+          <input type="text" id="L_vercode" name="vercode" required lay-verify="vercode" placeholder="请输入验证码" autocomplete="off" class="layui-input">
+          
+        </div>
+        {{template "public/captcha.html" }}
+        <div class="layui-form-mid">
+          <span style="color: #c00;"></span>
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <button class="layui-btn" lay-filter="reggo" lay-submit="" type="button">立即注册</button>
+      </div>
+      
+    </form>
+  </div>
+</div>
+
+
+<script>
+layui.config({
+  base:'/static/js/'
+}).use('register')
+</script>
+

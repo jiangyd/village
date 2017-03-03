@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+{{template "public/header.html" .}}
+<title>测试君|测试</title>
+</head>
+<body>
+
+
+{{template "public/nav.html" .}}
+
+
+
+<div class="main fly-user-main layui-clear">
+	
+
+	<ul lay-filter="user" class="layui-nav layui-nav-tree layui-inline"> 
+	 <li class="layui-nav-item" style=""> <a href="/user/topic/">      <i class="layui-icon"></i>      我的主题    </a>  </li>  
+	 <li class="layui-nav-item layui-this" style="">    <a href="/user/message">      <i class="layui-icon"></i>      我的消息    </a>  </li> 
+	  <li class="layui-nav-item " style=""><a href="/user/set/">      <i class="layui-icon"></i>      我的收藏    </a>  </li> 
+	   <li class="layui-nav-item " style=""><a href="/user/set/">      <i class="layui-icon"></i>      基本设置    </a>  </li> 
+	  
+	    <span class="layui-nav-bar" style="height: 0px; top: 212.5px; opacity: 0;"></span>
+	    </ul>
+</div>

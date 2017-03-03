@@ -1,0 +1,24 @@
+
+<ul class="fly-list">
+			{{range .newreplys}}
+    		<li class="fly-list-li">
+    			<a href="" class="fly-list-avatar">
+    				<img src="/static/168.jpg" alt="测试">
+    			</a>
+    			<h2 class="fly-tip">
+    				<a href="/topic/{{.Id}}">{{.Title}}</a>
+    				<span class="fly-tip-stick">置顶</span>
+    				<span class="fly-tip-jing">精华</span>
+    			</h2>
+    			<p>
+    				<span><a href="">作者:{{.Author.Nickname}}</a></span>
+    				<span>29天</span>
+    				<span>测试用例</span>
+    				<span class="fly-list-hint" style="margin-top: 10px;">
+    					<i class="layui-icon" title="回答" style="font-size: 10px; color: #1E9FFF;margin-right: 5px;">&#xe63a;</i>{{.ReplyCount}}
+    					<i class="layui-icon" title="人气" style="font-size: 10px; color: #1E9FFF;margin-right: 5px;">&#xe60b;</i>{{.View}}
+    				</span>
+    			</p>
+    		</li>
+    		{{end}}
+    	</ul>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+{{template "public/header.html" .}}
+<title>测试君|社区</title>
+</head>
+<body>
+
+
+{{template "public/nav.html" .}}
+
+<div class="main layui-clear">
+	<div class="wrap">
+		<div class="content">
+<div class="detail_container trans_3">
+<h1>{{.topic.Title}}</h1>
+<div class="date_hits"><span><i>发布时间：</i>{{.topic.Ctime}}</span><span><i>作者：</i>{{.topic.Author.Nickname}}</span><span><i>浏览数：</i> {{.topic.View}}</span><span><i>评论数：</i> <a id="changyan_count_unit" href="javascript:void(0);">{{.topic.ReplyCount}}</a></span></div>
+<div class="content">{{.topic.Content}}</div>
+<div class="keywords"><p>常用函数，PHP</p></div>
+
+
+<div class="prev_next">
+{{if gt .upper_topic.Id 0}}
+<div class="prev">上一篇：<a href="/topic/{{.upper_topic.Id}}">{{.upper_topic.Title}}</a></div>
+{{end}}
+{{if gt .lower_topic.Id 1}}
+<div class="next">下一篇：<a href="/topic/{{.lower_topic.Id}}">{{.lower_topic.Title}}</a></div>
+{{end}}
+
+
+</div>
+
+
+<form  method="post">
+
+		<div class="layui-form-item layui-form-text">
+		<div class="layui-input-block">
+			<textarea id="reply_content" name="content"  placeholder="请输入内容" class="layui-textarea fly-editor" style="height:260px;"></textarea>
+		</div>
+		</div>
+		<div class="layui-form-item">
+        <label for="L_title" class="layui-form-label">验证码</label>
+        <div class="layui-input-block">
+        	<input type="hidden" value="{{.topic.Id}}" name="topic_id">
+         	<input type="text" id="L_vercode" name="vercode" required lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input" style="display: inline;width: 150px;">
+          
+          	{{template "public/captcha.html"}}
+          	<button class="layui-btn layui-btn-normal" lay-filter="replygo" lay-submit type="button" style="float: right;" >提交回复</button>
+        </div>
+
+          
+	</div>
+	
+</form>
+	
+
+
+<script>
+layui.config({
+  base:'/static/js/'
+}).use('content')
+</script>
