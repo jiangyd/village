@@ -19,9 +19,7 @@ layui.define(['layer','form'],function(exports){
 			type:'POST',
 			success:function(text){
 				if(text.msg=='success'){
-					layer.msg('欢迎登录')
-					setTimeout(function (){location.href='/'}, 3000);
-					
+					location.href='/'
 				}else if(text.code!=0){
 					layer.msg(text.msg)
 				}

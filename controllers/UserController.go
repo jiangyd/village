@@ -30,12 +30,11 @@ func (self *UserController) Login() {
 	userinfo := models.CheckLogin(email, password)
 	if len(userinfo.Email) > 0 {
 		self.SetSession("uid", userinfo.Id)
+		fmt.Println(self.GetSession("uid"), "uuuuuidddd")
 		self.SetSession("nickname", userinfo.Nickname)
 		msg := map[string]interface{}{"code": 0, "msg": "success"}
 		self.Data["json"] = &msg
 		self.ServeJSON()
-		self.Ctx.Redirect(302, "/")
-
 	} else {
 		msg := map[string]interface{}{"code": 1, "msg": "用户名或密码错误!"}
 		self.Data["json"] = &msg
@@ -82,7 +81,8 @@ func (self *UserController) Register() {
 		self.Redirect("/user/register", 302)
 	} else {
 		user := models.User{Nickname: nickname, Email: email, Password: password}
-		models.AddUser(&user)
+		uid := models.AddUser(&user)
+		self.SetSession("uid", int(uid))
 		msg := map[string]interface{}{"code": 0, "msg": "success"}
 		self.Data["json"] = &msg
 		self.ServeJSON()

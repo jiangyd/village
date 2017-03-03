@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"github.com/astaxie/beego"
 	"village/models"
 )
@@ -11,8 +12,8 @@ type ContentController struct {
 
 func (self *ContentController) Get() {
 	self.TplName = "index.html"
-
 	sess_uid := self.GetSession("uid")
+	fmt.Println(sess_uid, "adfd")
 	if sess_uid == nil {
 		self.Data["islogin"] = false
 	} else {
