@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"github.com/astaxie/beego"
-	"tester/models"
+	"village/models"
 )
 
 type ContentController struct {

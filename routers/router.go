@@ -2,7 +2,7 @@ package routers
 
 import (
 	"github.com/astaxie/beego"
-	"tester/controllers"
+	"village/controllers"
 )
 
 func init() {

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/astaxie/beego"
 	"strconv"
-	"tester/models"
+	"village/models"
 )
 
 type TopicController struct {
