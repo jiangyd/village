@@ -12,6 +12,9 @@ type User struct {
 	Email    string `orm:"unique"`
 	Avatar   string
 	Ctime    time.Time `orm:"auto_now_add;type(datetime)"`
+	Sign     string    `orm:"size(255)"`
+	Sex      int
+	City     string
 }
 
 //检查用户名密码

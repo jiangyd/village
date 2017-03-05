@@ -28,6 +28,7 @@ func SaveTopic(topic *Topic) int64 {
 	return id
 }
 
+//增加点赞数
 func UpTopic(topic *Topic) {
 	o := orm.NewOrm()
 	topic.Up = topic.Up + 1
@@ -57,6 +58,14 @@ func IncrView(topic *Topic) {
 	o := orm.NewOrm()
 	topic.View = topic.View + 1
 	o.Update(topic, "View")
+
+}
+
+//主题浏览数增加
+func IncrReplyCount(topic *Topic) {
+	o := orm.NewOrm()
+	topic.ReplyCount = topic.ReplyCount + 1
+	o.Update(topic, "ReplyCount")
 
 }
 

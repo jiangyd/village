@@ -45,12 +45,33 @@ func (self *UserController) Login() {
 
 }
 
+func (self *UserController) Logout() {
+	self.DelSession("uid")
+	self.Ctx.Redirect(301, "/")
+}
+
 func (self *UserController) Forget() {
 	self.TplName = "user/forget.html"
 }
 
 func (self *UserController) Set() {
-	self.TplName = "user/set.html"
+	self.TplName = "user/setinfo.html"
+}
+
+func (self *UserController) Message() {
+	self.TplName = "user/message.html"
+}
+
+func (self *UserController) UserTopic() {
+	self.TplName = "user/usertopic.html"
+}
+
+func (self *UserController) Collection() {
+	self.TplName = "user/collection.html"
+}
+
+func (self *UserController) Follow() {
+	self.TplName = "user/follow.html"
 }
 
 func (self *UserController) RegisterPage() {

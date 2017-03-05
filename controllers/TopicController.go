@@ -19,8 +19,10 @@ func (self *TopicController) TopicDetial() {
 		topic := models.FindTopicById(tid)
 		models.IncrView(&topic)
 		self.Data["topic"] = topic
+		self.Data["replyinfo"] = models.FindReplyByTid(&models.Topic{Id: tid})
 		self.Data["upper_topic"] = models.FindTopicById(tid - 1)
 		self.Data["lower_topic"] = models.FindTopicById(tid + 1)
+
 		self.TplName = "topic/topicdetial.html"
 
 	}
@@ -68,7 +70,9 @@ func (self *TopicController) ReplyTopic() {
 			tid, _ := strconv.Atoi(topic_id)
 			reply := models.Reply{Topic: &models.Topic{Id: tid}, Content: content, User: &models.User{Id: uid.(int)}}
 			models.SaveReply(&reply)
-			msg := map[string]interface{}{"code": 0, "msg": "success"}
+			topic := models.FindTopicById(tid)
+			models.IncrReplyCount(&topic)
+			msg := map[string]interface{}{"code": 0, "msg": "success", "tid": tid}
 			self.Data["json"] = &msg
 			self.ServeJSON()
 		}

@@ -9,10 +9,16 @@ func init() {
 	beego.Router("/", &controllers.ContentController{})
 	beego.Router("/user/login", &controllers.UserController{}, "GET:LoginPage")
 	beego.Router("/user/login", &controllers.UserController{}, "POST:Login")
+	beego.Router("/user/logout", &controllers.UserController{}, "POST:Logout")
 	beego.Router("/user/forget", &controllers.UserController{}, "GET:Forget")
 	beego.Router("/user/:uid([0-9]+),", &controllers.UserController{}, "GET:Detial")
 	beego.Router("/user/set", &controllers.UserController{}, "GET:Set")
+	beego.Router("/user/message", &controllers.UserController{}, "GET:Message")
+	beego.Router("/user/topic", &controllers.UserController{}, "GET:UserTopic")
+	beego.Router("/user/collection", &controllers.UserController{}, "GET:Collection")
+	beego.Router("/user/follow", &controllers.UserController{}, "GET:Follow")
 	beego.Router("/user/register", &controllers.UserController{}, "GET:RegisterPage")
+
 	beego.Router("/user/detial", &controllers.UserController{}, "GET:Detial")
 	beego.Router("/user/register", &controllers.UserController{}, "POST:Register")
 	beego.Router("/capt", &controllers.Capt{})
@@ -20,5 +26,7 @@ func init() {
 	beego.Router("/topic/create", &controllers.TopicController{}, "GET:CreatePage")
 	beego.Router("/topic/create", &controllers.TopicController{}, "POST:CreateTopic")
 	beego.Router("/topic/reply", &controllers.TopicController{}, "POST:ReplyTopic")
+	beego.Router("/dz", &controllers.DzController{}, "POST:Dz")
+
 	//beego.Router("/wd/index", &controllers.ContentController{}, "GET:Index")
 }
