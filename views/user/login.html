@@ -1,54 +1,48 @@
 <!DOCTYPE html>
 <html>
-
 {{template "public/header.html" .}}
 <title>测试君|登录</title>
 </head>
+
 <body>
-
-
-{{template "public/nav.html" .}}
-
-
-
-<div class="main layui-clear">
-  <h2 class="page-title">登录</h2> 
-  <div class="layui-form layui-form-pane">
-    <form method="post">
-      <div class="layui-form-item">
-        <label for="L_email" class="layui-form-label">邮箱</label>
-        <div class="layui-input-inline">
-          <input type="text" id="L_email" name="email" required lay-verify="required" autocomplete="off" class="layui-input">
-        </div>
-      </div>
-      <div class="layui-form-item">
-        <label for="L_pass" class="layui-form-label">密码</label>
-        <div class="layui-input-inline">
-          <input type="password" id="L_pass" name="password" required lay-verify="required" autocomplete="off" class="layui-input">
-        </div>
-      </div>
-      <div class="layui-form-item">
-        <label for="L_vercode" class="layui-form-label">验证码</label>
-        <div class="layui-input-inline">
-          <input type="text" id="L_vercode" name="vercode" required lay-verify="required" placeholder="请回答后面的问题" autocomplete="off" class="layui-input">
-        </div>
-        {{template "public/captcha.html"}}
-        <div class="layui-form-mid">
-          <span style="color: #c00;"></span>
-        </div>
-      </div>
-      <div class="layui-form-item">
-        <button class="layui-btn" lay-filter="logingo" lay-submit type="button">立即登录</button>
-        <span style="padding-left:20px;">
+    {{template "public/nav.html" .}}
+    <div class="main layui-clear">
+        <h2 class="page-title">登录</h2>
+        <div class="layui-form layui-form-pane">
+            <form method="post">
+                <div class="layui-form-item">
+                    <label for="L_email" class="layui-form-label">邮箱</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="L_email" name="email" required lay-verify="required" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="L_pass" class="layui-form-label">密码</label>
+                    <div class="layui-input-inline">
+                        <input type="password" id="L_pass" name="password" required lay-verify="required" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="L_vercode" class="layui-form-label">验证码</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="L_vercode" name="vercode" required lay-verify="required" placeholder="请回答后面的问题" autocomplete="off" class="layui-input">
+                    </div>
+                    {{template "public/captcha.html"}}
+                    <div class="layui-form-mid">
+                        <span style="color: #c00;"></span>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <button class="layui-btn" lay-filter="logingo" lay-submit type="button">立即登录</button>
+                    <span style="padding-left:20px;">
           <a href="/user/forget">忘记密码？</a>
         </span>
-      </div>
-     
-    </form>
-  </div>
-</div>
-<script>
-layui.config({
-  base:'/static/js/'
-}).use('login')
-</script>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+    layui.config({
+        base: '/static/js/'
+    }).use('login')
+    </script>

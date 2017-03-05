@@ -1,0 +1,50 @@
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+    <legend>评论({{.replyinfo|len}})</legend>
+    <div class="layui-field-box">
+        <ul class="jieda photos">
+            {{range .replyinfo}}
+            <li style="margin-left: 20px;margin-right: 20px;">
+                <a></a>
+                <div class="detail-about detail-about-reply">
+                    <a class="jie-user" href="">
+                        <img src="{{.User.Avatar}}">
+                        <cite><i>{{.User.Nickname}}</i></cite>
+                    </a>
+                    <div class="detail-hits">
+                        <span> {{date .Ctime "Y-m-d H:i:s"}}</span>
+                    </div>
+                </div>
+                <div class="detail-body jieda-body">
+                    {{str2html .Content}}
+                </div>
+                <div class="jieda-reply">
+                    <span><a onclick="dz('rid',{{.Id}})"><img src="/static/images/dz.png" alt="支持" title="支持" ><cite>(<em id="rid{{.Id}}">{{.Up}}</em>)</cite></a></span>
+                    <span><img src="/static/images/reply.png" alt="回复" title="回复此楼" ></span>
+                </div>
+            </li>
+            {{end}}
+        </ul>
+    </div>
+</fieldset>
+
+<script src="/static/js/jQuery.js"></script>
+<script type="text/javascript">
+    function dz(tp, tpid) {
+        $.ajax({
+            url: "/dz",
+            data: {
+                "type": tp,
+                "typeid": tpid
+            },
+            type: "POST",
+            success: function(text) {
+                if (text.msg == "success") {
+                    var id='rid'+tpid
+                    $("#"+id).text(parseInt($("#"+id).text())+1)
+                } else if (text.code != 0) {
+                    layer.msg(text.msg)
+                }
+            }
+        })
+    };
+</script>

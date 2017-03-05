@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+{{template "public/header.html" .}}
+<title>测试君|测试</title>
+</head>
+
+<body>
+    {{template "public/nav.html" .}}
+    <div class="main fly-user-main layui-clear">
+        {{template "user/detial.html" .}}
+        <div class="layui-tab layui-tab-brief" lay-filter="user">
+            <ul id="LAY_mine" class="layui-tab-title">
+                <li class="layui-this">我的资料</li>
+                <li>头像</li>
+                <li>密码</li>
+            </ul>
+            <div class="layui-tab-content" style="padding: 20px 0;">
+                <div class="layui-form layui-form-pane layui-tab-item layui-show">
+                    <form method="post">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label" for="L_email">邮箱</label>
+                            <div class="layui-input-inline">
+                                <input type="text" class="layui-input" value="" autocomplete="off" lay-verify="email" required="" name="email" id="L_email">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label" for="L_username">昵称</label>
+                            <div class="layui-input-inline">
+                                <input type="text" class="layui-input" value="" autocomplete="off" lay-verify="email" required="" name="email" id="L_email">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label" for="L_sex">性别</label>
+                            <div class="layui-input-block">
+                                <input type="radio" checked="" title="男" value="男" name="sex">
+                                <div class="layui-unselect layui-form-radio layui-form-radioed"><i class="layui-anim layui-icon"></i><span>男</span></div>
+                                <input type="radio" title="女" value="女" name="sex">
+                                <div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i><span>女</span></div>
+                                <input type="radio" title="保密" value="禁" name="sex">
+                                <div class="layui-unselect layui-form-radio "><i class="layui-anim layui-icon"></i><span>保密</span></div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label" for="L_sign">城市</label>
+                            <div class="layui-input-inline">
+                                <input type="text" class="layui-input" value="普陀" autocomplete="off" name="city" id="L_city"> </div>
+                        </div>
+                        <div class="layui-form-item layui-form-text">
+                            <label for="L_title" class="layui-form-label">个性签名</label>
+                            <div class="layui-input-block">
+                                <textarea style="height: 80px;" class="layui-textarea" autocomplete="off" name="sign" id="L_sign" placeholder="随便写些什么刷下存在感"></textarea>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <button class="layui-btn" lay-submit="" lay-filter="setinfo" type="button" key="set-mine">确认修改</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="layui-form layui-form-pane layui-tab-item">
+                    <div class="layui-form-item">
+                        <div class="avatar-add">
+                            <p>建议尺寸168*168，支持jpg、png、gif，最大不能超过30KB</p>
+                            <div class="upload-img">
+                                <div class="layui-box layui-upload-button">
+                                    <form action="/user/upload/" enctype="multipart/form-data" key="set-mine" method="post" target="layui-upload-iframe">
+                                        <input type="file" lay-title="上传头像" id="LAY-file" name="file">
+                                    </form><span class="layui-upload-icon"><i class="layui-icon"></i>上传头像</span></div>
+                            </div> <img src="http://q.qlogo.cn/qqapp/101235792/489522D308766C5EEA91D99FC2C5E192/100"> <span class="loading"></span> </div>
+                    </div>
+                </div>
+                <div class="layui-form layui-form-pane layui-tab-item">
+                    <form method="post">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label" for="L_pass">原密码</label>
+                            <div class="layui-input-inline">
+                                <input type="password" class="layui-input" value="" autocomplete="off" lay-verify="required" required="" name="email" id="L_email">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label" for="L_pass">新密码</label>
+                            <div class="layui-input-inline">
+                                <input type="password" class="layui-input" value="" autocomplete="off" lay-verify="required" required="" name="email" id="L_email">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label" for="L_pass">确认密码</label>
+                            <div class="layui-input-inline">
+                                <input type="password" class="layui-input" value="" autocomplete="off" lay-verify="required" required="" name="email" id="L_email">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <button class="layui-btn" lay-submit="" lay-filter="modify-pwd" type="button" key="set-mine">确认修改</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    layui.config({
+        base: '/static/js/'
+    }).use('user')
+    </script>
+</body>
+
+</html>

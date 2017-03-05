@@ -1,12 +1,39 @@
 <!DOCTYPE html>
 <html>
-
 {{template "public/header.html" .}}
 <title>测试村|找回密码</title>
 </head>
+
 <body>
-
-
-{{template "public/nav.html" .}}
-
-<div class="main layui-clear">  <div pad20="" class="fly-panel fly-panel-user">    <div lay-filter="user" class="layui-tab layui-tab-brief">      <ul class="layui-tab-title">        <li class="layui-this">找回密码</li>      </ul>      <div style="padding: 20px 0;" id="LAY_ucm" class="layui-form layui-tab-content">        <div class="layui-tab-item layui-show">                                        <div class="layui-form layui-form-pane">            <form method="post">              <div class="layui-form-item">                <label class="layui-form-label" for="L_email">邮箱</label>                <div class="layui-input-inline">                  <input type="text" class="layui-input" autocomplete="off" lay-verify="required" required="" name="email" id="L_email">                </div>              </div>              <div class="layui-form-item">                <label class="layui-form-label" for="L_vercode">验证码</label>                <div class="layui-input-inline">                  <input type="text" class="layui-input" autocomplete="off" placeholder="请输入验证码" lay-verify="required" required="" name="vercode" id="L_vercode">                </div>                <div class="layui-form-mid">                                </div>              </div>              <div class="layui-form-item">                <button lay-submit="" lay-filter="*" alert="1" class="layui-btn">提交</button>              </div>            </form>          </div>                            </div>      </div>    </div>  </div>  </div>
+    {{template "public/nav.html" .}}
+    <div class="main layui-clear">
+        <div pad20="" class="fly-panel fly-panel-user">
+            <div lay-filter="user" class="layui-tab layui-tab-brief">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">找回密码</li>
+                </ul>
+                <div style="padding: 20px 0;" id="LAY_ucm" class="layui-form layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                        <div class="layui-form layui-form-pane">
+                            <form method="post">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label" for="L_email">邮箱</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" class="layui-input" autocomplete="off" lay-verify="required" required="" name="email" id="L_email"> </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label" for="L_vercode">验证码</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" class="layui-input" autocomplete="off" placeholder="请输入验证码" lay-verify="required" required="" name="vercode" id="L_vercode"> </div>
+                                    <div class="layui-form-mid"> </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <button lay-submit="" lay-filter="*" alert="1" class="layui-btn">提交</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

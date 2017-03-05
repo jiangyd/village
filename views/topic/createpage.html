@@ -1,53 +1,38 @@
 <!DOCTYPE html>
 <html>
-
 {{template "public/header.html" .}}
 <title>测试君|社区</title>
 </head>
+
 <body>
-
-
-{{template "public/nav.html" .}}
-
-<div class="main layui-clear">
-	
-	<h2 class="page-title">发表主题</h2>
-	
-	<div class="layui-form layui-form-pane">
-	<form  method="post">
-		<div class="layui-form-item">
-
-			<label for="L_title" class="layui-form-label">标题</label>
-			<div class="layui-input-block">
-			<input type="text" id="L_title" name="title" required lay-verify="required" autocomplete="off" class="layui-input">
-			</div>
-		</div>
-		<div class="layui-form-item layui-form-text">
-		<div class="layui-input-block">
-			<textarea id="topic_content" name="content"  placeholder="请输入内容" class="layui-textarea fly-editor" style="height:260px;"></textarea>
-		</div>
-		</div>
-		<div class="layui-form-item">
-        <label for="L_title" class="layui-form-label">验证码</label>
-        <div class="layui-input-block">
-         	<input type="text" id="L_vercode" name="vercode" required lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input" style="display: inline;width: 150px;">
-          
-          	{{template "public/captcha.html"}}
-          	<button class="layui-btn layui-btn-normal" lay-filter="topicgo" lay-submit type="button" style="float: right;" >发表主题</button>
+    {{template "public/nav.html" .}}
+    <div class="main layui-clear">
+        <h2 class="page-title">发表主题</h2>
+        <div class="layui-form layui-form-pane">
+            <form method="post">
+                <div class="layui-form-item">
+                    <label for="L_title" class="layui-form-label">标题</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="L_title" name="title" required lay-verify="required" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <div class="layui-input-block">
+                        <textarea id="topic_content" name="content" placeholder="请输入内容" class="layui-textarea fly-editor" style="height:260px;"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="L_title" class="layui-form-label">验证码</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="L_vercode" name="vercode" required lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input" style="display: inline;width: 150px;"> {{template "public/captcha.html"}}
+                        <button class="layui-btn layui-btn-normal" lay-filter="topicgo" lay-submit type="button" style="float: right;">发表主题</button>
+                    </div>
+                </div>
+            </form>
         </div>
-
-          
-	</div>
-	
-</form>
-	
-</div>
-</div>
-
-
-
-<script>
-layui.config({
-  base:'/static/js/'
-}).use('content')
-</script>
+    </div>
+    <script>
+    layui.config({
+        base: '/static/js/'
+    }).use('content')
+    </script>

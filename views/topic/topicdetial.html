@@ -1,62 +1,52 @@
 <!DOCTYPE html>
 <html>
-
 {{template "public/header.html" .}}
 <title>测试君|社区</title>
 </head>
+
 <body>
-
-
-{{template "public/nav.html" .}}
-
-<div class="main layui-clear">
-	<div class="wrap">
-		<div class="content">
-<div class="detail_container trans_3">
-<h1>{{.topic.Title}}</h1>
-<div class="date_hits"><span><i>发布时间：</i>{{.topic.Ctime}}</span><span><i>作者：</i>{{.topic.Author.Nickname}}</span><span><i>浏览数：</i> {{.topic.View}}</span><span><i>评论数：</i> <a id="changyan_count_unit" href="javascript:void(0);">{{.topic.ReplyCount}}</a></span></div>
-<div class="content">{{.topic.Content}}</div>
-<div class="keywords"><p>常用函数，PHP</p></div>
-
-
-<div class="prev_next">
-{{if gt .upper_topic.Id 0}}
-<div class="prev">上一篇：<a href="/topic/{{.upper_topic.Id}}">{{.upper_topic.Title}}</a></div>
-{{end}}
-{{if gt .lower_topic.Id 1}}
-<div class="next">下一篇：<a href="/topic/{{.lower_topic.Id}}">{{.lower_topic.Title}}</a></div>
-{{end}}
-
-
-</div>
-
-
-<form  method="post">
-
-		<div class="layui-form-item layui-form-text">
-		<div class="layui-input-block">
-			<textarea id="reply_content" name="content"  placeholder="请输入内容" class="layui-textarea fly-editor" style="height:260px;"></textarea>
-		</div>
-		</div>
-		<div class="layui-form-item">
-        <label for="L_title" class="layui-form-label">验证码</label>
-        <div class="layui-input-block">
-        	<input type="hidden" value="{{.topic.Id}}" name="topic_id">
-         	<input type="text" id="L_vercode" name="vercode" required lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input" style="display: inline;width: 150px;">
-          
-          	{{template "public/captcha.html"}}
-          	<button class="layui-btn layui-btn-normal" lay-filter="replygo" lay-submit type="button" style="float: right;" >提交回复</button>
-        </div>
-
-          
-	</div>
-	
-</form>
-	
-
-
-<script>
-layui.config({
-  base:'/static/js/'
-}).use('content')
-</script>
+    {{template "public/nav.html" .}}
+    <div class="main layui-clear">
+        <div class="wrap">
+            <div class="content">
+                <div class="detail_container trans_3">
+                    <h1>{{.topic.Title}}</h1>
+                    <div class="date_hits"><span><i>发布时间：</i>{{date .topic.Ctime "Y-m-d H:i:s"}}</span><span><i>作者：</i>{{.topic.Author.Nickname}}</span><span><i>浏览数：</i> {{.topic.View}}</span><span><i>评论数：</i> <a id="changyan_count_unit" href="javascript:void(0);">{{.topic.ReplyCount}}</a></span></div>
+                    <div class="content">{{str2html .topic.Content}}</div>
+                    <div class="keywords">
+                        <p>常用函数，PHP</p>
+                    </div>
+                    <div class="prev_next">
+                        {{if gt .upper_topic.Id 0}}
+                        <div class="prev">上一篇：<a href="/topic/{{.upper_topic.Id}}">{{.upper_topic.Title}}</a></div>
+                        {{end}} {{if gt .lower_topic.Id 1}}
+                        <div class="next">下一篇：<a href="/topic/{{.lower_topic.Id}}">{{.lower_topic.Title}}</a></div>
+                        {{end}}
+                    </div>
+                    <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+                    <div class="keywords" style="margin-top: 50px;">转载文章时务必注明原作者及原始链接，并注明「发表于 TesterVillage 」，并不得对作品进行修改。</div>
+                    {{template "topic/reply.html" .}}
+                    <div class="layui-form layui-form-pane">
+                        <form method="post">
+                            <div class="layui-form-item layui-form-text">
+                                <div class="layui-input-block">
+                                    <textarea id="reply_content" name="content" placeholder="请输入内容" class="layui-textarea fly-editor" style="height:260px;"></textarea>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label for="L_title" class="layui-form-label">验证码</label>
+                                <div class="layui-input-block">
+                                    <input type="hidden" name="topic_id" value="{{.topic.Id}}">
+                                    <input type="text" id="L_vercode" name="vercode" required lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input" style="display: inline;width: 150px;"> {{template "public/captcha.html"}}
+                                    <button class="layui-btn layui-btn-normal" lay-filter="replygo" lay-submit type="button" style="float: right;">提交回复</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <script>
+                    layui.config({
+                        base: '/static/js/'
+                    }).use('content')
+                    </script>
+</body>
