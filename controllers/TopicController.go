@@ -14,6 +14,13 @@ type TopicController struct {
 func (self *TopicController) TopicDetial() {
 	id := self.Ctx.Input.Param(":id")
 	tid, _ := strconv.Atoi(id)
+	sess_uid := self.GetSession("uid")
+	if sess_uid == nil {
+		self.Data["islogin"] = false
+	} else {
+		self.Data["islogin"] = true
+		self.Data["userinfo"] = models.FindUserDetialById(sess_uid.(int))
+	}
 	if tid >= 0 {
 		fmt.Println(self.GetSession("SessionId"))
 		topic := models.FindTopicById(tid)

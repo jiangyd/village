@@ -47,7 +47,8 @@ func (self *UserController) Login() {
 
 func (self *UserController) Logout() {
 	self.DelSession("uid")
-	self.Ctx.Redirect(301, "/")
+	self.Data["islogin"] = false
+	self.Ctx.Redirect(302, "/")
 }
 
 func (self *UserController) Forget() {
