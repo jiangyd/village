@@ -121,5 +121,5 @@ func (self *UserController) Detial() {
 	// id := self.Ctx.Input.Param(":uid")
 	// uid, _ := strconv.Atoi(id)
 	// models.FindUserDetialById(uid)
-	self.TplName = "user/detial.html"
+	self.TplName = "user/center.html"
 }

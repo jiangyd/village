@@ -20,7 +20,7 @@ func init() {
 	beego.Router("/user/follow", &controllers.UserController{}, "GET:Follow")
 	beego.Router("/user/register", &controllers.UserController{}, "GET:RegisterPage")
 
-	beego.Router("/user/detial", &controllers.UserController{}, "GET:Detial")
+	// beego.Router("/user/detial", &controllers.UserController{}, "GET:Detial")
 	beego.Router("/user/register", &controllers.UserController{}, "POST:Register")
 	beego.Router("/capt", &controllers.Capt{})
 	beego.Router("/topic/:id([0-9]+)", &controllers.TopicController{}, "GET:TopicDetial")
