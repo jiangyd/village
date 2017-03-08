@@ -23,13 +23,14 @@
                         <div class="next">下一篇：<a href="/topic/{{.lower_topic.Id}}">{{.lower_topic.Title}}</a></div>
                         {{end}}
                     </div>
-                    <button type="button" onclick="Collec('tid',{{.topic.Id}})">收藏</button>
+
+                    <button type="button" onclick="Collec('tid',{{.topic.Id}})" id="collection">{{if .collection.Id}}取消收藏{{else}}收藏{{end}}</button>
                     <div class="bdsharebuttonbox" style="margin-top: 50px;margin-right: 100px;">
                         <a href="#" class="bds_more" data-cmd="more"></a>
                         <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
                         <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
                         <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
-                        <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a>
+                        <!-- <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a> -->
                         <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
                     </div>
                     <script>
@@ -90,8 +91,12 @@
                             type: "POST",
                             success: function(text) {
                                 if (text.msg == "success") {
-                                    var id = 'rid' + tpid
-                                    $("#" + id).text(parseInt($("#" + id).text()) + 1)
+                                    
+                                    if ($("#collection").text()=='收藏'){
+                                        $("#collection").text("取消收藏")
+                                    }else if($("#collection").text()=='取消收藏'){
+                                        $("#collection").text("收藏")
+                                    }
                                 } else if (text.code != 0) {
                                     layer.msg(text.msg)
                                 }

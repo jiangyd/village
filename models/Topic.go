@@ -11,7 +11,7 @@ type Topic struct {
 	Content       string    `orm:"type(text)"`
 	Author        *User     `orm:"rel(fk)"`
 	Ctime         time.Time `orm:"auto_now_add;type(datetime)"`
-	Utime         time.Time `orm:"null"`
+	Utime         time.Time `orm:"auto_now;null"`
 	View          int       `orm:"default(0)"`
 	ReplyCount    int       `orm:"default(0)"`
 	LastReplyUser *User     `orm:"rel(fk);null"`
@@ -26,6 +26,25 @@ func SaveTopic(topic *Topic) int64 {
 		panic(err)
 	}
 	return id
+}
+
+//更新主题
+func UpdateTopic(topic *Topic) int64 {
+	o := orm.NewOrm()
+	id, err := o.Update(topic)
+	if err != nil {
+		panic(err)
+	}
+	return id
+}
+
+//通过用户id查找主题
+func FindTopicByUid(uid *User) []*Topic {
+	o := orm.NewOrm()
+	var topic Topic
+	var topics []*Topic
+	o.QueryTable(topic).Filter("Author", uid).OrderBy("-Ctime").RelatedSel().All(&topics)
+	return topics
 }
 
 //增加点赞数

@@ -20,6 +20,7 @@ func (self *TopicController) TopicDetial() {
 	} else {
 		self.Data["islogin"] = true
 		self.Data["userinfo"] = models.FindUserDetialById(sess_uid.(int))
+		self.Data["collection"] = models.FindCollec("tid", tid, &models.User{Id: sess_uid.(int)})
 	}
 	if tid >= 0 {
 		fmt.Println(self.GetSession("SessionId"))
@@ -41,6 +42,8 @@ func (self *TopicController) CreatePage() {
 	if uid == nil {
 		self.Ctx.Redirect(302, "/user/login")
 	} else {
+		self.Data["islogin"] = true
+		self.Data["userinfo"] = models.FindUserDetialById(uid.(int))
 		self.TplName = "topic/createpage.html"
 	}
 }
@@ -61,6 +64,43 @@ func (self *TopicController) CreateTopic() {
 		self.ServeJSON()
 	}
 
+}
+
+func (self *TopicController) EditPage() {
+	uid := self.GetSession("uid")
+	tid, _ := strconv.Atoi(self.Ctx.Input.Param(":id"))
+	if uid == nil {
+		self.Ctx.Redirect(302, "/user/login")
+	} else {
+		self.Data["islogin"] = true
+		self.Data["userinfo"] = models.FindUserDetialById(uid.(int))
+		self.Data["topic"] = models.FindTopicById(tid)
+		self.TplName = "topic/edittopic.html"
+	}
+}
+
+func (self *TopicController) EditTopic() {
+	topic_id, title, content, vercode, captcha_id := self.Input().Get("topic_id"), self.Input().Get("title"), self.Input().Get("content"), self.Input().Get("vercode"), self.Input().Get("captcha_id")
+	tid, _ := strconv.Atoi(topic_id)
+	uid := self.GetSession("uid")
+	if uid == nil {
+		self.Ctx.Redirect(302, "/user/login")
+	} else {
+		if !CheckCode(vercode, captcha_id) {
+			msg := map[string]interface{}{"code": 1, "msg": "验证码错误"}
+			self.Data["json"] = &msg
+			self.ServeJSON()
+		} else {
+			self.Data["islogin"] = true
+			self.Data["userinfo"] = models.FindUserDetialById(uid.(int))
+			topic := models.Topic{Id: tid, Content: content, Title: title}
+			models.UpdateTopic(&topic)
+			msg := map[string]interface{}{"code": 0, "msg": "success", "tid": tid}
+			self.Data["json"] = &msg
+			self.ServeJSON()
+		}
+
+	}
 }
 
 func (self *TopicController) ReplyTopic() {

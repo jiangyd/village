@@ -20,6 +20,16 @@ func SaveReply(reply *Reply) int64 {
 	return id
 }
 
+//通过用户id查找评论
+func FindReplyByUid(uid *User) []*Reply {
+	o := orm.NewOrm()
+	var reply Reply
+	var replys []*Reply
+	o.QueryTable(reply).Filter("User", uid).OrderBy("-Ctime").RelatedSel().All(&replys)
+	return replys
+
+}
+
 //通过主题id,查找评论
 func FindReplyByTid(tid *Topic) []*Reply {
 	o := orm.NewOrm()

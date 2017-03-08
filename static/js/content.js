@@ -55,6 +55,33 @@ layui.define(['layer', 'layedit', 'form'], function(exports) {
             url: "/topic/reply",
             data: {
                 "topic_id": data.field.topic_id,
+                "title": data.field.title,
+                "content": layedit.getContent(reply_content),
+                "vercode": data.field.vercode,
+                "captcha_id": data.field.captcha_id
+            },
+            type: 'POST',
+            success: function(text) {
+                if (text.msg == 'success') {
+                    location.href = '/topic/' + text.tid
+
+                } else if (text.code != 0) {
+                    layer.msg(text.msg)
+                }
+            }
+
+        });
+
+        return false;
+
+    });
+
+    form.on('submit(edittopicgo)', function(data) {
+        $.ajax({
+            async: false,
+            url: "/topic/edit",
+            data: {
+                "topic_id": data.field.topic_id,
                 "content": layedit.getContent(reply_content),
                 "vercode": data.field.vercode,
                 "captcha_id": data.field.captcha_id

@@ -23,7 +23,7 @@ func (self *CollecController) Collec() {
 		self.ServeJSON()
 	} else {
 		fmt.Println(collec)
-		models.DelCollection(&collec)
+		models.DelCollection(t, tpid, &models.User{Id: uid.(int)})
 		msg := map[string]interface{}{"code": 0, "msg": "取消收藏成功"}
 		self.Data["json"] = &msg
 		self.ServeJSON()

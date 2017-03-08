@@ -67,6 +67,9 @@ func (self *UserController) Message() {
 
 func (self *UserController) UserTopic() {
 	self.Data["IsMyTopic"] = true
+	uid := self.GetSession("uid")
+	self.Data["MyTopic"] = models.FindTopicByUid(&models.User{Id: uid.(int)})
+	self.Data["MyReply"] = models.FindReplyByUid(&models.User{Id: uid.(int)})
 	self.TplName = "user/usertopic.html"
 }
 

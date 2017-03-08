@@ -26,6 +26,8 @@ func init() {
 	beego.Router("/topic/:id([0-9]+)", &controllers.TopicController{}, "GET:TopicDetial")
 	beego.Router("/topic/create", &controllers.TopicController{}, "GET:CreatePage")
 	beego.Router("/topic/create", &controllers.TopicController{}, "POST:CreateTopic")
+	beego.Router("/topic/edit/:id([0-9]+)", &controllers.TopicController{}, "GET:EditPage")
+	beego.Router("/topic/edit/:id([0-9]+)", &controllers.TopicController{}, "POST:EditTopic")
 	beego.Router("/topic/reply", &controllers.TopicController{}, "POST:ReplyTopic")
 	beego.Router("/dz", &controllers.DzController{}, "POST:Dz")
 

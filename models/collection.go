@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"github.com/astaxie/beego/orm"
 )
 
@@ -22,14 +21,25 @@ func AddCollection(collection *Collection) int64 {
 	}
 	return id
 }
-func DelCollection(collection *Collection) int64 {
+
+//删除收藏
+func DelCollection(t string, typeid int, uid *User) {
 
 	o := orm.NewOrm()
-	id, err := o.Delete(collection)
-	o.Commit()
-	fmt.Println(id)
-	if err != nil {
-		panic(err)
-	}
-	return id
+	var collection Collection
+	// id, err := o.Delete(collection)
+	// o.Commit()
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// return id
+	o.QueryTable(collection).Filter("Type", t).Filter("TypeId", typeid).Filter("Uid", uid).Delete()
+}
+
+//查找收藏
+func FindCollec(t string, typeid int, uid *User) Collection {
+	o := orm.NewOrm()
+	var collection Collection
+	o.QueryTable(collection).Filter("Type", t).Filter("TypeId", typeid).Filter("Uid", uid).One(&collection)
+	return collection
 }

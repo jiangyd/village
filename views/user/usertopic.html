@@ -15,6 +15,32 @@
             </ul>
             <div class="layui-tab-content" style="padding: 20px 0;">
                 <div class="layui-form layui-form-pane layui-tab-item layui-show">
+                    <div>
+                        <ul class="mine-view jie-row">
+                            {{range .MyTopic}}
+                            <li>
+                                <a href="/topic/{{.Id}}" class="jie-title" target="_blank">{{.Title}}</a>
+                                <i>{{date .Ctime "Y-m-d H:i:s"}}</i>
+                                <a class="mine-edit" href="/topic/edit/{{.Id}}">编辑</a>
+                                <em>浏览:{{.View}}     评论:{{.ReplyCount}}</em>
+                            </li>
+                            {{end}}
+                        </ul>
+                    </div>
+                </div>
+                <div class="layui-form layui-form-pane layui-tab-item">
+                    <ul class="home-jieda">
+                        {{range .MyReply}}
+                        <li>
+                            <p> <span>{{date .Ctime "Y-m-d H:i:s"}}</span> 在<a target="_blank" href="/topic/{{.Topic.Id}}">{{.Topic.Title}}</a>中回答： </p>
+                            <div class="home-dacontent">{{str2html .Content}}</div>
+                        </li>
+                        {{end}}
+                    </ul>
+                    <div>
+                        <ul>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
