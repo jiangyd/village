@@ -56,22 +56,27 @@ func (self *UserController) Forget() {
 }
 
 func (self *UserController) Set() {
+	self.Data["IsSeting"] = true
 	self.TplName = "user/setinfo.html"
 }
 
 func (self *UserController) Message() {
+	self.Data["IsMessage"] = true
 	self.TplName = "user/message.html"
 }
 
 func (self *UserController) UserTopic() {
+	self.Data["IsMyTopic"] = true
 	self.TplName = "user/usertopic.html"
 }
 
 func (self *UserController) Collection() {
+	self.Data["IsCollection"] = true
 	self.TplName = "user/collection.html"
 }
 
 func (self *UserController) Follow() {
+	self.Data["IsFollow"] = true
 	self.TplName = "user/follow.html"
 }
 
