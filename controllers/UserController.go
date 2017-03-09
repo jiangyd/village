@@ -56,31 +56,82 @@ func (self *UserController) Forget() {
 }
 
 func (self *UserController) Set() {
-	self.Data["IsSeting"] = true
-	self.TplName = "user/setinfo.html"
+
+	uid := self.GetSession("uid")
+	if uid == nil {
+		self.Data["islogin"] = false
+		self.Ctx.Redirect(302, "/")
+	} else {
+		user := models.FindUserDetialById(uid.(int))
+		self.Data["islogin"] = true
+		self.Data["userinfo"] = user
+		self.Data["IsSeting"] = true
+		self.TplName = "user/setinfo.html"
+	}
+
 }
 
 func (self *UserController) Message() {
-	self.Data["IsMessage"] = true
-	self.TplName = "user/message.html"
+	uid := self.GetSession("uid")
+	if uid == nil {
+		self.Data["islogin"] = false
+		self.Ctx.Redirect(302, "/")
+	} else {
+		user := models.FindUserDetialById(uid.(int))
+		self.Data["islogin"] = true
+		self.Data["userinfo"] = user
+		self.Data["IsMessage"] = true
+		self.TplName = "user/message.html"
+	}
+
 }
 
 func (self *UserController) UserTopic() {
-	self.Data["IsMyTopic"] = true
 	uid := self.GetSession("uid")
-	self.Data["MyTopic"] = models.FindTopicByUid(&models.User{Id: uid.(int)})
-	self.Data["MyReply"] = models.FindReplyByUid(&models.User{Id: uid.(int)})
-	self.TplName = "user/usertopic.html"
+	if uid == nil {
+		self.Data["islogin"] = false
+		self.Ctx.Redirect(302, "/")
+	} else {
+		user := models.FindUserDetialById(uid.(int))
+		self.Data["islogin"] = true
+		self.Data["userinfo"] = user
+		self.Data["IsMyTopic"] = true
+		self.Data["MyTopic"] = models.FindTopicByUid(&models.User{Id: uid.(int)})
+		self.Data["MyReply"] = models.FindReplyByUid(&models.User{Id: uid.(int)})
+		self.TplName = "user/usertopic.html"
+
+	}
+
 }
 
 func (self *UserController) Collection() {
-	self.Data["IsCollection"] = true
-	self.TplName = "user/collection.html"
+
+	uid := self.GetSession("uid")
+	if uid == nil {
+		self.Data["islogin"] = false
+		self.Ctx.Redirect(302, "/")
+	} else {
+		user := models.FindUserDetialById(uid.(int))
+		self.Data["islogin"] = true
+		self.Data["userinfo"] = user
+		self.Data["IsCollection"] = true
+		self.TplName = "user/collection.html"
+	}
 }
 
 func (self *UserController) Follow() {
-	self.Data["IsFollow"] = true
-	self.TplName = "user/follow.html"
+	uid := self.GetSession("uid")
+	if uid == nil {
+		self.Data["islogin"] = false
+		self.Ctx.Redirect(302, "/")
+	} else {
+		user := models.FindUserDetialById(uid.(int))
+		self.Data["islogin"] = true
+		self.Data["userinfo"] = user
+		self.Data["IsFollow"] = true
+		self.TplName = "user/follow.html"
+	}
+
 }
 
 func (self *UserController) RegisterPage() {

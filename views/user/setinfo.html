@@ -20,13 +20,13 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label" for="L_email">邮箱</label>
                             <div class="layui-input-inline">
-                                <input type="text" class="layui-input" value="" autocomplete="off" lay-verify="email" required="" name="email" id="L_email">
+                                <input type="text" class="layui-input" value="{{.userinfo.Email}}" autocomplete="off" lay-verify="email" required="" name="email" id="L_email">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label" for="L_username">昵称</label>
                             <div class="layui-input-inline">
-                                <input type="text" class="layui-input" value="" autocomplete="off" lay-verify="email" required="" name="email" id="L_email">
+                                <input type="text" class="layui-input" value="{{.userinfo.Nickname}}" autocomplete="off" lay-verify="email" required="" name="email" id="L_email">
                             </div>
                         </div>
                         <div class="layui-form-item">
@@ -43,12 +43,12 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label" for="L_sign">城市</label>
                             <div class="layui-input-inline">
-                                <input type="text" class="layui-input" value="普陀" autocomplete="off" name="city" id="L_city"> </div>
+                                <input type="text" class="layui-input" value="{{.userinfo.City}}" autocomplete="off" name="city" id="L_city"> </div>
                         </div>
                         <div class="layui-form-item layui-form-text">
                             <label for="L_title" class="layui-form-label">个性签名</label>
                             <div class="layui-input-block">
-                                <textarea style="height: 80px;" class="layui-textarea" autocomplete="off" name="sign" id="L_sign" placeholder="随便写些什么刷下存在感"></textarea>
+                                <textarea style="height: 80px;" class="layui-textarea" autocomplete="off" name="sign" id="L_sign" placeholder="随便写些什么刷下存在感">{{.userinfo.Sign}}</textarea>
                             </div>
                         </div>
                         <div class="layui-form-item">
@@ -65,7 +65,7 @@
                                     <form action="/user/upload/" enctype="multipart/form-data" key="set-mine" method="post" target="layui-upload-iframe">
                                         <input type="file" lay-title="上传头像" id="LAY-file" name="file">
                                     </form><span class="layui-upload-icon"><i class="layui-icon"></i>上传头像</span></div>
-                            </div> <img src="http://q.qlogo.cn/qqapp/101235792/489522D308766C5EEA91D99FC2C5E192/100"> <span class="loading"></span> </div>
+                            </div> <img src="{{.userinfo.Avatar}}"> <span class="loading"></span> </div>
                     </div>
                 </div>
                 <div class="layui-form layui-form-pane layui-tab-item">
