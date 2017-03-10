@@ -22,6 +22,12 @@ layui.define(['layer', 'layedit', 'form'], function(exports) {
         height: 180,
     });
 
+    //编辑主题富文本编辑器
+    var edittopic_content = layedit.build('edittopic_content', {
+        tool: ['strong', 'face', 'image', 'link', 'unlink', 'code'],
+        height: 180,
+    });
+
 
     form.on('submit(topicgo)', function(data) {
         $.ajax({
@@ -82,7 +88,8 @@ layui.define(['layer', 'layedit', 'form'], function(exports) {
             url: "/topic/edit",
             data: {
                 "topic_id": data.field.topic_id,
-                "content": layedit.getContent(reply_content),
+                "title":data.field.title,
+                "content": layedit.getContent(edittopic_content),
                 "vercode": data.field.vercode,
                 "captcha_id": data.field.captcha_id
             },
@@ -90,7 +97,6 @@ layui.define(['layer', 'layedit', 'form'], function(exports) {
             success: function(text) {
                 if (text.msg == 'success') {
                     location.href = '/topic/' + text.tid
-
                 } else if (text.code != 0) {
                     layer.msg(text.msg)
                 }

@@ -93,7 +93,9 @@ func (self *TopicController) EditTopic() {
 		} else {
 			self.Data["islogin"] = true
 			self.Data["userinfo"] = models.FindUserDetialById(uid.(int))
-			topic := models.Topic{Id: tid, Content: content, Title: title}
+			topic := models.FindTopicById(tid)
+			topic.Content = content
+			topic.Title = title
 			models.UpdateTopic(&topic)
 			msg := map[string]interface{}{"code": 0, "msg": "success", "tid": tid}
 			self.Data["json"] = &msg
