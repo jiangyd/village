@@ -12,16 +12,17 @@ func init() {
 	beego.Router("/user/logout", &controllers.UserController{}, "GET:Logout")
 	beego.Router("/user/forget", &controllers.UserController{}, "GET:Forget")
 	beego.Router("/user/:uid([0-9]+),", &controllers.UserController{}, "GET:Detial")
-	beego.Router("/user/set", &controllers.UserController{}, "GET:Set")
+	beego.Router("/user/set", &controllers.UserController{}, "GET:Set")      //设置信息页面
+	beego.Router("/user/set", &controllers.UserController{}, "POST:SetInfo") //修改基本信息
 	beego.Router("/user/message", &controllers.UserController{}, "GET:Message")
 	beego.Router("/user/topic", &controllers.UserController{}, "GET:UserTopic")
 	beego.Router("/user/collection", &controllers.UserController{}, "GET:Collection")
 	beego.Router("/collection", &controllers.CollecController{}, "POST:Collec")
 	beego.Router("/user/follow", &controllers.UserController{}, "GET:Follow")
 	beego.Router("/user/register", &controllers.UserController{}, "GET:RegisterPage")
-
-	// beego.Router("/user/detial", &controllers.UserController{}, "GET:Detial")
 	beego.Router("/user/register", &controllers.UserController{}, "POST:Register")
+	beego.Router("/user/imgupload", &controllers.UploadImg{}, "POST:Upload")
+
 	beego.Router("/capt", &controllers.Capt{})
 	beego.Router("/topic/:id([0-9]+)", &controllers.TopicController{}, "GET:TopicDetial")
 	beego.Router("/topic/create", &controllers.TopicController{}, "GET:CreatePage")

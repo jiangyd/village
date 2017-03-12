@@ -58,8 +58,17 @@ func UpTopic(topic *Topic) {
 func FindTopicById(id int) Topic {
 	o := orm.NewOrm()
 	var topic Topic
-	o.QueryTable(topic).Filter("id", id).RelatedSel().One(&topic)
+	o.QueryTable(topic).Filter("Id", id).RelatedSel().One(&topic)
 	return topic
+}
+
+//通过一组主题id查询
+func FindTopicByIds(ids []int) []*Topic {
+	o := orm.NewOrm()
+	var topic Topic
+	var topics []*Topic
+	o.QueryTable(topic).Filter("Id__in", ids).RelatedSel().All(&topics)
+	return topics
 }
 
 //最新主题,通过更新时间倒序查询

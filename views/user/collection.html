@@ -15,6 +15,18 @@
             </ul>
             <div class="layui-tab-content" style="padding: 20px 0;">
                 <div class="layui-form layui-form-pane layui-tab-item layui-show">
+                <ul class="mine-view jie-row">
+                            {{range .MyCollecTopic}}
+                            <li>
+                                <a href="/topic/{{.Id}}" class="jie-title" target="_blank">{{.Title}}</a>
+                             
+                                <a class="mine-edit" href="/topic/{{.Id}}"></a>
+                                <em>取消收藏</em>
+                            </li>
+                            {{end}}
+                        </ul>
+                </div>
+                <div class="layui-form layui-form-pane layui-tab-item">1
                 </div>
             </div>
         </div>

@@ -22,6 +22,17 @@ func AddCollection(collection *Collection) int64 {
 	return id
 }
 
+//通过用户id查找收藏
+
+func FindCollecByUid(Type string, uid *User) []*Collection {
+	o := orm.NewOrm()
+	var collection Collection
+	var collections []*Collection
+	o.QueryTable(collection).Filter("Uid", uid).Filter("Type", Type).RelatedSel().All(&collections, "TypeId")
+	return collections
+
+}
+
 //删除收藏
 func DelCollection(t string, typeid int, uid *User) {
 

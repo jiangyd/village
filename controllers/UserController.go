@@ -3,7 +3,7 @@ package controllers
 import (
 	"fmt"
 	"github.com/astaxie/beego"
-	// "strconv"
+	"strconv"
 	"village/models"
 )
 
@@ -25,12 +25,10 @@ func (self *UserController) Login() {
 	// 	self.ServeJSON()
 	// 	return
 	// }
-	fmt.Println(email, password)
 	fmt.Println(vercode, captcha_id)
 	userinfo := models.CheckLogin(email, password)
 	if len(userinfo.Email) > 0 {
 		self.SetSession("uid", userinfo.Id)
-		fmt.Println(self.GetSession("uid"), "uuuuuidddd")
 		self.SetSession("nickname", userinfo.Nickname)
 		msg := map[string]interface{}{"code": 0, "msg": "success"}
 		self.Data["json"] = &msg
@@ -62,11 +60,35 @@ func (self *UserController) Set() {
 		self.Data["islogin"] = false
 		self.Ctx.Redirect(302, "/")
 	} else {
+
 		user := models.FindUserDetialById(uid.(int))
 		self.Data["islogin"] = true
 		self.Data["userinfo"] = user
 		self.Data["IsSeting"] = true
 		self.TplName = "user/setinfo.html"
+	}
+
+}
+
+func (self *UserController) SetInfo() {
+
+	uid := self.GetSession("uid")
+	if uid == nil {
+		self.Data["islogin"] = false
+		self.Ctx.Redirect(302, "/")
+	} else {
+		fmt.Println("mmm")
+		nickname, sex, city, sign := self.Input().Get("nickname"), self.Input().Get("sex"), self.Input().Get("city"), self.Input().Get("sign")
+		sexv, _ := strconv.Atoi(sex)
+		user := models.FindUserDetialById(uid.(int))
+		user.Nickname = nickname
+		user.Sex = sexv
+		user.City = city
+		user.Sign = sign
+		models.UpdateUser(&user)
+		msg := map[string]interface{}{"code": 0, "msg": "success"}
+		self.Data["json"] = &msg
+		self.ServeJSON()
 	}
 
 }
@@ -115,6 +137,13 @@ func (self *UserController) Collection() {
 		self.Data["islogin"] = true
 		self.Data["userinfo"] = user
 		self.Data["IsCollection"] = true
+
+		ids := models.FindCollecByUid("tid", &models.User{Id: uid.(int)})
+		var tids []int
+		for _, item := range ids {
+			tids = append(tids, item.TypeId)
+		}
+		self.Data["MyCollecTopic"] = models.FindTopicByIds(tids)
 		self.TplName = "user/collection.html"
 	}
 }

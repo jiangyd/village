@@ -20,24 +20,24 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label" for="L_email">邮箱</label>
                             <div class="layui-input-inline">
-                                <input type="text" class="layui-input" value="{{.userinfo.Email}}" autocomplete="off" lay-verify="email" required="" name="email" id="L_email">
+                                <input type="text" class="layui-input" value="{{.userinfo.Email}}" autocomplete="off" lay-verify="email" required="" name="Email" id="L_email" disabled="disabled">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label" for="L_username">昵称</label>
                             <div class="layui-input-inline">
-                                <input type="text" class="layui-input" value="{{.userinfo.Nickname}}" autocomplete="off" lay-verify="email" required="" name="email" id="L_email">
+                                <input type="text" class="layui-input" value="{{.userinfo.Nickname}}" autocomplete="off" required="" name="Nickname" id="L_email">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label" for="L_sex">性别</label>
                             <div class="layui-input-block">
-                                <input type="radio" checked="" title="男" value="男" name="sex">
-                                <div class="layui-unselect layui-form-radio layui-form-radioed"><i class="layui-anim layui-icon"></i><span>男</span></div>
-                                <input type="radio" title="女" value="女" name="sex">
-                                <div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i><span>女</span></div>
-                                <input type="radio" title="保密" value="禁" name="sex">
-                                <div class="layui-unselect layui-form-radio "><i class="layui-anim layui-icon"></i><span>保密</span></div>
+                                <input type="radio"  title="男" value="0" name="sex" {{if eq .userinfo.Sex 0}}checked{{end}}>
+                                <div class="layui-unselect layui-form-radio {{if eq .userinfo.Sex 0}}layui-form-radioed{{end}}"><i class="layui-anim layui-icon"></i><span>男</span></div>
+                                <input type="radio" title="女" value="1" name="sex" {{if eq .userinfo.Sex 1}}checked{{end}}>
+                                <div class="layui-unselect layui-form-radio {{if eq .userinfo.Sex 1}}layui-form-radioed{{end}}" ><i class="layui-anim layui-icon"></i><span>女</span></div>
+                                <input type="radio" title="保密" value="2" name="sex" {{if eq .userinfo.Sex 2}}checked{{end}}>
+                                <div class="layui-unselect layui-form-radio {{if eq .userinfo.Sex 2}}layui-form-radioed{{end}}"><i class="layui-anim layui-icon"></i><span>保密</span></div>
                             </div>
                         </div>
                         <div class="layui-form-item">
@@ -62,9 +62,9 @@
                             <p>建议尺寸168*168，支持jpg、png、gif，最大不能超过30KB</p>
                             <div class="upload-img">
                                 <div class="layui-box layui-upload-button">
-                                    <form action="/user/upload/" enctype="multipart/form-data" key="set-mine" method="post" target="layui-upload-iframe">
-                                        <input type="file" lay-title="上传头像" id="LAY-file" name="file">
-                                    </form><span class="layui-upload-icon"><i class="layui-icon"></i>上传头像</span></div>
+                                 
+                                        <input type="file" lay-title="上传头像" id="LAY-file" name="file" class="layui-upload-file">
+                                    <span class="layui-upload-icon"><i class="layui-icon"></i>上传头像</span></div>
                             </div> <img src="{{.userinfo.Avatar}}"> <span class="loading"></span> </div>
                     </div>
                 </div>

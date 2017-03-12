@@ -1,23 +1,60 @@
-layui.define(['layer','form','element'],function(exports){
-	var layer=layui.layer
-	var form=layui.form()
-	var elements=layui.element()
-	var $ = layui.jquery
+layui.define(['layer', 'form', 'element', 'upload'], function(exports) {
+    var layer = layui.layer
+    var form = layui.form()
+    var elements = layui.element()
+    var $ = layui.jquery
+    
 
-	elements.use('element',function(){
-		var element = layui.element();
-		element.on('user',function(data){
-			element.tabChange('user',data.index);
-		});
-		
-	});
+    elements.on('user', function(data) {
+        elements.tabChange('user', data.index);
+    });
 
-	form.on('submit()',function(data){
+    //头像设置上传
+    layui.upload({
+            url: "/user/imgupload",
+            success: function(text) {
+                if (text.msg == 'success') {
+                    // setTimeout(function() { location.href = '/user/set' }, 1000);
+                    layer.msg("cc")
+                } else if (text.code != 0) {
+                    layer.msg(text.msg)
 
-	})
-	
+                }
+            }
+
+        }
+
+    )
 
 
 
-	exports('login',{});
+    form.on('submit(setinfo)', function(data) {
+        $.ajax({
+            async: false,
+            url: "/user/set",
+            data: {
+                // "email": data.field.Email,
+                "nickname": data.field.Nickname,
+                "sex": data.field.sex,
+                "city": data.field.city,
+                "sign": data.field.sign
+            },
+            type: 'POST',
+            success: function(text) {
+                if (text.msg == 'success') {
+                    setTimeout(function() { location.href = '/user/set' }, 1000);
+                } else if (text.code != 0) {
+                    layer.msg(text.msg)
+
+                }
+            }
+
+        })
+        return false;
+    })
+
+
+
+
+    exports('login', {});
 });

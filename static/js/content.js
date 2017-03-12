@@ -25,7 +25,7 @@ layui.define(['layer', 'layedit', 'form'], function(exports) {
     //编辑主题富文本编辑器
     var edittopic_content = layedit.build('edittopic_content', {
         tool: ['strong', 'face', 'image', 'link', 'unlink', 'code'],
-        height: 180,
+       
     });
 
 

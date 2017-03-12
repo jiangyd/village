@@ -13,7 +13,7 @@ type User struct {
 	Avatar   string
 	Ctime    time.Time `orm:"auto_now_add;type(datetime)"`
 	Sign     string    `orm:"size(255)"`
-	Sex      int
+	Sex      int       //0:男,1:女，2:保密
 	City     string
 }
 
@@ -36,6 +36,13 @@ func FindUserDetialById(id int) User {
 func AddUser(user *User) int64 {
 	o := orm.NewOrm()
 	id, _ := o.Insert(user)
+	return id
+}
+
+//更新用户信息
+func UpdateUser(user *User) int64 {
+	o := orm.NewOrm()
+	id, _ := o.Update(user)
 	return id
 }
 
