@@ -22,6 +22,7 @@ func init() {
 		new(models.Message),
 		new(models.Dz),
 		new(models.Collection),
+		new(models.Firend),
 	)
 	orm.RunSyncdb("default", false, true)
 }

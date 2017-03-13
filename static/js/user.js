@@ -14,8 +14,7 @@ layui.define(['layer', 'form', 'element', 'upload'], function(exports) {
             url: "/user/imgupload",
             success: function(text) {
                 if (text.msg == 'success') {
-                    // setTimeout(function() { location.href = '/user/set' }, 1000);
-                    layer.msg("cc")
+                    setTimeout(function() { location.href = '/user/set' }, 1000);
                 } else if (text.code != 0) {
                     layer.msg(text.msg)
 
