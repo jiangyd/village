@@ -49,6 +49,32 @@ func (self *UserController) Logout() {
 	self.Ctx.Redirect(302, "/")
 }
 
+func (self *UserController) UpdatePwd() {
+	oldpassword, newpassword := self.Input().Get("oldpassword"), self.Input().Get("newpassword")
+	uid := self.GetSession("uid")
+	if uid == nil {
+		self.Data["islogin"] = false
+		self.Ctx.Redirect(302, "/")
+	} else {
+
+		user := models.FindUserDetialById(uid.(int))
+		if oldpassword == user.Password {
+			user.Password = newpassword
+			models.UpdateUser(&user)
+			self.DelSession("uid")
+			msg := map[string]interface{}{"code": 0, "msg": "success"}
+			self.Data["json"] = &msg
+			self.ServeJSON()
+
+		} else {
+			msg := map[string]interface{}{"code": 1, "msg": "原密码错误"}
+			self.Data["json"] = &msg
+			self.ServeJSON()
+		}
+	}
+
+}
+
 func (self *UserController) Forget() {
 	self.TplName = "user/forget.html"
 }

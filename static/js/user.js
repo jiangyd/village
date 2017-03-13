@@ -51,7 +51,36 @@ layui.define(['layer', 'form', 'element', 'upload'], function(exports) {
 
         })
         return false;
-    })
+    });
+    form.on('submit(modify-pwd)',function(data){
+        if(data.field.newpassword!=data.field.repassword){
+            layer.msg("两次密码输入不一致!")
+            return false;
+        }
+        $.ajax({
+            async:false,
+            url:"/user/updatepwd",
+            data:{"oldpassword":data.field.oldpassword,
+                  "newpassword":data.field.newpassword},
+            type:'POST',
+            success:function(text){
+                if(text.msg=='success'){
+                    
+                    layer.msg('修改成功,请重新登陆!')
+                    setTimeout(function (){location.href='/user/login'}, 3000);
+                    
+                }else if(text.code!=0){
+                    layer.msg(text.msg)
+
+                }
+            }
+
+
+        });
+        
+        return false;
+
+    });
 
 
 
