@@ -165,11 +165,16 @@ func (self *UserController) Collection() {
 		self.Data["IsCollection"] = true
 
 		ids := models.FindCollecByUid("tid", &models.User{Id: uid.(int)})
-		var tids []int
-		for _, item := range ids {
-			tids = append(tids, item.TypeId)
+		//判断是否有收藏数据
+		if len(ids) > 0 {
+			var tids []int
+			for _, item := range ids {
+				tids = append(tids, item.TypeId)
+			}
+			self.Data["MyCollecTopic"] = models.FindTopicByIds(tids)
+		} else {
+			self.Data["MyCollecTopic"] = []int{}
 		}
-		self.Data["MyCollecTopic"] = models.FindTopicByIds(tids)
 		self.TplName = "user/collection.html"
 	}
 }
