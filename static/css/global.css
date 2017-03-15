@@ -168,6 +168,24 @@ body .fly-user-main{position: relative; width: 1085px; min-height: 600px; margin
 .user-looklog span a i{position:absolute; bottom: -5px; left: 0; width: 100%; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-style: normal;}
 
 /* 个人主页 */
+.fly-panel {
+    background-color: #fff;
+    border-radius: 2px;
+}
+.fly-panel[pad20] {
+    padding: 20px;
+}
+.fly-panel-title {
+    background-color: #f8f8f8;
+    border-radius: 2px 2px 0 0;
+    color: #333;
+    font-size: 14px;
+    height: 40px;
+    line-height: 40px;
+    margin-bottom: 5px;
+    padding: 0 15px;
+    position: relative;
+}
 .fly-home{position: relative; padding: 30px 0 30px; text-align: center; background-color: #f2f2f2;}
 .fly-home img{width:120px; height:120px; border-radius:100%;}
 .fly-home h1{font-size:26px; line-height:30px; margin-top:10px;}

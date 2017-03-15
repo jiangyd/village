@@ -79,14 +79,16 @@ func (self *UserController) Forget() {
 	self.TplName = "user/forget.html"
 }
 
-func (self *UserController) UserHome() {
+func (self *UserController) UserDetial() {
 	uid := self.Ctx.Input.Param(":uid")
-	fmt.Println(uid, "uiddddddddddddddddd")
+
 	userid, _ := strconv.Atoi(uid)
-	fmt.Printf("%T", userid)
-	fmt.Println(userid, "useriaaad")
-	self.Data["userinfo"] = models.FindUserDetialById(userid)
-	self.TplName = "user/home.html"
+	user := models.FindUserDetialById(userid)
+	self.Data["islogin"] = true
+	self.Data["userinfo"] = user
+	self.Data["MyTopic"] = models.FindTopicByUid(&models.User{Id: userid})
+	self.Data["MyReply"] = models.FindReplyByUid(&models.User{Id: userid})
+	self.TplName = "user/detial.html"
 }
 
 func (self *UserController) Set() {
@@ -238,12 +240,4 @@ func (self *UserController) Register() {
 		self.Data["json"] = &msg
 		self.ServeJSON()
 	}
-}
-
-//用户详情
-func (self *UserController) Detial() {
-	// id := self.Ctx.Input.Param(":uid")
-	// uid, _ := strconv.Atoi(id)
-	// models.FindUserDetialById(uid)
-	self.TplName = "user/center.html"
 }
