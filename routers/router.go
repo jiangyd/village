@@ -23,6 +23,7 @@ func init() {
 	beego.Router("/user/register", &controllers.UserController{}, "POST:Register")
 	beego.Router("/user/imgupload", &controllers.UploadImg{}, "POST:Upload")
 	beego.Router("/user/updatepwd", &controllers.UserController{}, "POST:UpdatePwd")
+	beego.Router("/user/home/:uid([0-9]+)", &controllers.UserController{}, "GET:UserHome")
 	beego.Router("/capt", &controllers.Capt{})
 	beego.Router("/topic/:id([0-9]+)", &controllers.TopicController{}, "GET:TopicDetial")
 	beego.Router("/topic/create", &controllers.TopicController{}, "GET:CreatePage")

@@ -79,6 +79,16 @@ func (self *UserController) Forget() {
 	self.TplName = "user/forget.html"
 }
 
+func (self *UserController) UserHome() {
+	uid := self.Ctx.Input.Param(":uid")
+	fmt.Println(uid, "uiddddddddddddddddd")
+	userid, _ := strconv.Atoi(uid)
+	fmt.Printf("%T", userid)
+	fmt.Println(userid, "useriaaad")
+	self.Data["userinfo"] = models.FindUserDetialById(userid)
+	self.TplName = "user/home.html"
+}
+
 func (self *UserController) Set() {
 
 	uid := self.GetSession("uid")
