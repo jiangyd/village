@@ -7,7 +7,7 @@
  {{template "public/nav.html" .}}
 <div style="background-image: url();" class="fly-home"> <img alt="{{.userinfo.Nickname}}" src="{{.userinfo.Avatar}}">
     <h1>    {{.userinfo.Nickname}}     <i class="iconfont         "></i>           </h1>
-    <p class="fly-home-info"><span>{{date .userinfo.Ctime "Y-m-d H:i:s"}}</span> <i class="iconfont icon-chengshi"></i><span>来自{{.userinfo.City}}</span> </p>
+    <p class="fly-home-info"><span>{{date .userinfo.Ctime "Y-m-d H:i:s"}}</span> <i class="iconfont icon-chengshi"></i><span>来自{{.userinfo.City}}</span> <button onclick="firendadd({{.userinfo.Id}})">+关注</button></p>
     <p class="fly-home-sign">{{.userinfo.Sign}}</p>
 </div>
 
@@ -44,4 +44,23 @@
 </div>
 </div>
 </div>
+<script src="/static/js/jQuery.js"></script>
+<script type="text/javascript">
+                    function firendadd(uid){
+                    	$.ajax({
+                    		url: "/user/firend",
+                            data: {
+                                "uid": uid
+                            },
+                            type: "POST",
+                            success:function(text){
+                            	if (text.code==0){
+                            		console.log("cc")
+                            	}else{
+                            		console.log(text.msg)
+                            	}
+                            }
+                    	})
+                    } 
+                    </script>
 </body>

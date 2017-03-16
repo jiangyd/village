@@ -80,15 +80,21 @@ func (self *UserController) Forget() {
 }
 
 func (self *UserController) UserDetial() {
-	uid := self.Ctx.Input.Param(":uid")
+	sessionuid := self.GetSession("uid")
+	if sessionuid == nil {
+		self.Data["isfollow"] = false
+	} else {
+		uid := self.Ctx.Input.Param(":uid")
 
-	userid, _ := strconv.Atoi(uid)
-	user := models.FindUserDetialById(userid)
-	self.Data["islogin"] = true
-	self.Data["userinfo"] = user
-	self.Data["MyTopic"] = models.FindTopicByUid(&models.User{Id: userid})
-	self.Data["MyReply"] = models.FindReplyByUid(&models.User{Id: userid})
-	self.TplName = "user/detial.html"
+		userid, _ := strconv.Atoi(uid)
+		user := models.FindUserDetialById(userid)
+		self.Data["islogin"] = true
+		self.Data["userinfo"] = user
+		self.Data["MyTopic"] = models.FindTopicByUid(&models.User{Id: userid})
+		self.Data["MyReply"] = models.FindReplyByUid(&models.User{Id: userid})
+		self.TplName = "user/detial.html"
+	}
+
 }
 
 func (self *UserController) Set() {
@@ -191,7 +197,7 @@ func (self *UserController) Collection() {
 	}
 }
 
-func (self *UserController) Follow() {
+func (self *UserController) FollowPage() {
 	uid := self.GetSession("uid")
 	if uid == nil {
 		self.Data["islogin"] = false
