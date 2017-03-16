@@ -20,6 +20,14 @@ func SaveReply(reply *Reply) int64 {
 	return id
 }
 
+//查找活跃用户
+func FindHotUser() []*Reply {
+	o := orm.NewOrm()
+	var reply Reply
+	var replys []*Reply
+	o.QueryTable(reply).OrderBy("User")
+}
+
 //通过用户id查找评论
 func FindReplyByUid(uid *User) []*Reply {
 	o := orm.NewOrm()
