@@ -1,8 +1,8 @@
 <dl>
 {{range .HotUser}}
 <dd>
-    <a href="/user/detial/{{.User.Id}}"> <img src="/avatar/168.jpg">
-        <cite>{{.User}}</cite> <i>334次回答</i> </a>
+    <a href="/user/detial/{{.user_id}}"> <img src="/avatar/168.jpg">
+        <cite>{{.nickname}}</cite> <i>{{.num}}次回答</i> </a>
 </dd>
 {{end}}
 </dl>

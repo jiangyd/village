@@ -25,4 +25,5 @@ func (self *ContentController) Get() {
 	self.Data["Uptopics"] = models.UpTopicList()
 	self.Data["Categorys"] = models.GetAllCategory()
 	self.Data["NewUser"] = models.NewUser()
+	self.Data["HotUser"] = models.FindHotUser()
 }

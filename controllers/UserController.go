@@ -84,16 +84,17 @@ func (self *UserController) UserDetial() {
 	if sessionuid == nil {
 		self.Data["isfollow"] = false
 	} else {
-		uid := self.Ctx.Input.Param(":uid")
-
-		userid, _ := strconv.Atoi(uid)
-		user := models.FindUserDetialById(userid)
-		self.Data["islogin"] = true
-		self.Data["userinfo"] = user
-		self.Data["MyTopic"] = models.FindTopicByUid(&models.User{Id: userid})
-		self.Data["MyReply"] = models.FindReplyByUid(&models.User{Id: userid})
-		self.TplName = "user/detial.html"
+		self.Data["isfollow"] = true
 	}
+	uid := self.Ctx.Input.Param(":uid")
+	userid, _ := strconv.Atoi(uid)
+	user := models.FindUserDetialById(userid)
+	self.Data["islogin"] = true
+	self.Data["userinfo"] = user
+	self.Data["MyTopic"] = models.FindTopicByUid(&models.User{Id: userid})
+	self.Data["MyReply"] = models.FindReplyByUid(&models.User{Id: userid})
+
+	self.TplName = "user/detial.html"
 
 }
 

@@ -21,11 +21,11 @@ func SaveReply(reply *Reply) int64 {
 }
 
 //查找活跃用户
-func FindHotUser() []*Reply {
+func FindHotUser() []orm.Params {
 	o := orm.NewOrm()
-	var reply Reply
-	var replys []*Reply
-	o.QueryTable(reply).OrderBy("User")
+	var replys []orm.Params
+	o.Raw("select count(r.user_id) as num,u.nickname,r.user_id from reply r,user u where r.user_id=u.id group by r.user_id order by num limit 12").Values(&replys, "num", "nickname", "user_id")
+	return replys
 }
 
 //通过用户id查找评论

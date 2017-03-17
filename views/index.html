@@ -34,7 +34,7 @@
                 <button class="layui-btn layui-btn-normal">百搭按钮</button>
             </a>
             <h3 class="page-title">最近一周回答榜</h3>
-            <div style="margin-bottom: 20px;"></div>
+            <div style="margin-bottom: 20px;">{{template "user/hotuser.html" .}}</div>
             <h3 class="page-title"><i class="layui-icon">&#xe64c;</i>   标签云</h3>
             <div>
                 {{template "topic/category.html" .}}
