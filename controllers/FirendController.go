@@ -18,6 +18,7 @@ func (self *FirendController) Firend() {
 		self.Ctx.Redirect(302, "/")
 	} else {
 		if useraid.(int) == userbid {
+			self.Data["isself"] = true
 			msg := map[string]interface{}{"code": 1, "msg": "不能关注自己"}
 			self.Data["json"] = &msg
 			self.ServeJSON()

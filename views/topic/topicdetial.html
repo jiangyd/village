@@ -90,14 +90,11 @@
                             },
                             type: "POST",
                             success: function(text) {
-                                if (text.msg == "success") {
-                                    
-                                    if ($("#collection").text()=='收藏'){
-                                        $("#collection").text("取消收藏")
-                                    }else if($("#collection").text()=='取消收藏'){
-                                        $("#collection").text("收藏")
-                                    }
-                                } else if (text.code != 0) {
+                                if (text.msg == "success"){
+                                    $("#collection").text("取消收藏")
+                                }else if(text.msg=="取消收藏成功"){
+                                    $("#collection").text("收藏")
+                                }else if (text.code != 0) {
                                     layer.msg(text.msg)
                                 }
                             }

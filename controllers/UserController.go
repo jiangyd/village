@@ -81,19 +81,34 @@ func (self *UserController) Forget() {
 
 func (self *UserController) UserDetial() {
 	sessionuid := self.GetSession("uid")
+	uid := self.Ctx.Input.Param(":uid")
+	userid, _ := strconv.Atoi(uid)
+	//判断是否登陆状态
 	if sessionuid == nil {
 		self.Data["isfollow"] = false
 	} else {
-		self.Data["isfollow"] = true
+		//判断是否访问自己的详情页
+		if sessionuid.(int) == userid {
+			self.Data["isself"] = true
+		}
+		//判断是否已关注用户
+		if models.IsFirend(&models.User{Id: sessionuid.(int)}, &models.User{Id: userid}) {
+			self.Data["isfollow"] = true
+		} else {
+			self.Data["isfollow"] = false
+		}
+
 	}
-	uid := self.Ctx.Input.Param(":uid")
-	userid, _ := strconv.Atoi(uid)
+
 	user := models.FindUserDetialById(userid)
+	//如果用户不存在就跳转到首页
+	if user.Id == 0 && user.Email == "" {
+		self.Ctx.Redirect(302, "/")
+	}
 	self.Data["islogin"] = true
 	self.Data["userinfo"] = user
 	self.Data["MyTopic"] = models.FindTopicByUid(&models.User{Id: userid})
 	self.Data["MyReply"] = models.FindReplyByUid(&models.User{Id: userid})
-
 	self.TplName = "user/detial.html"
 
 }

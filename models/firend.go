@@ -17,6 +17,14 @@ func FirendAdd(firend *Firend) int64 {
 	return id
 }
 
+//是否关注关系
+func IsFirend(usera, userb *User) bool {
+	o := orm.NewOrm()
+	var firend Firend
+	return o.QueryTable(firend).Filter("UserA", usera).Filter("UserB", userb).Exist()
+
+}
+
 //通过关注人查找
 func FindFirendByUserA(uid *User) []*Firend {
 	o := orm.NewOrm()
