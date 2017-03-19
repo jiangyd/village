@@ -14,7 +14,7 @@
                     <div class="date_hits"><span><i>发布时间：</i>{{date .topic.Ctime "Y-m-d H:i:s"}}</span><span><i>作者：</i>{{.topic.Author.Nickname}}</span><span><i>浏览数：</i> {{.topic.View}}</span><span><i>评论数：</i> <a id="changyan_count_unit" href="javascript:void(0);">{{.topic.ReplyCount}}</a></span></div>
                     <div class="content">{{str2html .topic.Content}}</div>
                     <div class="keywords">
-                        <p>常用函数，PHP</p>
+                        <p>{{.topic.Category.Category}}</p>
                     </div>
                     <div class="prev_next">
                         {{if gt .upper_topic.Id 0}}
@@ -23,7 +23,7 @@
                         <div class="next">下一篇：<a href="/topic/{{.lower_topic.Id}}">{{.lower_topic.Title}}</a></div>
                         {{end}}
                     </div>
-
+                    <button type="button" onclick="dz('tid',{{.topic.Id}})" id='dz'>点赞</button>
                     <button type="button" onclick="Collec('tid',{{.topic.Id}})" id="collection">{{if .collection.Id}}取消收藏{{else}}收藏{{end}}</button>
                     <div class="bdsharebuttonbox" style="margin-top: 50px;margin-right: 100px;">
                         <a href="#" class="bds_more" data-cmd="more"></a>
@@ -81,6 +81,26 @@
                     }).use('content')
                     </script>
                     <script type="text/javascript">
+                    function dz(tp, tpid) {
+                        $.ajax({
+                            url: "/dz",
+                            data: {
+                                "type": tp,
+                                "typeid": tpid
+                            },
+                            type: "POST",
+                            success: function(text) {
+                                if (text.msg == "success") {
+                                    $("#dz").text("取消点赞")
+                                } else if (text.msg == "取消点赞成功") {
+                                    $("#dz").text("点赞")
+                                } else if (text.code != 0) {
+                                    layer.msg(text.msg)
+                                }
+                            }
+                        })
+                    };
+
                     function Collec(tp, tpid) {
                         $.ajax({
                             url: "/collection",
@@ -90,11 +110,11 @@
                             },
                             type: "POST",
                             success: function(text) {
-                                if (text.msg == "success"){
+                                if (text.msg == "success") {
                                     $("#collection").text("取消收藏")
-                                }else if(text.msg=="取消收藏成功"){
+                                } else if (text.msg == "取消收藏成功") {
                                     $("#collection").text("收藏")
-                                }else if (text.code != 0) {
+                                } else if (text.code != 0) {
                                     layer.msg(text.msg)
                                 }
                             }

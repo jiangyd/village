@@ -14,8 +14,7 @@ func (self *FirendController) Firend() {
 	useraid := self.GetSession("uid")
 	userbid, _ := strconv.Atoi(self.Input().Get("uid"))
 	if useraid == nil {
-		self.Data["islogin"] = false
-		self.Ctx.Redirect(302, "/")
+		self.Ctx.Redirect(302, "/user/login")
 	} else {
 		if useraid.(int) == userbid {
 			self.Data["isself"] = true

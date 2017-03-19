@@ -24,7 +24,7 @@ func SaveReply(reply *Reply) int64 {
 func FindHotUser() []orm.Params {
 	o := orm.NewOrm()
 	var replys []orm.Params
-	o.Raw("select count(r.user_id) as num,u.nickname,r.user_id from reply r,user u where r.user_id=u.id group by r.user_id order by num limit 12").Values(&replys, "num", "nickname", "user_id")
+	o.Raw("select count(r.user_id) as num,u.nickname,r.user_id ,u.avatar from reply r,user u where r.user_id=u.id  group by r.user_id  order by num  DESC limit 12").Values(&replys, "num", "nickname", "user_id", "avatar")
 	return replys
 }
 

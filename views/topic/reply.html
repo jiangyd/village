@@ -19,32 +19,50 @@
                 </div>
                 <div class="jieda-reply">
                     <span><a onclick="dz('rid',{{.Id}})"><img src="/static/images/dz.png" alt="支持" title="支持" ><cite>(<em id="rid{{.Id}}">{{.Up}}</em>)</cite></a></span>
-                    <span><img src="/static/images/reply.png" alt="回复" title="回复此楼" ></span>
+                    <span><img src="/static/images/reply.png" alt="回复" title="回复此楼" >回复</span>
+                    <div class="jieda-admin"> <span type="accept" class="jieda-accept" onclick="caina({{$.topic.Id}},{{.Id}})">采纳</span> </div>
                 </div>
             </li>
             {{end}}
         </ul>
     </div>
 </fieldset>
-
 <script src="/static/js/jQuery.js"></script>
 <script type="text/javascript">
-    function dz(tp, tpid) {
-        $.ajax({
-            url: "/dz",
-            data: {
-                "type": tp,
-                "typeid": tpid
-            },
-            type: "POST",
-            success: function(text) {
-                if (text.msg == "success") {
-                    var id='rid'+tpid
-                    $("#"+id).text(parseInt($("#"+id).text())+1)
-                } else if (text.code != 0) {
-                    layer.msg(text.msg)
-                }
+function dz(tp, tpid) {
+    $.ajax({
+        url: "/dz",
+        data: {
+            "type": tp,
+            "typeid": tpid
+        },
+        type: "POST",
+        success: function(text) {
+            if (text.msg == "success") {
+                var id = 'rid' + tpid
+                $("#" + id).text(parseInt($("#" + id).text()) + 1)
+            } else if (text.code != 0) {
+                layer.msg(text.msg)
             }
-        })
-    };
+        }
+    })
+};
+function caina(tid, rid) {
+    $.ajax({
+        url: "/topic/adopt",
+        data: {
+            "tid": tid,
+            "rid": rid
+        },
+        type: "POST",
+        success: function(text) {
+            if (text.msg == "success") {
+                var id = 'rid' + tpid
+                $("#" + id).text("已采纳")
+            } else if (text.code != 0) {
+                layer.msg(text.msg)
+            }
+        }
+    })
+};
 </script>

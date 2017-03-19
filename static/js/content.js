@@ -30,6 +30,7 @@ layui.define(['layer', 'layedit', 'form'], function(exports) {
 
 
     form.on('submit(topicgo)', function(data) {
+        layer.msg(data.field.category)
         $.ajax({
             async: false,
             url: "/topic/create",
@@ -37,7 +38,8 @@ layui.define(['layer', 'layedit', 'form'], function(exports) {
                 "title": data.field.title,
                 "content": layedit.getContent(topic_content),
                 "vercode": data.field.vercode,
-                "captcha_id": data.field.captcha_id
+                "captcha_id": data.field.captcha_id,
+                "category":data.field.category
             },
             type: 'POST',
             success: function(text) {
@@ -91,7 +93,8 @@ layui.define(['layer', 'layedit', 'form'], function(exports) {
                 "title":data.field.title,
                 "content": layedit.getContent(edittopic_content),
                 "vercode": data.field.vercode,
-                "captcha_id": data.field.captcha_id
+                "captcha_id": data.field.captcha_id,
+                "category":data.field.category
             },
             type: 'POST',
             success: function(text) {

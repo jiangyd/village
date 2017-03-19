@@ -32,6 +32,7 @@ func init() {
 	beego.Router("/topic/edit/", &controllers.TopicController{}, "POST:EditTopic")
 	beego.Router("/topic/reply", &controllers.TopicController{}, "POST:ReplyTopic")
 	beego.Router("/dz", &controllers.DzController{}, "POST:Dz")
+	beego.Router("/topic/adopt", &controllers.TopicController{}, "POST:Adopt")
 
 	//beego.Router("/wd/index", &controllers.ContentController{}, "GET:Index")
 }

@@ -8,15 +8,17 @@ import (
 type Topic struct {
 	Id            int
 	Title         string
-	Content       string    `orm:"type(text)"`
-	Author        *User     `orm:"rel(fk)"`
-	Ctime         time.Time `orm:"auto_now_add;type(datetime)"`
-	Utime         time.Time `orm:"auto_now;null"`
-	View          int       `orm:"default(0)"`
-	ReplyCount    int       `orm:"default(0)"`
-	LastReplyUser *User     `orm:"rel(fk);null"`
-	LastReplyTime time.Time `orm:"null;type(datetime);"`
-	Up            int       `orm:"default(0)"`
+	Content       string     `orm:"type(text)"`
+	Author        *User      `orm:"rel(fk)"`
+	Ctime         time.Time  `orm:"auto_now_add;type(datetime)"`
+	Utime         time.Time  `orm:"auto_now;null"`
+	View          int        `orm:"default(0)"`
+	ReplyCount    int        `orm:"default(0)"`
+	LastReplyUser *User      `orm:"rel(fk);null"`
+	LastReplyTime time.Time  `orm:"null;type(datetime);"`
+	Up            int        `orm:"default(0)"`
+	Category      *Categorys `orm:"rel(fk)"`
+	Adopt         *Reply     `orm:"rel(fk);null"`
 }
 
 func SaveTopic(topic *Topic) int64 {
@@ -120,6 +122,7 @@ func UpTopicList() []*Topic {
 	o := orm.NewOrm()
 	var topic Topic
 	var topics []*Topic
-	o.QueryTable(topic).Filter("Up", 0).OrderBy("-Ctime").RelatedSel().All(&topics)
+	//点赞数量大于等于1
+	o.QueryTable(topic).Filter("Up__gte", 1).OrderBy("-Ctime").RelatedSel().All(&topics)
 	return topics
 }

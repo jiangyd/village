@@ -5,17 +5,17 @@
 </head>
 <body>
  {{template "public/nav.html" .}}
-<div style="background-image: url();" class="fly-home"> <img alt="{{.userinfo.Nickname}}" src="{{.userinfo.Avatar}}">
-    <h1>    {{.userinfo.Nickname}}     <i class="iconfont         "></i>           </h1>
-    <p class="fly-home-info"><span>{{date .userinfo.Ctime "Y-m-d H:i:s"}}</span> <i class="iconfont icon-chengshi"></i><span>来自{{.userinfo.City}}</span> 
-    {{if .isself}}{{else}}{{if .isfollow}}<button onclick="firendadd({{.userinfo.Id}})">取消关注</button>{{else}}<button onclick="firendadd({{.userinfo.Id}})">+关注</button>{{end}}{{end}}</p>
-    <p class="fly-home-sign">{{.userinfo.Sign}}</p>
+<div style="background-image: url();" class="fly-home"> <img alt="{{.detial_userinfo.Nickname}}" src="{{.detial_userinfo.Avatar}}">
+    <h1>    {{.detial_userinfo.Nickname}}     <i class="iconfont"></i>           </h1>
+    <p class="fly-home-info"><span>{{date .detial_userinfo.Ctime "Y-m-d H:i:s"}}</span> <i class="iconfont icon-chengshi"></i><span>来自{{.detial_userinfo.City}}</span> 
+    {{if .isself}}{{else}}{{if .isfollow}}<button onclick="firendadd({{.detial_userinfo.Id}})">取消关注</button>{{else}}<button onclick="firendadd({{.detial_userinfo.Id}})">+关注</button>{{end}}{{end}}</p>
+    <p class="fly-home-sign">{{.detial_userinfo.Sign}}</p>
 </div>
 
 <div class="main fly-home-main">
 <div class="layui-inline fly-home-jie">
 <div class="fly-panel">
-	<h3 class="fly-panel-title">{{.userinfo.Nickname}} 最近的主题</h3>
+	<h3 class="fly-panel-title">{{.detial_userinfo.Nickname}} 最近的主题</h3>
 	<ul class="jie-row">
 	{{range .MyTopic}}
 	<li>
@@ -30,7 +30,7 @@
 
 <div class="layui-inline fly-home-da">
 <div class="fly-panel">
-	<h3 class="fly-panel-title">{{.userinfo.Nickname}} 最近的回复</h3>
+	<h3 class="fly-panel-title">{{.detial_userinfo.Nickname}} 最近的回复</h3>
 	<ul class="home-jieda">
 	{{range .MyReply}}
 		<li>

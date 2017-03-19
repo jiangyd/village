@@ -25,6 +25,14 @@ func CheckLogin(email, password string) User {
 	return user
 }
 
+//查询用户是否存在
+func IsUserExit(uid *User) bool {
+	o := orm.NewOrm()
+	var user User
+	return o.QueryTable(user).Filter("Id", uid).Exist()
+
+}
+
 //查看用户详细信息
 func FindUserDetialById(id int) User {
 	o := orm.NewOrm()
