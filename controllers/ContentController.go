@@ -23,8 +23,9 @@ func (self *ContentController) Get() {
 	self.Data["waitreplys"] = models.WaitReply()
 	self.Data["newreplys"] = models.NewReply()
 	self.Data["Uptopics"] = models.UpTopicList()
-	self.Data["Categorys"] = models.GetAllCategory()
+	self.Data["Categorys"] = models.GetTopicCategory()
 	self.Data["NewUser"] = models.NewUser()
 	self.Data["HotUser"] = models.FindHotUser()
+	self.Data["adopts"] = models.AdoptTopicList()
 
 }

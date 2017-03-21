@@ -1,6 +1,6 @@
 
 /* 公用 */
-html{overflow-x: hidden; overflow-y: auto; background-color:white; }
+html{overflow-x: hidden; overflow-y: auto; background-color:#eee; }
 html body{margin-top: 80px;}
 body{line-height:24px;}
 i{font-style: normal;}
@@ -113,6 +113,10 @@ body .layui-edit-face  .layui-layer-content{padding:0; background-color:#fff; co
 .layui-edit-face ul li:hover{position: relative; z-index: 2; border: 1px solid #eb7350; background: #fff9ec;}
 
 /* Tab */
+.fly-panel{margin-bottom: 10px; background-color: #fff; border-radius: 2px;}
+.fly-panel[pad20]{padding: 20px;}
+.fly-panel-title{position: relative; height: 37px; line-height: 37px; margin: 0 15px 7px; padding: 0 0px; margin-bottom: 5px; border-bottom: 1px dotted #E9E9E9; color: #333; border-radius: 2px 2px 0 0; font-size: 14px;}
+
 .fly-tab{position:relative; margin-bottom:20px;}
 .fly-tab span,
 .fly-tab span a{display:inline-block; *display:inline; *zoom:1; vertical-align:top;}
@@ -488,30 +492,30 @@ body .fly-user-main{position: relative; width: 1085px; min-height: 600px; margin
 
 /*标签云*/
 
-.category0 {
-	background-color:#FF5722;
-}
-.category1 {
-	background-color:#5FB878;
-}
-.category2 {
-	background-color:#F7B824;
-}
-.category3 {
-	background-color:#01AAED;
-}
-.left-category {
+.label-item {
     display: inline-block;
-    min-width: 10px;
-    margin: 0.25em 0;
-    width: 27.2%;;
-    padding: .5em .625em;
-    color: #fff;
-    line-height: 0.9;
-    vertical-align: baseline;
-    white-space: nowrap;
-    background-color: #999;
-    cursor: pointer;
+    margin: 15px 5px 0 0;
+    padding: 1px 8px 2px;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 15px;
+    -webkit-background-clip: padding-box;
+    -moz-border-radius: 15px;
+    -moz-background-clip: padding;
+    border-radius: 15px;
+    background-clip: padding-box;
+    text-decoration: none
+}
+
+.label-item:link,.label-item:visited {
+    color: #999;
+    text-decoration: none
+}
+
+.label-item.active,.label-item:hover {
+    color: #00c1de;
+    border-color: #00c1de;
+    text-decoration: none;
+    background: transparent
 }
 
 
@@ -584,7 +588,7 @@ body .fly-user-main{position: relative; width: 1085px; min-height: 600px; margin
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    width: 45%;
+    
 }
 .detail_container .prev_next .next {
     float: right;

@@ -91,7 +91,7 @@ func IncrView(topic *Topic) {
 
 }
 
-//主题浏览数增加
+//主题评论数增加
 func IncrReplyCount(topic *Topic) {
 	o := orm.NewOrm()
 	topic.ReplyCount = topic.ReplyCount + 1
@@ -124,5 +124,14 @@ func UpTopicList() []*Topic {
 	var topics []*Topic
 	//点赞数量大于等于1
 	o.QueryTable(topic).Filter("Up__gte", 1).OrderBy("-Ctime").RelatedSel().All(&topics)
+	return topics
+}
+
+//已采纳贴
+func AdoptTopicList() []*Topic {
+	o := orm.NewOrm()
+	var topic Topic
+	var topics []*Topic
+	o.QueryTable(topic).Filter("Adopt__isnull", false).OrderBy("-Ctime").RelatedSel().All(&topics)
 	return topics
 }

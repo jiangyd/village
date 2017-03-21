@@ -1,0 +1,24 @@
+<ul class="fly-list">
+    {{range .adopts}}
+    <li class="fly-list-li">
+        <a href="/user/detial/{{.Author.Id}}" class="fly-list-avatar">
+            <img src="/static/168.jpg" alt="测试">
+        </a>
+        <h2 class="fly-tip">
+                    <a href="/topic/{{.Id}}">{{.Title}}</a>
+                    <!-- <span class="fly-tip-stick">置顶</span> -->
+                    <!-- <span class="fly-tip-jing">精华</span> -->
+                </h2>
+        <p>
+            <span><a href="/user/detial/{{.Author.Id}}">{{.Author.Nickname}}</a></span>
+            <span>{{date .Ctime "Y-m-d H:i:s"}}</span>
+            <a href="" class="label-item" style="margin: 0;">{{.Category.Category}}</a>
+            
+            <span class="fly-list-hint" style="margin-top: 10px;">
+                        <i class="layui-icon" title="回答" style="font-size: 10px; color: #1E9FFF;margin-right: 5px;">&#xe63a;</i>{{.ReplyCount}}
+                        <i class="layui-icon" title="人气" style="font-size: 10px; color: #1E9FFF;margin-right: 5px;">&#xe60b;</i>{{.View}}
+                    </span>
+        </p>
+    </li>
+    {{end}}
+</ul>

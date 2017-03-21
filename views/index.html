@@ -22,7 +22,7 @@
                         <div class="layui-tab-item">{{template "topic/NewReply.html" .}}</div>
                         <div class="layui-tab-item">{{template "topic/WaitReply.html" .}}</div>
                         <div class="layui-tab-item">{{template "topic/UpTopics.html" .}}</div>
-                        <div class="layui-tab-item"></div>
+                        <div class="layui-tab-item">{{template "topic/adopts.html" .}}</div>
                     </div>
                 </div>
             </div>
@@ -35,7 +35,7 @@
             </a>
 
             <div style="margin-bottom: 20px;">{{template "user/hotuser.html" .}}</div>
-            <h3 class="page-title"><i class="layui-icon">&#xe64c;</i>   标签云</h3>
+            <h3 class="fly-panel-title"><i class="layui-icon">&#xe64c;</i>   标签云</h3>
             <div>
                 {{template "topic/category.html" .}}
             </div>

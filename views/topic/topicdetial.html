@@ -18,45 +18,20 @@
                     </div>
                     <div class="prev_next">
                         {{if gt .upper_topic.Id 0}}
-                        <div class="prev">上一篇：<a href="/topic/{{.upper_topic.Id}}">{{.upper_topic.Title}}</a></div>
+                        <div class="prev"><a href="/topic/{{.upper_topic.Id}}">&lt;&lt;&nbsp;{{.upper_topic.Title}}</a></div>
                         {{end}} {{if gt .lower_topic.Id 1}}
-                        <div class="next">下一篇：<a href="/topic/{{.lower_topic.Id}}">{{.lower_topic.Title}}</a></div>
+                        <div class="next"><a href="/topic/{{.lower_topic.Id}}">{{.lower_topic.Title}}&nbsp;&gt;&gt;</a></div>
                         {{end}}
                     </div>
-                    <button type="button" onclick="dz('tid',{{.topic.Id}})" id='dz'>点赞</button>
-                    <button type="button" onclick="Collec('tid',{{.topic.Id}})" id="collection">{{if .collection.Id}}取消收藏{{else}}收藏{{end}}</button>
-                    <div class="bdsharebuttonbox" style="margin-top: 50px;margin-right: 100px;">
-                        <a href="#" class="bds_more" data-cmd="more"></a>
-                        <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
-                        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
-                        <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
-                        <!-- <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a> -->
-                        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+                    <div style="text-align: center;margin-top: 30px;" >
+                    <button type="button" onclick="dz('tid',{{.topic.Id}})" id='dz' class="layui-btn-small layui-btn-radius layui-btn-primary">点赞</button>
+                    <button type="button" onclick="Collec('tid',{{.topic.Id}})" id="collection" class="layui-btn-small layui-btn-radius layui-btn-primary">{{if .collection.Id}}取消收藏{{else}}收藏{{end}}</button>
                     </div>
-                    <script>
-                    window._bd_share_config = {
-                        "common": {
-                            "bdSnsKey": {},
-                            "bdText": "",
-                            "bdMini": "2",
-                            "bdPic": "",
-                            "bdStyle": "0",
-                            "bdSize": "16"
-                        },
-                        "share": {},
-                        "image": {
-                            "viewList": ["qzone", "tsina", "tqq", "renren", "weixin"],
-                            "viewText": "分享到：",
-                            "viewSize": "16"
-                        },
-                        "selectShare": {
-                            "bdContainerClass": null,
-                            "bdSelectMiniList": ["qzone", "tsina", "tqq", "renren", "weixin"]
-                        }
-                    };
-                    with(document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
-                    </script>
-                    <div class="keywords" style="margin-top: 50px;">转载文章时务必注明原作者及原始链接，并注明「发表于 TesterVillage 」，并不得对作品进行修改。</div>
+
+                        
+                    
+                    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":["weixin","sqq","youdao","evernotecn","copy"],"bdPic":"","bdStyle":"2","bdSize":"16"},"slide":{"type":"slide","bdImg":"0","bdPos":"left","bdTop":"112.5"},"image":{"viewList":["weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+                    <div class="keywords" style="margin-top: 20px;">转载文章时务必注明原作者及原始链接，并注明「发表于 TesterVillage 」，并不得对作品进行修改。</div>
                     {{template "topic/reply.html" .}}
                     <div class="layui-form layui-form-pane">
                         <form method="post">
@@ -65,7 +40,7 @@
                                     <textarea id="reply_content" name="content" placeholder="请输入内容" class="layui-textarea fly-editor" style="height:260px;"></textarea>
                                 </div>
                             </div>
-                            <div class="layui-form-item">
+                            <div class="layui-form-item ">
                                 <label for="L_title" class="layui-form-label">验证码</label>
                                 <div class="layui-input-block">
                                     <input type="hidden" name="topic_id" value="{{.topic.Id}}">

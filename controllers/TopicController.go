@@ -44,7 +44,7 @@ func (self *TopicController) CreatePage() {
 	} else {
 		self.Data["islogin"] = true
 		self.Data["userinfo"] = models.FindUserDetialById(uid.(int))
-		self.Data["categorys"] = models.GetAllCategory()
+		self.Data["categorys"] = models.GetTopicCategory()
 		self.TplName = "topic/createpage.html"
 	}
 }
@@ -77,7 +77,7 @@ func (self *TopicController) EditPage() {
 		self.Data["islogin"] = true
 		self.Data["userinfo"] = models.FindUserDetialById(uid.(int))
 		self.Data["topic"] = models.FindTopicById(tid)
-		self.Data["categorys"] = models.GetAllCategory()
+		self.Data["categorys"] = models.GetTopicCategory()
 		self.TplName = "topic/edittopic.html"
 	}
 }
