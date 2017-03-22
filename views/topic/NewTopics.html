@@ -1,4 +1,4 @@
-<ul class="fly-list">
+<ul class="fly-panel fly-list fly-list-top">
     {{range .newstopics}}
     <li class="fly-list-li">
         <a href="/user/detial/{{.Author.Id}}" class="fly-list-avatar">
@@ -6,8 +6,6 @@
         </a>
         <h2 class="fly-tip">
                     <a href="/topic/{{.Id}}">{{.Title}}</a>
-                    <!-- <span class="fly-tip-stick">置顶</span> -->
-                    <!-- <span class="fly-tip-jing">精华</span> -->
                 </h2>
         <p>
             <span><a href="/user/detial/{{.Author.Id}}">{{.Author.Nickname}}</a></span>

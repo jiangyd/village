@@ -6,7 +6,7 @@ import (
 )
 
 func init() {
-	beego.Router("/", &controllers.ContentController{})
+	beego.Router("/", &controllers.ContentController{}, "GET:Index")
 	beego.Router("/user/login", &controllers.UserController{}, "GET:LoginPage")
 	beego.Router("/user/login", &controllers.UserController{}, "POST:Login")
 	beego.Router("/user/logout", &controllers.UserController{}, "GET:Logout")
@@ -33,8 +33,13 @@ func init() {
 	beego.Router("/topic/reply", &controllers.TopicController{}, "POST:ReplyTopic")
 	beego.Router("/dz", &controllers.DzController{}, "POST:Dz")
 	beego.Router("/topic/adopt", &controllers.TopicController{}, "POST:Adopt")
+	beego.Router("/topic/:type([a-z]+)", &controllers.ContentController{}, "GET:TopicList")
+	// beego.Router("/topic/waitreply", &controllers.ContentController{}, "GET:WaitReply")
+	// beego.Router("/topic/newreply", &controllers.ContentController{}, "GET:NewReply")
+	// beego.Router("/topic/up", &controllers.ContentController{}, "GET:UpTopicList")
+	// beego.Router("/topic/adopt", &controllers.ContentController{}, "GET:AdoptTopicList")
 
-	beego.Router("/cite", &controllers.CiteController{}, "GET:CitePage")
+	beego.Router("/site", &controllers.SiteController{}, "GET:SitePage")
 
 	//beego.Router("/wd/index", &controllers.ContentController{}, "GET:Index")
 }

@@ -11,11 +11,8 @@
             <div class="content">
                 <div class="detail_container trans_3">
                     <h1>{{.topic.Title}}</h1>
-                    <div class="date_hits"><span><i>发布时间：</i>{{date .topic.Ctime "Y-m-d H:i:s"}}</span><span><i>作者：</i>{{.topic.Author.Nickname}}</span><span><i>浏览数：</i> {{.topic.View}}</span><span><i>评论数：</i> <a id="changyan_count_unit" href="javascript:void(0);">{{.topic.ReplyCount}}</a></span></div>
+                    <div class="date_hits"><span><i>标签:{{.topic.Category.Category}}</i></span><span><i>发表于：</i>{{date .topic.Ctime "Y-m-d H:i:s"}}</span><span><i>作者：</i>{{.topic.Author.Nickname}}</span><span><i>浏览数：</i> {{.topic.View}}</span><span><i>评论数：</i> <a id="changyan_count_unit" href="javascript:void(0);">{{.topic.ReplyCount}}</a></span></div>
                     <div class="content">{{str2html .topic.Content}}</div>
-                    <div class="keywords">
-                        <p>{{.topic.Category.Category}}</p>
-                    </div>
                     <div class="prev_next">
                         {{if gt .upper_topic.Id 0}}
                         <div class="prev"><a href="/topic/{{.upper_topic.Id}}">&lt;&lt;&nbsp;{{.upper_topic.Title}}</a></div>
