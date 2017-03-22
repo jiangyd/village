@@ -3,7 +3,7 @@ html{overflow-x: hidden; overflow-y: auto; background-color: #efefef; }
 html body{margin-top: 80px; }
 body{line-height:24px;}
 i{font-style: normal;}
-.main{width: 1080px; min-height: 600px; margin: 0 auto 15px;}
+.main{max-width: 1200px; margin: 0 auto;position: relative;}
 .wrap{float:left; width: 100%; min-height:300px;}
 .content{margin-right: 352px;}
 .edge{position: relative; float:left; top:0; width:336px; margin-left:-336px;}
@@ -448,12 +448,84 @@ body .fly-user-main{width: auto; margin: 10px;}
 }
 
 /*帖子详情*/
+.page_left {
+    float: left;
+    padding-bottom: 10px;
+    width: 70%;
+}
+.page_right {
+    float: right;
+    position: relative;
+    top: 0;
+    width: 29%;
+}
+.page_right img{
+    position:absolute;
+    left:50%;
+    top:50%;
+    width:108px; 
+    height:108px;
+    margin:30px 0 0 -175px;
+    border-radius:100%;
+}
+.page_right h3 {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #fff;
+    border-color: -moz-use-text-color -moz-use-text-color #009688;
+    border-image: none;
+    border-style: none none solid;
+    border-width: medium medium 1px;
+    height: 38px;
+    line-height: 40px;
+    margin: 0;
+    padding: 0 15px;
+    width: auto;
+}
+.page_right_list {
+    background: none repeat scroll 0 0 #fff;
+    margin: 0 0 20px;
+    padding: 10px 10px 10px 15px;
+}
+.page_right_list:hover {
+    box-shadow: 0 1px 16px -8px #000;
+}
+.page_right_list li {
+    color: #009688;
+    font-style: oblique;
+    line-height: 32px;
+    list-style: inside none decimal-leading-zero;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.page_right_list li a {
+    display: inline-block;
+    font-size: 14px;
+    font-style: normal;
+    margin-right: 5px;
+    max-width: 74%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: top;
+    white-space: nowrap;
+}
+.page_right_list li a:hover {
+    color: #009688;
+}
+.page_right_list li span {
+    color: #888;
+    display: inline-block;
+    font-size: 12px;
+    font-style: normal;
+    vertical-align: top;
+}
 .detail_container {
     background: none repeat scroll 0 0 #fff;
     margin-bottom: 20px;
     min-height: 600px;
     padding: 10px 0;
-    width: 800px;
 }
 .detail_container:hover {
     box-shadow: 0 1px 16px -8px #000;
@@ -477,17 +549,17 @@ body .fly-user-main{width: auto; margin: 10px;}
     text-align: center;
     margin-left: 30px;
 }
-.detail_container .content {
+.detail_container .t_content {
     font-size: 14px;
     line-height: 26px;
     padding: 15px 20px;
     word-wrap: break-word;
 }
-.detail_container .content img {
+.detail_container .t_content img {
     max-width: 100%;
     vertical-align: baseline;
 }
-.detail_container .content a {
+.detail_container .t_content a {
     color: #01aaed;
 }
 .detail_container .keywords {
@@ -523,11 +595,3 @@ body .fly-user-main{width: auto; margin: 10px;}
     float: right;
 }
 /*帖子详情页右侧*/
-.bbs-post-right{width:300px;}
-.hot-list ul li:hover em{background-color:#21bad8;}
-.comment-person{background-color:#fff; padding:17px 0;}
-.cp-head{width:98px; height:98px; float:left; display:block; border-radius:5px; border:3px solid #e5e5e5; position:relative;}
-.cp-head:hover{border:3px solid #62b5f1;}
-.cp-head img{width:98px; height:98px;}
-.cp-head span{width:68px; height:20px; display:block; border:1px solid #fff; position:absolute; bottom:-2px; right:-10px; background-color:#ffb123; line-height:20px; border-radius:10px; text-align:center; font-size:12px; color:#fff;}
-.cp-right{width:145px;}

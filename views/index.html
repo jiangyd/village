@@ -17,7 +17,7 @@
                         <li class="{{if .isuptopic}}layui-this{{end}}"><a href="/topic/uptopic">点赞帖</a></li>
                         <li class="{{if .isadopt}}layui-this{{end}}"><a href="/topic/adopt">已采纳</a></li>
                     </ul>
-                    <div class="layui-tab-content">
+                    <div class="layui-tab-content" style="padding: 0px;">
                         <div class="layui-tab-item {{if .isnewtopic}}layui-show{{end}}">{{template "topic/NewTopics.html" .}}</div>
                         <div class="layui-tab-item {{if .isnewreply}}layui-show{{end}}">{{template "topic/NewReply.html" .}}</div>
                         <div class="layui-tab-item {{if .iswaitreply}}layui-show{{end}}">{{template "topic/WaitReply.html" .}}</div>
