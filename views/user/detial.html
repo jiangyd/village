@@ -3,9 +3,9 @@
 {{template "public/header.html" .}}
 <title>测试村|找回密码</title>
 </head>
-<body>
+<body class="fly-full">
  {{template "public/nav.html" .}}
-<div style="background-image: url();" class="fly-home"> <img alt="{{.detial_userinfo.Nickname}}" src="{{.detial_userinfo.Avatar}}">
+<div class="fly-home" style="background-image: url();" > <img alt="{{.detial_userinfo.Nickname}}" src="{{.detial_userinfo.Avatar}}">
     <h1>    {{.detial_userinfo.Nickname}}     <i class="iconfont"></i>           </h1>
     <p class="fly-home-info"><span>{{date .detial_userinfo.Ctime "Y-m-d H:i:s"}}</span> <i class="iconfont icon-chengshi"></i><span>来自{{.detial_userinfo.City}}</span> 
     {{if .isself}}{{else}}{{if .isfollow}}<button onclick="firendadd({{.detial_userinfo.Id}})">取消关注</button>{{else}}<button onclick="firendadd({{.detial_userinfo.Id}})">+关注</button>{{end}}{{end}}</p>
