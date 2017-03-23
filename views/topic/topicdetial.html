@@ -61,12 +61,26 @@
             </div>
         </div>
         <div class="page_right">
-            <div>
+            <div class="fly-home">
                 <h3>关于作者</h3>
                 <img src="{{.topic.Author.Avatar}}">
+                <h1>{{.topic.Author.Nickname}}</h1>
+                <p class="fly-home-info">
+                <span>{{date .topic.Author.Ctime "Y-m-d"}}</span>
+                <span>{{.topic.Author.City}}</span>
+               <p class="fly-home-sign">签名:{{.topic.Author.Sign}}</p>
                 <button type="button"  class="layui-btn-small layui-btn-radius layui-btn-primary">+关注</button>
                 <button type="button"  class="layui-btn-small layui-btn-radius layui-btn-primary">私信</button>
             </div>
+            <dl class="fly-panel fly-list-one" style="margin-top: 10px;">
+            <dt class="fly-panel-title">他的其它文章</dt>
+            {{range .other_topic}}
+            <dd>
+                <a href="/topic/{{.Id}}">{{.Title}}</a>
+            </dd>
+            {{end}}
+            </dl>
+
         </div>
         <script>
         window._bd_share_config = {

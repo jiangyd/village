@@ -25,6 +25,8 @@ func (self *TopicController) TopicDetial() {
 	if tid >= 0 {
 		fmt.Println(self.GetSession("SessionId"))
 		topic := models.FindTopicById(tid)
+		//作者更多的文章
+		self.Data["other_topic"] = models.FindTopicByUid(topic.Author)
 		models.IncrView(&topic)
 		self.Data["topic"] = topic
 		self.Data["replyinfo"] = models.FindReplyByTid(&models.Topic{Id: tid})
