@@ -61,26 +61,25 @@
             </div>
         </div>
         <div class="page_right">
-            <div class="fly-home">
+            <div class="fly-home" style="padding: 0px 0px 5px">
                 <h3>关于作者</h3>
                 <img src="{{.topic.Author.Avatar}}">
                 <h1>{{.topic.Author.Nickname}}</h1>
                 <p class="fly-home-info">
-                <span>{{date .topic.Author.Ctime "Y-m-d"}}</span>
-                <span>{{.topic.Author.City}}</span>
-               <p class="fly-home-sign">签名:{{.topic.Author.Sign}}</p>
-                <button type="button"  class="layui-btn-small layui-btn-radius layui-btn-primary">+关注</button>
-                <button type="button"  class="layui-btn-small layui-btn-radius layui-btn-primary">私信</button>
+                    <span>{{date .topic.Author.Ctime "Y-m-d"}}</span>
+                    <span>{{.topic.Author.City}}</span>
+                    <p class="fly-home-sign">签名:{{.topic.Author.Sign}}</p>
+                    <button type="button" class="layui-btn-small layui-btn-radius layui-btn-primary" onclick="firendadd({{.topic.Author.Id}})">+关注</button>
+                    <button type="button"  class="layui-btn-small layui-btn-radius layui-btn-primary" id="message">私信</button>
             </div>
             <dl class="fly-panel fly-list-one" style="margin-top: 10px;">
-            <dt class="fly-panel-title">他的其它文章</dt>
-            {{range .other_topic}}
-            <dd>
-                <a href="/topic/{{.Id}}">{{.Title}}</a>
-            </dd>
-            {{end}}
+                <dt class="fly-panel-title">TA最近的文章</dt>
+                {{range .other_topic}}
+                <dd>
+                    <a href="/topic/{{.Id}}">{{.Title}}</a>
+                </dd>
+                {{end}}
             </dl>
-
         </div>
         <script>
         window._bd_share_config = {
@@ -116,49 +115,10 @@
             base: '/static/js/'
         }).use('content')
         </script>
-        <script type="text/javascript">
-        function dz(tp, tpid) {
-            $.ajax({
-                url: "/dz",
-                data: {
-                    "type": tp,
-                    "typeid": tpid
-                },
-                type: "POST",
-                success: function(text) {
-                    if (text.msg == "success") {
-                        $("#dz").text("取消点赞")
-                    } else if (text.msg == "取消点赞成功") {
-                        $("#dz").text("点赞")
-                    } else if (text.code != 0) {
-                        layer.msg(text.msg)
-                    }
-                }
-            })
-        };
-
-        function Collec(tp, tpid) {
-            $.ajax({
-                url: "/collection",
-                data: {
-                    "type": tp,
-                    "typeid": tpid
-                },
-                type: "POST",
-                success: function(text) {
-                    if (text.msg == "success") {
-                        $("#collection").text("取消收藏")
-                    } else if (text.msg == "取消收藏成功") {
-                        $("#collection").text("收藏")
-                    } else if (text.code != 0) {
-                        layer.msg(text.msg)
-                    }
-                }
-            })
-        };
-        </script>
     </div>
     </div>
     </div>
     </div>
+    <script src="/static/js/jQuery.js"></script>
+    <script src="/static/js/village.js"></script>
 </body>

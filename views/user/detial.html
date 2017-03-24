@@ -46,22 +46,5 @@
 </div>
 </div>
 <script src="/static/js/jQuery.js"></script>
-<script type="text/javascript">
-                    function firendadd(uid){
-                    	$.ajax({
-                    		url: "/user/firend",
-                            data: {
-                                "uid": uid
-                            },
-                            type: "POST",
-                            success:function(text){
-                            	if (text.code==0){
-                            		console.log("cc")
-                            	}else{
-                            		console.log(text.msg)
-                            	}
-                            }
-                    	})
-                    } 
-                    </script>
+<script src="/static/js/village.js"></script>
 </body>

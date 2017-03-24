@@ -25,7 +25,7 @@ layui.define(['layer', 'layedit', 'form'], function(exports) {
     //编辑主题富文本编辑器
     var edittopic_content = layedit.build('edittopic_content', {
         tool: ['strong', 'face', 'image', 'link', 'unlink', 'code'],
-       
+
     });
 
 
@@ -39,7 +39,7 @@ layui.define(['layer', 'layedit', 'form'], function(exports) {
                 "content": layedit.getContent(topic_content),
                 "vercode": data.field.vercode,
                 "captcha_id": data.field.captcha_id,
-                "category":data.field.category
+                "category": data.field.category
             },
             type: 'POST',
             success: function(text) {
@@ -90,11 +90,11 @@ layui.define(['layer', 'layedit', 'form'], function(exports) {
             url: "/topic/edit",
             data: {
                 "topic_id": data.field.topic_id,
-                "title":data.field.title,
+                "title": data.field.title,
                 "content": layedit.getContent(edittopic_content),
                 "vercode": data.field.vercode,
                 "captcha_id": data.field.captcha_id,
-                "category":data.field.category
+                "category": data.field.category
             },
             type: 'POST',
             success: function(text) {
@@ -110,6 +110,14 @@ layui.define(['layer', 'layedit', 'form'], function(exports) {
         return false;
 
     });
+    //私信弹出
+    $('#message').on('click',function(){
+        layer.open({
+        type: 1,
+        content: '传入任意的文本或html' //这里content是一个普通的String
+    });
+    })
+    
 
 
 

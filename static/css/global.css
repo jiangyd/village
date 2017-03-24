@@ -478,9 +478,9 @@ body .fly-user-main{width: auto; margin: 10px;}
     border-image: none;
     border-style: none none solid;
     border-width: medium medium 1px;
-    height: 15px;
-    line-height: 5px;
-    margin: 0;
+    height: 25px;
+    line-height: 25px;
+    margin: 5px;
     padding: 0 15px;
     width: auto;
 }
