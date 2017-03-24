@@ -9,8 +9,8 @@ function firendadd(uid) {
         success: function(text) {
             if (text.code == 0) {
                 console.log("cc")
-            } else {
-                console.log(text.msg)
+            }else if (text.msg="需要登陆") {
+                location.href = '/user/login'
             }
         }
     })

@@ -14,7 +14,9 @@ func (self *FirendController) Firend() {
 	useraid := self.GetSession("uid")
 	userbid, _ := strconv.Atoi(self.Input().Get("uid"))
 	if useraid == nil {
-		self.Ctx.Redirect(302, "/user/login")
+		msg := map[string]interface{}{"code": 1, "msg": "需要登陆"}
+		self.Data["json"] = &msg
+		self.ServeJSON()
 	} else {
 		if useraid.(int) == userbid {
 			self.Data["isself"] = true

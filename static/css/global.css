@@ -563,7 +563,7 @@ body .fly-user-main{width: auto; margin: 10px;}
     color: #01aaed;
 }
 .detail_container .keywords {
-    background: url("../images/tag_icon.png") no-repeat scroll 10px center / 20px auto #f2f2f2;
+    background: no-repeat scroll 10px center / 20px auto #f2f2f2;
     color: #666;
     font-size: 12px;
     line-height: 20px;

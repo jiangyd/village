@@ -113,8 +113,11 @@ layui.define(['layer', 'layedit', 'form'], function(exports) {
     //私信弹出
     $('#message').on('click',function(){
         layer.open({
-        type: 1,
-        content: '传入任意的文本或html' //这里content是一个普通的String
+        type: 0,
+        title:"发送私信",
+        offset: '100px',
+
+        content: '<textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>' //这里content是一个普通的String
     });
     })
     
