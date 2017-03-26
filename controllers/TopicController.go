@@ -14,17 +14,11 @@ type TopicController struct {
 func (self *TopicController) TopicDetial() {
 	id := self.Ctx.Input.Param(":id")
 	tid, _ := strconv.Atoi(id)
-	sess_uid := self.GetSession("uid")
-	if sess_uid == nil {
-		self.Data["islogin"] = false
-	} else {
-		self.Data["islogin"] = true
-		self.Data["userinfo"] = models.FindUserDetialById(sess_uid.(int))
-		self.Data["collection"] = models.FindCollec("tid", tid, &models.User{Id: sess_uid.(int)})
-	}
+	sessionid := self.GetSession("uid")
 	if tid >= 0 {
 		fmt.Println(self.GetSession("SessionId"))
 		topic := models.FindTopicById(tid)
+		author := topic.Author.Id
 		//作者更多的文章
 		self.Data["other_topic"] = models.FindTopicByUid(topic.Author)
 		models.IncrView(&topic)
@@ -34,6 +28,30 @@ func (self *TopicController) TopicDetial() {
 		self.Data["lower_topic"] = models.FindTopicById(tid + 1)
 
 		self.TplName = "topic/topicdetial.html"
+		if sessionid == nil {
+			self.Data["islogin"] = false
+			self.Data["isdz"] = false
+			self.Data["isself"] = false
+			self.Data["isfirend"] = false
+			self.Data["isfollow"] = false
+		} else {
+			//判断是否访问自己的详情页
+			if sessionid.(int) == author {
+				self.Data["isself"] = true
+			} else {
+				self.Data["isself"] = false
+				//判断是否已关注用户
+				if models.IsFirend(&models.User{Id: sessionid.(int)}, &models.User{Id: author}) {
+					self.Data["isfirend"] = true
+				} else {
+					self.Data["isfirend"] = false
+				}
+			}
+			self.Data["islogin"] = true
+			self.Data["userinfo"] = models.FindUserDetialById(sessionid.(int))
+			self.Data["collection"] = models.FindCollec("tid", tid, &models.User{Id: sessionid.(int)})
+			self.Data["isdz"] = models.IsDz("tid", tid, &models.User{Id: sessionid.(int)})
+		}
 
 	}
 

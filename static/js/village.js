@@ -7,9 +7,11 @@ function firendadd(uid) {
         },
         type: "POST",
         success: function(text) {
-            if (text.code == 0) {
-                console.log("cc")
-            }else if (text.msg="需要登陆") {
+            if (text.msg == "关注成功") {
+                $("#firend").text("取消关注")
+            }else if (text.msg == "取消关注成功"){
+            	$("#firend").text("关注")
+            }else if (text.msg="need loging") {
                 location.href = '/user/login'
             }
         }
@@ -27,9 +29,7 @@ function dz(tp, tpid) {
         type: "POST",
         success: function(text) {
             if (text.msg == "success") {
-                $("#dz").text("取消点赞")
-            } else if (text.msg == "取消点赞成功") {
-                $("#dz").text("点赞")
+                $("#dz").text("已点赞")
             } else if (text.code != 0) {
                 layer.msg(text.msg)
             }

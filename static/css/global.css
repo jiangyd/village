@@ -520,6 +520,7 @@ body .fly-user-main{width: auto; margin: 10px;}
     font-size: 12px;
     font-style: normal;
     vertical-align: top;
+
 }
 .detail_container {
     background: none repeat scroll 0 0 #fff;
@@ -543,7 +544,7 @@ body .fly-user-main{width: auto; margin: 10px;}
 .detail_container .date_hits span {
     color: #666;
     display: inline-block;
-    font-size: 10px;
+    font-size: 15px;
     font-style: oblique;
     line-height: 15px;
     text-align: center;

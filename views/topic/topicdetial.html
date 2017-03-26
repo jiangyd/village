@@ -29,7 +29,7 @@
                 </div>
                 <div style="text-align: center;margin-top: 30px;">
                     <button type="button" onclick="dz('tid',{{.topic.Id}})" id='dz' class="layui-btn-small layui-btn-radius layui-btn-primary">
-                        点赞
+                        {{if .isdz}}已点赞{{else}}点赞{{end}}
                     </button>
                     <button type="button" onclick="Collec('tid',{{.topic.Id}})" id="collection" class="layui-btn-small layui-btn-radius layui-btn-primary">
                         {{if .collection.Id}}取消收藏{{else}}收藏{{end}}
@@ -62,15 +62,29 @@
         </div>
         <div class="page_right">
             <div class="fly-home" style="padding: 0px 0px 5px">
-                <h3>关于作者</h3>
+                <dt class="fly-panel-title">关于作者</dt>
                 <img src="{{.topic.Author.Avatar}}">
                 <h1>{{.topic.Author.Nickname}}</h1>
                 <p class="fly-home-info">
                     <span>{{date .topic.Author.Ctime "Y-m-d"}}</span>
                     <span>{{.topic.Author.City}}</span>
-                    <p class="fly-home-sign">签名:{{.topic.Author.Sign}}</p>
-                    <button type="button" class="layui-btn-small layui-btn-radius layui-btn-primary" onclick="firendadd({{.topic.Author.Id}})">+关注</button>
+                    <p class="fly-home-sign">
+                    {{if eq (.topic.Author.Sign|len) 0}}
+                    这个人很懒,什么都没有留下
+                    {{else}}
+                   {{.topic.Author.Sign}}
+                    {{end}}
+                    </p>
+                    {{if .isself}}
+                    {{else}}
+                    {{if .isfirend}}
+                    <button id="firend" onclick="firendadd({{.topic.Author.Id}})" class="layui-btn-small layui-btn-radius layui-btn-primary">取消关注</button>
+                    {{else}}
+                    <button id="firend" onclick="firendadd({{.topic.Author.Id}})" class="layui-btn-small layui-btn-radius layui-btn-primary">+关注</button>
+                    {{end}}
                     <button type="button"  class="layui-btn-small layui-btn-radius layui-btn-primary" id="message">私信</button>
+                    {{end}}
+                    <input type="hidden" id="userb" value="{{.topic.Author.Id}}">
             </div>
             <dl class="fly-panel fly-list-one" style="margin-top: 10px;">
                 <dt class="fly-panel-title">TA最近的文章</dt>

@@ -15,7 +15,7 @@ func (self *DzController) Dz() {
 	tpid, _ := strconv.Atoi(typeid)
 	uid := self.GetSession("uid")
 	dz := models.Dz{Type: t, TypeId: tpid, Uid: &models.User{Id: uid.(int)}}
-	if models.Adddz(&dz) >= 0 {
+	if models.AddDz(&dz) >= 0 {
 		switch t {
 		case "tid":
 			//查找主题id,给主题点赞数加1

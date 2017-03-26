@@ -269,3 +269,21 @@ func (self *UserController) Register() {
 		self.ServeJSON()
 	}
 }
+
+func (self *UserController) SendMsg() {
+	sessionid := self.GetSession("uid")
+	if sessionid == nil {
+		msg := map[string]interface{}{"code": 1, "msg": "need loging"}
+		self.Data["json"] = &msg
+		self.ServeJSON()
+	} else {
+		userb, msgcontent := self.Input().Get("userb"), self.Input().Get("content")
+		userbid, _ := strconv.Atoi(userb)
+		message := models.Message{Send: &models.User{Id: sessionid.(int)}, Recv: &models.User{Id: userbid}, Content: msgcontent}
+		models.SendMsg(&message)
+		msg := map[string]interface{}{"code": 0, "msg": "success"}
+		self.Data["json"] = &msg
+		self.ServeJSON()
+	}
+
+}

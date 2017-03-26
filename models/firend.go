@@ -17,6 +17,13 @@ func FirendAdd(firend *Firend) int64 {
 	return id
 }
 
+//删除关注
+func FirendDel(usera, userb *User) {
+	o := orm.NewOrm()
+	var firend Firend
+	o.QueryTable(firend).Filter("UserA", usera).Filter("UserB", userb).Delete()
+}
+
 //是否关注关系
 func IsFirend(usera, userb *User) bool {
 	o := orm.NewOrm()

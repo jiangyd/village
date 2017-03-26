@@ -14,7 +14,7 @@ type Message struct {
 	Read    int       `orm:"default(0)"` //消息是否已读,0未读,1已读,默认为0
 }
 
-func sendmessage(message *Message) int64 {
+func SendMsg(message *Message) int64 {
 	o := orm.NewOrm()
 	id, _ := o.Insert(message)
 	return id

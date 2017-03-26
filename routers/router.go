@@ -14,7 +14,7 @@ func init() {
 	beego.Router("/user/set", &controllers.UserController{}, "GET:Set")      //设置信息页面
 	beego.Router("/user/set", &controllers.UserController{}, "POST:SetInfo") //修改基本信息
 	beego.Router("/user/message", &controllers.UserController{}, "GET:Message")
-	beego.Router("/user/message", &controllers.UserController{}, "GET:Message")
+	beego.Router("/user/message", &controllers.UserController{}, "POST:SendMsg")
 	beego.Router("/user/topic", &controllers.UserController{}, "GET:UserTopic")
 	beego.Router("/user/collection", &controllers.UserController{}, "GET:Collection")
 	beego.Router("/collection", &controllers.CollecController{}, "POST:Collec")
@@ -35,12 +35,8 @@ func init() {
 	beego.Router("/dz", &controllers.DzController{}, "POST:Dz")
 	beego.Router("/topic/adopt", &controllers.TopicController{}, "POST:Adopt")
 	beego.Router("/topic/:type([a-z]+)", &controllers.ContentController{}, "GET:TopicList")
-	// beego.Router("/topic/waitreply", &controllers.ContentController{}, "GET:WaitReply")
-	// beego.Router("/topic/newreply", &controllers.ContentController{}, "GET:NewReply")
-	// beego.Router("/topic/up", &controllers.ContentController{}, "GET:UpTopicList")
-	// beego.Router("/topic/adopt", &controllers.ContentController{}, "GET:AdoptTopicList")
 
+	beego.Router("/topicupload", &controllers.UploadImg{}, "POST:TopicUpload")
 	beego.Router("/site", &controllers.SiteController{}, "GET:SitePage")
 
-	//beego.Router("/wd/index", &controllers.ContentController{}, "GET:Index")
 }

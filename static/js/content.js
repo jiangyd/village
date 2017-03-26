@@ -5,9 +5,9 @@ layui.define(['layer', 'layedit', 'form'], function(exports) {
     var form = layui.form()
     layedit.set({
         uploadImage: {
-            url: '' //接口url
+            url: '/topicupload' //接口url
                 ,
-            type: '' //默认post
+            type: 'POST' //默认post
         }
     });
 
@@ -116,8 +116,28 @@ layui.define(['layer', 'layedit', 'form'], function(exports) {
         type: 0,
         title:"发送私信",
         offset: '100px',
+        btn:['发送'],
+  
 
-        content: '<textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>' //这里content是一个普通的String
+        content: '<textarea id="sixin" name="sixin" placeholder="请输入内容" class="layui-textarea"></textarea>' ,//这里content是一个普通的String
+              yes:function(){
+                layer.msg("cc")
+               $.ajax({
+                async:false,
+                url:"/user/message",
+                data:{
+                userb:$("#userb").val(),    
+                content:$("#sixin").val()
+                },
+                type:'POST',
+                success:function(text){
+                    if(text.msg=='success'){
+                        layer.msg("发送成功")
+                    }
+                }
+                
+               })
+        }
     });
     })
     
