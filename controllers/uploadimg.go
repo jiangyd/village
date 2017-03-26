@@ -3,6 +3,7 @@ package controllers
 import (
 	"fmt"
 	"github.com/astaxie/beego"
+	"strconv"
 	"time"
 	"village/models"
 )
@@ -46,10 +47,12 @@ func (self *UploadImg) TopicUpload() {
 	} else {
 		timestamp := time.Now().Unix()
 		f, h, _ := self.GetFile("file")
-		path := "/static/images/" + string(timestamp) + h.Filename
+		timestr := strconv.Itoa(int(timestamp))
+		path := "/static/images/" + timestr + h.Filename
 		defer f.Close()
 		self.SaveToFile("file", "."+path)
-		UpQiNiu(path, path)
+		//传入文件路径，及七牛保存的文件名
+		UpQiNiu("."+path, "/static/images/"+timestr+"_"+h.Filename)
 		msg := map[string]interface{}{"code": 0, "msg": "", "data": map[string]interface{}{"src": path, "title": ""}}
 		self.Data["json"] = &msg
 		self.ServeJSON()

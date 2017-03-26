@@ -24,6 +24,7 @@ func init() {
 		new(models.Collection),
 		new(models.Firend),
 		new(models.Sites),
+		new(models.QiNiuFile),
 	)
 	orm.RunSyncdb("default", false, true)
 }

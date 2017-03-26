@@ -21,6 +21,19 @@ type Topic struct {
 	Adopt         *Reply     `orm:"rel(fk);null"`
 }
 
+type QiNiuFile struct {
+	Id       int
+	Hash     string
+	Key      string
+	Filesize int
+}
+
+func SaveQiNiuFile(qiniufile *QiNiuFile) int64 {
+	o := orm.NewOrm()
+	id, _ := o.Insert(qiniufile)
+	return id
+}
+
 func SaveTopic(topic *Topic) int64 {
 	o := orm.NewOrm()
 	id, err := o.Insert(topic)

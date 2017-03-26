@@ -3,7 +3,7 @@
     <div class="layui-field-box">
         <ul class="jieda photos">
             {{range .replyinfo}}
-            <li style="margin-left: 20px;margin-right: 20px;">
+            <li style="margin-left: 20px;margin-right: 20px;" id="{{.User.Id}}_{{.Id}}">
                 <a></a>
                 <div class="detail-about detail-about-reply">
                     <a class="jie-user" href="/user/detial/{{.User.Id}}">
@@ -19,7 +19,7 @@
                 </div>
                 <div class="jieda-reply">
                     <span><a onclick="dz('rid',{{.Id}})"><img src="/static/images/dz.png" alt="支持" title="支持" ><cite>(<em id="rid{{.Id}}">{{.Up}}</em>)</cite></a></span>
-                    <span><img src="/static/images/reply.png" alt="回复" title="回复此楼" >回复</span>
+                    <span onclick="setreply()"><img src="/static/images/reply.png" alt="回复" title="回复此楼" >回复</span>
                     <div class="jieda-admin"> <span type="accept" class="jieda-accept" onclick="caina({{$.topic.Id}},{{.Id}})">采纳</span> </div>
                 </div>
             </li>
@@ -65,4 +65,8 @@ function caina(tid, rid) {
         }
     })
 };
+
+function setreply(){
+    $("#reply_content").append("aaaaaaaaaaaaa")
+}
 </script>
