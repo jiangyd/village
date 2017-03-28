@@ -22,10 +22,10 @@ var (
 type PutRet struct {
 	Hash     string `json:"hash"`
 	Key      string `json:"key"`
-	Filesize int    `json:"filesize"`
+	FileSize int    `json:"filesize"`
 }
 
-func UpQiNiu(filepath, key string) {
+func UpQiNiu(filepath, key string) PutRet {
 	// 初始化AK，SK
 	conf.ACCESS_KEY = "Wbm4-DTJs5TF3bRrfyOoOqNz7-RlpzWkXqxwxKil"
 	conf.SECRET_KEY = "JRJGbaTmpZGTXXM-dt05MgzxYHVoT6xL_poQKmqe"
@@ -53,8 +53,7 @@ func UpQiNiu(filepath, key string) {
 	// 打印出错信息
 	if res != nil {
 		fmt.Println("io.Put failed:", res)
-		return
-	} else {
-		fmt.Printf("%T", ret)
+		return ret
 	}
+	return ret
 }

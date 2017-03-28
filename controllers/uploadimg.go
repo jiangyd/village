@@ -12,6 +12,17 @@ type UploadImg struct {
 	beego.Controller
 }
 
+//七牛回调函数
+func (self *UploadImg) HuiDiao() {
+	var ob models.QiNiuFile
+	json.Unmarshal(self.Ctx.Input.RequestBody, &ob)
+	models.SaveQiNiuFile(&ob)
+	msg := map[string]interface{}{"hash": ob.Hash, "key": ob.Key, "filesize": ob.FileSize}
+	self.Data["json"] = &msg
+	self.ServeJSON()
+
+}
+
 func (self *UploadImg) Upload() {
 	//获取头像文件
 	sessionid := self.GetSession("uid")
@@ -52,8 +63,8 @@ func (self *UploadImg) TopicUpload() {
 		defer f.Close()
 		self.SaveToFile("file", "."+path)
 		//传入文件路径，及七牛保存的文件名
-		UpQiNiu("."+path, "/static/images/"+timestr+"_"+h.Filename)
-		msg := map[string]interface{}{"code": 0, "msg": "", "data": map[string]interface{}{"src": path, "title": ""}}
+		body := UpQiNiu("."+path, "/static/images/"+timestr+"_"+h.Filename)
+		msg := map[string]interface{}{"code": 0, "msg": "", "data": map[string]interface{}{"src": "http://file.testwd.cn/" + body.Key, "title": ""}}
 		self.Data["json"] = &msg
 		self.ServeJSON()
 	}
