@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/astaxie/beego"
 	"strconv"
@@ -13,7 +14,7 @@ type UploadImg struct {
 }
 
 //七牛回调函数
-func (self *UploadImg) HuiDiao() {
+func (self *UploadImg) QiNiuCallBack() {
 	var ob models.QiNiuFile
 	json.Unmarshal(self.Ctx.Input.RequestBody, &ob)
 	models.SaveQiNiuFile(&ob)
