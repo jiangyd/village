@@ -33,6 +33,7 @@ func main() {
 	beego.BConfig.WebConfig.Session.SessionOn = true
 	beego.BConfig.WebConfig.Session.SessionName = "SessionId"
 	beego.BConfig.WebConfig.Session.SessionProvider = "mysql"
+	beego.BConfig.CopyRequestBody = true
 	beego.BConfig.WebConfig.Session.SessionProviderConfig = "root:123456@tcp(127.0.0.1:3306)/village?charset=utf8&loc=Asia%2FShanghai"
 	/*end*/
 	beego.Run()

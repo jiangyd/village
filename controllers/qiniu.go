@@ -13,9 +13,9 @@ var (
 	// 设置上传文件的key
 	// key = "yourdefinekey"
 	// 设置CallbackUrl字段
-	callbackurl = "http://your.domain.com/callback"
+	callbackurl = "http://your.domain.com/qiniucallback"
 	// 设置CallbackBody字段
-	callbackbody = `{"key":$(key), "hash":$(etag),"filesize":$(fsize)}`
+	callbackbody = `{"key":"$(key)", "hash":"$(etag)","filesize":$(fsize)}`
 )
 
 // 构造返回值字段
@@ -50,10 +50,11 @@ func UpQiNiu(filepath, key string) {
 	// 调用PutFile方式上传，这里的key需要和上传指定的key一致
 	res := uploader.PutFile(nil, &ret, token, key, filepath, nil)
 	// 打印返回的信息
-	fmt.Println(ret)
 	// 打印出错信息
 	if res != nil {
 		fmt.Println("io.Put failed:", res)
 		return
+	} else {
+		fmt.Printf("%T", ret)
 	}
 }

@@ -35,7 +35,7 @@ func init() {
 	beego.Router("/dz", &controllers.DzController{}, "POST:Dz")
 	beego.Router("/topic/adopt", &controllers.TopicController{}, "POST:Adopt")
 	beego.Router("/topic/:type([a-z]+)", &controllers.ContentController{}, "GET:TopicList")
-
+	beego.Router("/qiniucallback", &controllers.TopicController{}, "POST:QiNiuCallBack")
 	beego.Router("/topicupload", &controllers.UploadImg{}, "POST:TopicUpload")
 	beego.Router("/site", &controllers.SiteController{}, "GET:SitePage")
 

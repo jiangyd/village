@@ -25,7 +25,7 @@ type QiNiuFile struct {
 	Id       int
 	Hash     string
 	Key      string
-	Filesize int
+	FileSize int
 }
 
 func SaveQiNiuFile(qiniufile *QiNiuFile) int64 {
