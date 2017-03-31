@@ -3,6 +3,7 @@ package routers
 import (
 	"github.com/astaxie/beego"
 	"village/controllers"
+	"village/controllers/admin"
 )
 
 func init() {
@@ -38,5 +39,8 @@ func init() {
 	beego.Router("/qiniucallback", &controllers.UploadImg{}, "POST:QiNiuCallBack")
 	beego.Router("/topicupload", &controllers.UploadImg{}, "POST:TopicUpload")
 	beego.Router("/site", &controllers.SiteController{}, "GET:SitePage")
+
+	//admin
+	beego.Router("/admin", &admin.Admin{}, "GET:Login")
 
 }
