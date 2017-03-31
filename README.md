@@ -1,7 +1,7 @@
 # village
 
 
-## 系统环境准备:
+## 系统环境准备,以ubuntu为例子:
 
 1. apt-get update
 2. apt-get install git
@@ -17,12 +17,13 @@
 5. go get -u github.com/astaxie/beego/session/mysql
 
 
-## 创建数据库:
+## 使用mysql数据库:
+1. 创建village数据库
 ```
     create database village CHARACTER SET utf8 COLLATE utf8_general_ci;
 ```
 
-1. 创建session mysql存储引擎表
+2. 创建session mysql存储引擎表
 
 ```
 CREATE TABLE `session` (
@@ -32,3 +33,5 @@ CREATE TABLE `session` (
 	PRIMARY KEY (`session_key`)
 	) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 ```
+
+3. 在main.go里面配置数据库地址
