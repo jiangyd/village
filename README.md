@@ -1,7 +1,7 @@
 # village
 
 
-##系统环境准备:
+## 系统环境准备:
 
 1. apt-get update
 2. apt-get install git
@@ -9,7 +9,7 @@
 4. apt-get install mysql-server
 5. 配置golang环境
 
-##安装第三方库:
+## 安装第三方库:
 1. go get github.com/astaxie/beego
 2. go get github.com/beego/bee
 3. go get -u qiniupkg.com/api.v7
@@ -17,12 +17,12 @@
 5. go get -u github.com/astaxie/beego/session/mysql
 
 
-##创建数据库:
+## 创建数据库:
 ```
     create database village CHARACTER SET utf8 COLLATE utf8_general_ci;
 ```
 
-1. ###创建session mysql存储引擎表
+1. 创建session mysql存储引擎表
 
 ```
 CREATE TABLE `session` (
