@@ -1,0 +1,27 @@
+<table class="layui-table">
+    <thead>
+        <tr>
+            <th>评论内容</th>
+            <th>帖子标题</th>
+            <th>作者</th>
+            <th>点赞数</th>
+            <th>创建时间</th>
+        </tr>
+    </thead>
+    <tbody>
+    {{range .topic}}
+        <tr>
+            <td>{{.Content}}</td>
+            <td>{{.Topic.Title}}</td>
+            <td>{{.User.Nickname}}</td>
+            <td>{{.Up}}</td>
+            <td>{{.Ctime}}</td>
+            
+        </tr>
+    {{end}}    
+    </tbody>
+</table>
+</div>
+</div>
+</body>
+</html>

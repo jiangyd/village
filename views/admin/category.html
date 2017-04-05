@@ -1,0 +1,21 @@
+<table class="layui-table">
+    <thead>
+        <tr>
+            <th>分类类型</th>
+            <th>分类名称</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+    {{range .topic}}
+        <tr>
+            <td>{{.Content}}</td>
+            <td>{{.Topic.Title}}</td>
+        </tr>
+    {{end}}    
+    </tbody>
+</table>
+</div>
+</div>
+</body>
+</html>
