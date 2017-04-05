@@ -7,6 +7,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"time"
 	"village/models"
+	"village/models/admin"
 	_ "village/routers"
 )
 
@@ -25,6 +26,8 @@ func init() {
 		new(models.Firend),
 		new(models.Sites),
 		new(models.QiNiuFile),
+		new(admin.Menu),
+		new(admin.SubMenu),
 	)
 	orm.RunSyncdb("default", false, true)
 }

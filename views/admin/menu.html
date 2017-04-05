@@ -1,0 +1,24 @@
+{{template "admin/nav.html" .}}
+<div class="layui-tab-content" style="margin-left: 200px;">
+<button class="layui-btn">添加菜单</button>
+<table class="layui-table">
+    <thead>
+        <tr>
+            <th>菜单码</th>
+            <th>菜单标题</th>
+        </tr>
+    </thead>
+    <tbody>
+    {{range .menu}}
+        <tr>
+            <td>{{.Key}}</td>
+            <td>{{.Title}}</td>
+            
+        </tr>
+    {{end}}    
+    </tbody>
+</table>
+</div>
+</div>
+</body>
+</html>

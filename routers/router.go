@@ -42,5 +42,6 @@ func init() {
 
 	//admin
 	beego.Router("/admin", &admin.Admin{}, "GET:Login")
+	beego.Router("/menu", &admin.Admin{}, "GET:Menu")
 
 }
