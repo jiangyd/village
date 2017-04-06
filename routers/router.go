@@ -42,7 +42,12 @@ func init() {
 
 	//admin
 	beego.Router("/admin", &admin.Admin{}, "GET:Login")
-	beego.Router("/menu", &admin.Admin{}, "GET:Menu")
+	beego.Router("/menu", &admin.Admin{}, "GET:MenuManageList")
 	beego.Router("/menu/:action([a-z]+)", &admin.Admin{}, "POST:MenuAction")
+	beego.Router("/submenu/:action([a-z]+)", &admin.Admin{}, "POST:SubMenuAction")
+	beego.Router("/admin/usermanagelist", &admin.Admin{}, "GET:UserManageList")
+	beego.Router("/admin/topicmanagelist", &admin.Admin{}, "GET:TopicManageList")
+	beego.Router("/admin/replymanagelist", &admin.Admin{}, "GET:ReplyManageList")
+	beego.Router("/admin/categorymanagelist", &admin.Admin{}, "GET:CategoryManageList")
 
 }

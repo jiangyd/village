@@ -19,6 +19,7 @@
             <th>父菜单</th>
             <th>菜单码</th>
             <th>菜单标题</th>
+            <th>url</th>
             <th>操作</th>
         </tr>
     </thead>
@@ -28,6 +29,7 @@
             <td>{{.Parent.Title}}</td>
             <td>{{.Key}}</td>
             <td>{{.Title}}</td>
+            <td>{{.Url}}</td>
             <td><button class="layui-btn layui-btn-mini">修改</button>
 <button class="layui-btn layui-btn-mini" >删除</button></td>
         </tr>
@@ -42,4 +44,38 @@
     }).use('admin');
 </script>
 </body>
+<div id="div_addsubmenu" style="display: none;">
+    <form class="layui-form" method="post" style="margin:20px 20px 0px">
+                <div class="layui-form-item">
+                <label class="layui-form-label">父菜单</label>
+<div class="layui-input-block">
+<select name="parent" lay-verify="required">
+<option value="">选择父级菜单</option>
+{{range .menu}}
+<option value="{{.Key}}">{{.Title}}</option>
+{{end}}
+</select>
+</div>
+</div>
+<div class="layui-form-item">
+<label class="layui-form-label">key</label>
+<div class="layui-input-block">
+<input type="text" name="key" required  lay-verify="required" placeholder="请输入key" autocomplete="off" class="layui-input">
+</div>
+</div>
+<div class="layui-form-item">
+<label class="layui-form-label">标题</label>
+<div class="layui-input-block">
+<input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+</div>
+</div>
+<div class="layui-form-item">
+<label class="layui-form-label">URL</label>
+<div class="layui-input-block">
+<input type="text" name="url" required  lay-verify="required" placeholder="请输入url" autocomplete="off" class="layui-input">
+</div>
+</div>
+<button class="layui-btn layui-btn-normal" lay-filter="addsubmenu" lay-submit type="button" style="float: right;">确认</button>
+</form>
+</div>
 </html>

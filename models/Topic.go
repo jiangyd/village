@@ -43,6 +43,15 @@ func SaveTopic(topic *Topic) int64 {
 	return id
 }
 
+//所有主题
+func GetAllTopic() []*Topic {
+	o := orm.NewOrm()
+	var topic Topic
+	var topics []*Topic
+	o.QueryTable(topic).All(&topics)
+	return topics
+}
+
 //更新主题
 func UpdateTopic(topic *Topic) int64 {
 	o := orm.NewOrm()

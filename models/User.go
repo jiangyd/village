@@ -17,6 +17,15 @@ type User struct {
 	City     string
 }
 
+//获取所有用户
+func GetAllUser() []*User {
+	o := orm.NewOrm()
+	var user User
+	var users []*User
+	o.QueryTable(user).OrderBy("-Ctime").All(&users)
+	return users
+}
+
 //检查用户名密码
 func CheckLogin(email, password string) User {
 	o := orm.NewOrm()

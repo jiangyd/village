@@ -64,3 +64,12 @@ func FindReplyByRid(id int) Reply {
 	o.QueryTable(reply).Filter("Id", id).RelatedSel().One(&reply)
 	return reply
 }
+
+//获取所有评论
+func GetAllReply() []*Reply {
+	o := orm.NewOrm()
+	var reply Reply
+	var replys []*Reply
+	o.QueryTable(reply).OrderBy("-Ctime").All(&replys)
+	return replys
+}

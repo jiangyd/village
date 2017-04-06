@@ -1,0 +1,27 @@
+<table class="layui-table">
+    <thead>
+        <tr>
+            <th>昵称</th>
+            <th>邮箱</th>
+            <th>创建时间</th>
+            <th>性别</th>
+            <th>城市</th>
+        </tr>
+    </thead>
+    <tbody>
+    {{range .users}}
+        <tr>
+            <td>{{.Nickname}}</td>
+            <td>{{.Email}}</td>
+            <td>{{.Ctime}}</td>
+            <td>{{.Sex}}</td>
+            <td>{{.City}}</td>
+            
+        </tr>
+    {{end}}    
+    </tbody>
+</table>
+</div>
+</div>
+</body>
+</html>
