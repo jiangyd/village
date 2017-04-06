@@ -1,11 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="/static/layui/css/layui.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/global.css">
+    <script type="text/javascript" src="/static/layui/layui.js"></script>
+    <title></title>
+</head>
+<body>
 {{template "admin/nav.html" .}}
-<div class="layui-tab-content" style="margin-left: 200px;">
-<button class="layui-btn">添加菜单</button>
+<div class="layui-tab-content"  style="margin-left: 200px;">
+<button class="layui-btn" id="addmenu">添加</button>
+
+
 <table class="layui-table">
     <thead>
         <tr>
             <th>菜单码</th>
             <th>菜单标题</th>
+            <th>操作</th>
         </tr>
     </thead>
     <tbody>
@@ -13,12 +25,18 @@
         <tr>
             <td>{{.Key}}</td>
             <td>{{.Title}}</td>
-            
+            <td><button class="layui-btn layui-btn-mini">修改</button>
+<button class="layui-btn layui-btn-mini" >删除</button></td>
         </tr>
     {{end}}    
     </tbody>
 </table>
 </div>
 </div>
+<script>
+    layui.config({
+        base: '/static/js/'
+    }).use('admin');
+</script>
 </body>
 </html>

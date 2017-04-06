@@ -25,6 +25,20 @@ func AddMenu(menu *Menu) int64 {
 	return id
 }
 
+//更新菜单
+func UpdateMenu(menu *Menu) int64 {
+	o := orm.NewOrm()
+	id, _ := o.Update(menu)
+	return id
+}
+
+//删除菜单
+func DelMenu(menu *Menu) int64 {
+	o := orm.NewOrm()
+	id, _ := o.Delete(menu)
+	return id
+}
+
 //添加子菜单
 func AddSubMenu(menu *SubMenu) int64 {
 	o := orm.NewOrm()
@@ -39,6 +53,14 @@ func GetAllMenu() []*Menu {
 	var menus []*Menu
 	o.QueryTable(menu).All(&menus)
 	return menus
+}
+
+//通过key获取菜单
+func GetMenuByKey(key string) Menu {
+	o := orm.NewOrm()
+	var menu Menu
+	o.QueryTable(menu).Filter("Key", key).One(&menu)
+	return menu
 }
 
 //获取所有子菜单
