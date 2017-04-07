@@ -72,6 +72,14 @@ func GetAllSubMenu() []*SubMenu {
 	return submenus
 }
 
+//通过key获取子菜单信息
+func GetSubMenuByKey(key string) SubMenu {
+	o := orm.NewOrm()
+	var submenu SubMenu
+	o.QueryTable(submenu).Filter("Key", key).One(&submenu)
+	return submenu
+}
+
 //获取子菜单
 func GetSubMenuByM(menu *Menu) []*SubMenu {
 	o := orm.NewOrm()

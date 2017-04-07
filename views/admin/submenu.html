@@ -30,7 +30,7 @@
             <td>{{.Key}}</td>
             <td>{{.Title}}</td>
             <td>{{.Url}}</td>
-            <td><button class="layui-btn layui-btn-mini">修改</button>
+            <td><button class="layui-btn layui-btn-mini" onclick="modifysubmenu('{{.Key}}')">修改</button>
 <button class="layui-btn layui-btn-mini" >删除</button></td>
         </tr>
     {{end}}    
@@ -43,6 +43,7 @@
         base: '/static/js/'
     }).use('admin');
 </script>
+<script src="/static/js/jQuery.js"></script>
 </body>
 <div id="div_addsubmenu" style="display: none;">
     <form class="layui-form" method="post" style="margin:20px 20px 0px">

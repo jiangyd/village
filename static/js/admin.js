@@ -72,5 +72,19 @@ layui.define(['layer','form','element'],function(exports){
         form.render('select');
     });
 
+
 	exports('admin',{});
 });
+
+//修改子菜单
+    function modifysubmenu(key){
+        $.get("/getsubmenuinfo?key="+key,function(data){
+            alert(data.data.key)
+        })
+        layer.open({
+            type:1,
+            title:"修改子菜单",
+            area: ['500px', '400px'],
+            content:$("#div_addsubmenu")
+        });
+    }

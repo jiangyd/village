@@ -16,6 +16,11 @@ func (self *Admin) Login() {
 	self.Data["menu"] = admin.GetAllMenu()
 	fmt.Println(admin.GetAllSubMenu())
 	self.Data["submenu"] = admin.GetAllSubMenu()
+	for a, b := range admin.GetAllSubMenu() {
+		fmt.Println(a, "a")
+		fmt.Println(b.Parent.Key, "key")
+		fmt.Println(b.Parent.Title, "title")
+	}
 }
 
 //菜单页面
@@ -45,6 +50,14 @@ func (self *Admin) CategoryManageList() {
 func (self *Admin) TopicManageList() {
 	self.TplName = "admin/topic.html"
 	self.Data["topics"] = models.GetAllTopic()
+}
+
+func (self *Admin) GetSubMenuInfo() {
+	key := self.Input().Get("key")
+	submenu := admin.GetSubMenuByKey(key)
+	msg := map[string]interface{}{"code": 0, "msg": "", "data": map[string]interface{}{"key": submenu.Key, "title": submenu.Title, "parent": submenu.Parent, "url": submenu.Url}}
+	self.Data["json"] = &msg
+	self.ServeJSON()
 }
 
 //菜单操作

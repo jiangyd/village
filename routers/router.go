@@ -49,5 +49,5 @@ func init() {
 	beego.Router("/admin/topicmanagelist", &admin.Admin{}, "GET:TopicManageList")
 	beego.Router("/admin/replymanagelist", &admin.Admin{}, "GET:ReplyManageList")
 	beego.Router("/admin/categorymanagelist", &admin.Admin{}, "GET:CategoryManageList")
-
+	beego.Router("/getsubmenuinfo", &admin.Admin{}, "GET:GetSubMenuInfo")
 }
