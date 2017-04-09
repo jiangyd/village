@@ -1,18 +1,19 @@
 package admin
 
 import (
+	"fmt"
 	"github.com/astaxie/beego/orm"
 )
 
 //菜单表
 type Menu struct {
-	Key   string `orm:"pk;"`
+	Key   string `orm:"pk"`
 	Title string `orm:"unique"`
 }
 
 //二级菜单表
 type SubMenu struct {
-	Key    string `orm:"pk;"`
+	Key    string `orm:"pk"`
 	Title  string `orm:"unique"`
 	Url    string
 	Parent *Menu `orm:"rel(fk)"`
@@ -28,7 +29,10 @@ func AddMenu(menu *Menu) int64 {
 //更新菜单
 func UpdateMenu(menu *Menu) int64 {
 	o := orm.NewOrm()
-	id, _ := o.Update(menu)
+	id, err := o.Update(menu)
+	if err != nil {
+		fmt.Println(err, "rrrrrrrrrrrrrrrrrrrrrrr")
+	}
 	return id
 }
 
@@ -36,13 +40,6 @@ func UpdateMenu(menu *Menu) int64 {
 func DelMenu(menu *Menu) int64 {
 	o := orm.NewOrm()
 	id, _ := o.Delete(menu)
-	return id
-}
-
-//添加子菜单
-func AddSubMenu(menu *SubMenu) int64 {
-	o := orm.NewOrm()
-	id, _ := o.Insert(menu)
 	return id
 }
 
@@ -63,12 +60,40 @@ func GetMenuByKey(key string) Menu {
 	return menu
 }
 
+//当前菜单是否存在子菜单
+func IsHasSubMenu(menu *Menu) bool {
+	o := orm.NewOrm()
+	var submenu SubMenu
+	return o.QueryTable(submenu).Filter("Parent", menu).Exist()
+}
+
+//添加子菜单
+func AddSubMenu(menu *SubMenu) int64 {
+	o := orm.NewOrm()
+	id, _ := o.Insert(menu)
+	return id
+}
+
+//更新子菜单信息
+func UpdateSubMenu(menu *SubMenu) int64 {
+	o := orm.NewOrm()
+	id, _ := o.Update(menu)
+	return id
+}
+
+//删除子菜单
+func DelSubMenu(menu *SubMenu) int64 {
+	o := orm.NewOrm()
+	id, _ := o.Delete(menu)
+	return id
+}
+
 //获取所有子菜单
 func GetAllSubMenu() []*SubMenu {
 	o := orm.NewOrm()
 	var submenu SubMenu
 	var submenus []*SubMenu
-	o.QueryTable(submenu).All(&submenus)
+	o.QueryTable(submenu).RelatedSel().All(&submenus)
 	return submenus
 }
 
@@ -76,7 +101,7 @@ func GetAllSubMenu() []*SubMenu {
 func GetSubMenuByKey(key string) SubMenu {
 	o := orm.NewOrm()
 	var submenu SubMenu
-	o.QueryTable(submenu).Filter("Key", key).One(&submenu)
+	o.QueryTable(submenu).Filter("Key", key).RelatedSel().One(&submenu)
 	return submenu
 }
 
@@ -85,6 +110,6 @@ func GetSubMenuByM(menu *Menu) []*SubMenu {
 	o := orm.NewOrm()
 	var submenu SubMenu
 	var submenus []*SubMenu
-	o.QueryTable(submenu).Filter("Parent", menu).All(&submenus)
+	o.QueryTable(submenu).Filter("Parent", menu).RelatedSel().All(&submenus)
 	return submenus
 }

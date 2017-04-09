@@ -20,6 +20,35 @@ func GetAllCategory() []*Categorys {
 	return categorys
 }
 
+//添加分类
+func AddCategory(category *Categorys) int64 {
+	o := orm.NewOrm()
+	id, _ := o.Insert(category)
+	return id
+}
+
+//更新分类
+func UpdateCategory(category *Categorys) int64 {
+	o := orm.NewOrm()
+	id, _ := o.Update(category)
+	return id
+}
+
+//删除分类
+func DelCategory(category *Categorys) int64 {
+	o := orm.NewOrm()
+	id, _ := o.Delete(category)
+	return id
+}
+
+//查找分类
+func FindCategory(category string, categorytype string) Categorys {
+	o := orm.NewOrm()
+	var cate Categorys
+	o.QueryTable(cate).Filter("Category", category).Filter("CategoryType", categorytype).One(&cate)
+	return cate
+}
+
 //获取主题分类
 func GetTopicCategory() []*Categorys {
 	o := orm.NewOrm()

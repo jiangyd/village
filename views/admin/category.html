@@ -1,21 +1,56 @@
-<table class="layui-table">
-    <thead>
-        <tr>
-            <th>分类类型</th>
-            <th>分类名称</th>
-            
-        </tr>
-    </thead>
-    <tbody>
-    {{range .categorys}}
-        <tr>
-            <td>{{.Category}}</td>
-            <td>{{.CategoryType}}</td>
-        </tr>
-    {{end}}    
-    </tbody>
-</table>
+<div class="layui-tab-content" style="margin-left: 200px;">
+    <button class="layui-btn" id="addcategory">添加</button>
+    <table class="layui-table">
+        <thead>
+            <tr>
+                <th>名称</th>
+                <th>类型</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{range .categorys}}
+            <tr>
+                <td>{{.Category}}</td>
+                <td>{{if eq .CategoryType "topic"}}主题{{else if eq .CategoryType "cite"}}站点{{end}}</td>
+                <td><button class="layui-btn layui-btn-mini" onclick="modifycategory({{.Category}},{{.CategoryType}})">修改</button>
+<button class="layui-btn layui-btn-mini" onclick="delcategory({{.Category}},{{.CategoryType}})">删除</button></td>
+            </tr>
+            {{end}}
+        </tbody>
+    </table>
 </div>
 </div>
+<script>
+    layui.config({
+        base: '/static/js/'
+    }).use('admin');
+</script>
 </body>
+<div id="div_addcategory" style="display: none;">
+    <form class="layui-form" method="post" style="margin:20px 20px 0px">
+        <div class="layui-form-item">
+            <label class="layui-form-label">类型</label>
+            <div class="layui-input-block">
+                <select name="categorytype" lay-verify="required">
+                    <option value=""></option>
+                    
+                    <option value="topic">主题分类</option>
+                    <option value="cite">站点分类</option>
+                </select>
+            </div>
+        </div>
+        
+       
+        <div class="layui-form-item">
+            <label class="layui-form-label">名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="category" required lay-verify="required" placeholder="请输入分类名称" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <button class="layui-btn layui-btn-normal" lay-filter="addcategory" lay-submit type="button" style="float: right;">确认</button>
+    </form>
+</div>
+<script src="/static/js/jQuery.js"></script>
+
 </html>

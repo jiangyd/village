@@ -13,7 +13,7 @@ import (
 
 func init() {
 	orm.RegisterDriver("mysql", orm.DRMySQL)
-	orm.RegisterDataBase("default", "mysql", "root:123456@tcp(192.168.56.102:3377)/village?charset=utf8&loc=Asia%2FShanghai")
+	orm.RegisterDataBase("default", "mysql", "root:123456@tcp(127.0.0.1:3306)/village?charset=utf8&loc=Asia%2FShanghai")
 	orm.DefaultTimeLoc = time.Local
 	orm.RegisterModel(
 		new(models.User),
@@ -37,7 +37,7 @@ func main() {
 	beego.BConfig.WebConfig.Session.SessionName = "SessionId"
 	beego.BConfig.WebConfig.Session.SessionProvider = "mysql"
 	beego.BConfig.CopyRequestBody = true
-	beego.BConfig.WebConfig.Session.SessionProviderConfig = "root:123456@tcp(192.168.56.102:3377)/village?charset=utf8&loc=Asia%2FShanghai"
+	beego.BConfig.WebConfig.Session.SessionProviderConfig = "root:123456@tcp(127.0.0.1:3306)/village?charset=utf8&loc=Asia%2FShanghai"
 	/*end*/
 	beego.Run()
 

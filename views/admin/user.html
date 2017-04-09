@@ -1,3 +1,4 @@
+<div class="layui-tab-content"  style="margin-left: 200px;">
 <table class="layui-table">
     <thead>
         <tr>
@@ -13,7 +14,7 @@
         <tr>
             <td>{{.Nickname}}</td>
             <td>{{.Email}}</td>
-            <td>{{.Ctime}}</td>
+            <td>{{date .Ctime "Y-m-d H:i:s"}}</td>
             <td>{{.Sex}}</td>
             <td>{{.City}}</td>
             

@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-<link rel="stylesheet" type="text/css" href="/static/layui/css/layui.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/global.css">
-    <script type="text/javascript" src="/static/layui/layui.js"></script>
-    <title></title>
-</head>
-<body>
-{{template "admin/nav.html" .}}
+
 
 <div class="layui-tab-content"  style="margin-left: 200px;">
 <button class="layui-btn" id="addsubmenu">添加</button>
@@ -31,7 +22,7 @@
             <td>{{.Title}}</td>
             <td>{{.Url}}</td>
             <td><button class="layui-btn layui-btn-mini" onclick="modifysubmenu('{{.Key}}')">修改</button>
-<button class="layui-btn layui-btn-mini" >删除</button></td>
+<button class="layui-btn layui-btn-mini" onclick="delsubmenu('{{.Key}}')">删除</button></td>
         </tr>
     {{end}}    
     </tbody>

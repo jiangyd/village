@@ -12,7 +12,7 @@ type Admin struct {
 }
 
 func (self *Admin) Login() {
-	self.TplName = "admin/submenu.html"
+	self.TplName = "admin/menu.html"
 	self.Data["menu"] = admin.GetAllMenu()
 	fmt.Println(admin.GetAllSubMenu())
 	self.Data["submenu"] = admin.GetAllSubMenu()
@@ -25,29 +25,52 @@ func (self *Admin) Login() {
 
 //菜单页面
 func (self *Admin) MenuManageList() {
+	self.Data["menu"] = admin.GetAllMenu()
+	self.Data["submenu"] = admin.GetAllSubMenu()
+	self.Layout = "admin/nav.html"
 	self.TplName = "admin/menu.html"
+}
+
+//子菜单页面
+func (self *Admin) SubMenuManageList() {
+	self.Data["menu"] = admin.GetAllMenu()
+	self.Data["submenu"] = admin.GetAllSubMenu()
+	self.Layout = "admin/nav.html"
+	self.TplName = "admin/submenu.html"
 }
 
 //用户页面
 func (self *Admin) UserManageList() {
+	self.Data["menu"] = admin.GetAllMenu()
+	self.Data["submenu"] = admin.GetAllSubMenu()
+	self.Layout = "admin/nav.html"
 	self.TplName = "admin/user.html"
 	self.Data["users"] = models.GetAllUser()
 }
 
 //评论页面
 func (self *Admin) ReplyManageList() {
+	self.Data["menu"] = admin.GetAllMenu()
+	self.Data["submenu"] = admin.GetAllSubMenu()
+	self.Layout = "admin/nav.html"
 	self.TplName = "admin/reply.html"
 	self.Data["replys"] = models.GetAllReply()
 }
 
 //分类页面
 func (self *Admin) CategoryManageList() {
+	self.Data["menu"] = admin.GetAllMenu()
+	self.Data["submenu"] = admin.GetAllSubMenu()
+	self.Layout = "admin/nav.html"
 	self.TplName = "admin/category.html"
 	self.Data["categorys"] = models.GetAllCategory()
 }
 
 //帖子页面
 func (self *Admin) TopicManageList() {
+	self.Data["menu"] = admin.GetAllMenu()
+	self.Data["submenu"] = admin.GetAllSubMenu()
+	self.Layout = "admin/nav.html"
 	self.TplName = "admin/topic.html"
 	self.Data["topics"] = models.GetAllTopic()
 }
@@ -55,9 +78,22 @@ func (self *Admin) TopicManageList() {
 func (self *Admin) GetSubMenuInfo() {
 	key := self.Input().Get("key")
 	submenu := admin.GetSubMenuByKey(key)
-	msg := map[string]interface{}{"code": 0, "msg": "", "data": map[string]interface{}{"key": submenu.Key, "title": submenu.Title, "parent": submenu.Parent, "url": submenu.Url}}
-	self.Data["json"] = &msg
-	self.ServeJSON()
+	self.TplName = "admin/editsubmenu.html"
+	self.Data["submenu"] = submenu
+	self.Data["menu"] = admin.GetAllMenu()
+	// msg := map[string]interface{}{"code": 0, "msg": "", "data": map[string]interface{}{"key": submenu.Key, "title": submenu.Title, "parent": submenu.Parent, "url": submenu.Url}}
+	// self.Data["json"] = &msg
+	// self.ServeJSON()
+}
+
+func (self *Admin) GetMenuInfo() {
+	key := self.Input().Get("key")
+	self.Data["menu"] = admin.GetMenuByKey(key)
+	self.TplName = "admin/editmenu.html"
+
+	// msg := map[string]interface{}{"code": 0, "msg": "", "data": map[string]interface{}{"key": submenu.Key, "title": submenu.Title, "parent": submenu.Parent, "url": submenu.Url}}
+	// self.Data["json"] = &msg
+	// self.ServeJSON()
 }
 
 //菜单操作
@@ -76,16 +112,24 @@ func (self *Admin) MenuAction() {
 		menu := admin.GetMenuByKey(key)
 		menu.Key = key
 		menu.Title = title
+		fmt.Println(menu, "menu")
 		admin.UpdateMenu(&menu)
 		msg := map[string]interface{}{"code": 0, "msg": "修改成功"}
 		self.Data["json"] = &msg
 		self.ServeJSON()
 	case "del":
 		menu := admin.GetMenuByKey(key)
-		admin.DelMenu(&menu)
-		msg := map[string]interface{}{"code": 0, "msg": "删除成功"}
-		self.Data["json"] = &msg
-		self.ServeJSON()
+		if admin.IsHasSubMenu(&menu) {
+			msg := map[string]interface{}{"code": 1, "msg": "该菜单下包含子菜单,不能删除!"}
+			self.Data["json"] = &msg
+			self.ServeJSON()
+		} else {
+			admin.DelMenu(&menu)
+			msg := map[string]interface{}{"code": 0, "msg": "删除成功"}
+			self.Data["json"] = &msg
+			self.ServeJSON()
+		}
+
 	default:
 		msg := map[string]interface{}{"code": 1, "msg": "未找到方法"}
 		self.Data["json"] = &msg
@@ -107,16 +151,52 @@ func (self *Admin) SubMenuAction() {
 		self.Data["json"] = &msg
 		self.ServeJSON()
 	case "modify":
-		menu := admin.GetMenuByKey(key)
+		menu := admin.GetSubMenuByKey(key)
 		menu.Key = key
 		menu.Title = title
-		admin.UpdateMenu(&menu)
+		menu.Parent = &admin.Menu{Key: parent}
+		menu.Url = url
+		fmt.Println(menu, "aaaa")
+		admin.UpdateSubMenu(&menu)
 		msg := map[string]interface{}{"code": 0, "msg": "修改成功"}
 		self.Data["json"] = &msg
 		self.ServeJSON()
 	case "del":
-		menu := admin.GetMenuByKey(key)
-		admin.DelMenu(&menu)
+		menu := admin.GetSubMenuByKey(key)
+		admin.DelSubMenu(&menu)
+		msg := map[string]interface{}{"code": 0, "msg": "删除成功"}
+		self.Data["json"] = &msg
+		self.ServeJSON()
+	default:
+		msg := map[string]interface{}{"code": 1, "msg": "未找到方法"}
+		self.Data["json"] = &msg
+		self.ServeJSON()
+	}
+
+}
+
+//分类操作
+func (self *Admin) CategoryAction() {
+	action := self.Ctx.Input.Param(":action")
+	category, categorytype := self.Input().Get("category"), self.Input().Get("categorytype")
+	switch action {
+	case "add":
+		categorys := models.Categorys{Category: category, CategoryType: categorytype}
+		models.AddCategory(&categorys)
+		msg := map[string]interface{}{"code": 0, "msg": "添加成功"}
+		self.Data["json"] = &msg
+		self.ServeJSON()
+	case "modify":
+		categorys := models.FindCategory(category, categorytype)
+		categorys.Category = category
+		categorys.CategoryType = categorytype
+		models.UpdateCategory(&categorys)
+		msg := map[string]interface{}{"code": 0, "msg": "修改成功"}
+		self.Data["json"] = &msg
+		self.ServeJSON()
+	case "del":
+		categorys := models.FindCategory(category, categorytype)
+		models.DelCategory(&categorys)
 		msg := map[string]interface{}{"code": 0, "msg": "删除成功"}
 		self.Data["json"] = &msg
 		self.ServeJSON()
