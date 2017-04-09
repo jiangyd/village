@@ -15,7 +15,7 @@ func (self *TopicController) TopicDetial() {
 	id := self.Ctx.Input.Param(":id")
 	tid, _ := strconv.Atoi(id)
 	sessionid := self.GetSession("uid")
-	if tid >= 0 {
+	if models.IsTopicExit(tid) {
 		fmt.Println(self.GetSession("SessionId"))
 		topic := models.FindTopicById(tid)
 		author := topic.Author.Id
@@ -53,6 +53,8 @@ func (self *TopicController) TopicDetial() {
 			self.Data["isdz"] = models.IsDz("tid", tid, &models.User{Id: sessionid.(int)})
 		}
 
+	} else {
+		self.Redirect("/", 404)
 	}
 
 }

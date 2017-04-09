@@ -13,8 +13,8 @@
             <tr>
                 <td>{{.Category}}</td>
                 <td>{{if eq .CategoryType "topic"}}主题{{else if eq .CategoryType "cite"}}站点{{end}}</td>
-                <td><button class="layui-btn layui-btn-mini" onclick="modifycategory({{.Category}},{{.CategoryType}})">修改</button>
-<button class="layui-btn layui-btn-mini" onclick="delcategory({{.Category}},{{.CategoryType}})">删除</button></td>
+                <td><button class="layui-btn layui-btn-mini" onclick="modifycategory({{.Id}})">修改</button>
+<button class="layui-btn layui-btn-mini" onclick="delcategory({{.Id}})">删除</button></td>
             </tr>
             {{end}}
         </tbody>

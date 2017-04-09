@@ -3,6 +3,7 @@ package admin
 import (
 	"fmt"
 	"github.com/astaxie/beego"
+	"strconv"
 	"village/models"
 	"village/models/admin"
 )
@@ -75,6 +76,7 @@ func (self *Admin) TopicManageList() {
 	self.Data["topics"] = models.GetAllTopic()
 }
 
+//编辑子菜单页面
 func (self *Admin) GetSubMenuInfo() {
 	key := self.Input().Get("key")
 	submenu := admin.GetSubMenuByKey(key)
@@ -86,6 +88,7 @@ func (self *Admin) GetSubMenuInfo() {
 	// self.ServeJSON()
 }
 
+//编辑菜单页面
 func (self *Admin) GetMenuInfo() {
 	key := self.Input().Get("key")
 	self.Data["menu"] = admin.GetMenuByKey(key)
@@ -94,6 +97,14 @@ func (self *Admin) GetMenuInfo() {
 	// msg := map[string]interface{}{"code": 0, "msg": "", "data": map[string]interface{}{"key": submenu.Key, "title": submenu.Title, "parent": submenu.Parent, "url": submenu.Url}}
 	// self.Data["json"] = &msg
 	// self.ServeJSON()
+}
+
+//编辑分类页面
+func (self *Admin) GetCategoryInfo() {
+	categoryid := self.Input().Get("categoryid")
+	id, _ := strconv.Atoi(categoryid)
+	self.TplName = "admin/editcategory.html"
+	self.Data["category"] = models.FindCategory(id)
 }
 
 //菜单操作
@@ -178,24 +189,29 @@ func (self *Admin) SubMenuAction() {
 //分类操作
 func (self *Admin) CategoryAction() {
 	action := self.Ctx.Input.Param(":action")
-	category, categorytype := self.Input().Get("category"), self.Input().Get("categorytype")
 	switch action {
 	case "add":
+		category, categorytype := self.Input().Get("category"), self.Input().Get("categorytype")
 		categorys := models.Categorys{Category: category, CategoryType: categorytype}
 		models.AddCategory(&categorys)
 		msg := map[string]interface{}{"code": 0, "msg": "添加成功"}
 		self.Data["json"] = &msg
 		self.ServeJSON()
 	case "modify":
-		categorys := models.FindCategory(category, categorytype)
+		categoryid, category, categorytype := self.Input().Get("categoryid"), self.Input().Get("category"), self.Input().Get("categorytype")
+		id, _ := strconv.Atoi(categoryid)
+		categorys := models.FindCategory(id)
 		categorys.Category = category
 		categorys.CategoryType = categorytype
+		fmt.Println(categorys)
 		models.UpdateCategory(&categorys)
 		msg := map[string]interface{}{"code": 0, "msg": "修改成功"}
 		self.Data["json"] = &msg
 		self.ServeJSON()
 	case "del":
-		categorys := models.FindCategory(category, categorytype)
+		categoryid := self.Input().Get("categoryid")
+		id, _ := strconv.Atoi(categoryid)
+		categorys := models.FindCategory(id)
 		models.DelCategory(&categorys)
 		msg := map[string]interface{}{"code": 0, "msg": "删除成功"}
 		self.Data["json"] = &msg

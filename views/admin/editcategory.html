@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/layui/css/layui.css">
+    <script type="text/javascript" src="/static/layui/layui.js"></script>
+    <title></title>
+</head>
+
+<body>
+    <form class="layui-form" method="post" style="margin:20px 20px 0px">
+        <div class="layui-form-item">
+            <label class="layui-form-label">类型</label>
+            <div class="layui-input-block">
+                <select name="categorytype" lay-verify="required">
+                    <option value=""></option>
+                    <option value="topic" {{if eq .category.CategoryType "topic"}}selected{{end}}>主题分类</option>
+                    <option value="cite" {{if eq .category.CategoryType "cite"}}selected{{end}}>站点分类</option>
+                    
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="category" required lay-verify="required" placeholder="请输入url" autocomplete="off" class="layui-input" value="{{.category.Category}}">
+                <input type="hidden" name="categoryid"  value="{{.category.Id}}">
+            </div>
+        </div>
+        <button class="layui-btn layui-btn-normal" lay-filter="editcategory" lay-submit type="button" style="float: right;">确认</button>
+    </form>
+    <script>
+    layui.use(['form'], function() {
+        var form = layui.form();
+        var $ = layui.jquery;
+        //监听提交
+        form.on('submit(editcategory)', function(data) {
+            $.ajax({
+                async: false,
+                url: "/category/modify",
+                data: {
+                    "categoryid":data.field.categoryid,
+                    "category": data.field.category,
+                    "categorytype": data.field.categorytype
+                },
+                type: 'POST',
+                success: function(text) {
+                    if (text.code == 0) {
+           				var index = parent.layer.getFrameIndex(window.name);
+           				parent.layer.close(index); 
+                        location.href = '/admin/submenumanagelist'
+
+                    } else if (text.code != 0) {
+                        layer.msg(text.msg)
+                    }
+                }
+            });
+            return false;
+        });
+    });
+    </script>
+</body>
+
+</html>

@@ -42,10 +42,10 @@ func DelCategory(category *Categorys) int64 {
 }
 
 //查找分类
-func FindCategory(category string, categorytype string) Categorys {
+func FindCategory(id int) Categorys {
 	o := orm.NewOrm()
 	var cate Categorys
-	o.QueryTable(cate).Filter("Category", category).Filter("CategoryType", categorytype).One(&cate)
+	o.QueryTable(cate).Filter("Id", id).One(&cate)
 	return cate
 }
 

@@ -161,7 +161,7 @@ function delsubmenu(key) {
                 type: "post",
                 url: "/submenu/del",
                 data: {
-                    key: key
+                    "key": key
                 },
                 success: function(data) {
                     if (data.code == 0) {
@@ -177,17 +177,17 @@ function delsubmenu(key) {
 }
 
 //修改分类
-function modifycategory(category,categorytype) {
+function modifycategory(id) {
     layer.open({
         type: 2,
-        title: "修改子菜单",
+        title: "修改分类",
         resize: false,
-        area: ['500px', '360px'],
-        content: ["/getcategoryinfo?category=" + category+"&categorytype="+categorytype]
+        area: ['500px', '260px'],
+        content: ["/getcategoryinfo?categoryid="+id]
     });
 }
 //删除分类
-function delcategory(category,categorytype) {
+function delcategory(id) {
     layer.confirm("是否确认删除？", {
         btn: ["是", "否"],
         yes: function() {
@@ -195,8 +195,7 @@ function delcategory(category,categorytype) {
                 type: "post",
                 url: "/category/del",
                 data: {
-                    category: category,
-                    categorytype:categorytype
+                   "categoryid":id
                 },
                 success: function(data) {
                     if (data.code == 0) {

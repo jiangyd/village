@@ -53,4 +53,5 @@ func init() {
 	beego.Router("/admin/categorymanagelist", &admin.Admin{}, "GET:CategoryManageList")
 	beego.Router("/getsubmenuinfo", &admin.Admin{}, "GET:GetSubMenuInfo")
 	beego.Router("/getmenuinfo", &admin.Admin{}, "GET:GetMenuInfo")
+	beego.Router("/getcategoryinfo", &admin.Admin{}, "GET:GetCategoryInfo")
 }

@@ -78,6 +78,13 @@ func UpTopic(topic *Topic) {
 	o.Update(topic, "Up")
 }
 
+//通过Id确认是否存在
+func IsTopicExit(id int) bool {
+	o := orm.NewOrm()
+	var topic Topic
+	return o.QueryTable(topic).Filter("Id", id).Exist()
+}
+
 //主题详情
 func FindTopicById(id int) Topic {
 	o := orm.NewOrm()
