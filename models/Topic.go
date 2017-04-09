@@ -48,7 +48,7 @@ func GetAllTopic() []*Topic {
 	o := orm.NewOrm()
 	var topic Topic
 	var topics []*Topic
-	o.QueryTable(topic).All(&topics)
+	o.QueryTable(topic).OrderBy("-Ctime").RelatedSel().All(&topics)
 	return topics
 }
 

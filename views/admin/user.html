@@ -1,28 +1,32 @@
-<div class="layui-tab-content"  style="margin-left: 200px;">
-<table class="layui-table">
-    <thead>
-        <tr>
-            <th>昵称</th>
-            <th>邮箱</th>
-            <th>创建时间</th>
-            <th>性别</th>
-            <th>城市</th>
-        </tr>
-    </thead>
-    <tbody>
-    {{range .users}}
-        <tr>
-            <td>{{.Nickname}}</td>
-            <td>{{.Email}}</td>
-            <td>{{date .Ctime "Y-m-d H:i:s"}}</td>
-            <td>{{.Sex}}</td>
-            <td>{{.City}}</td>
-            
-        </tr>
-    {{end}}    
-    </tbody>
-</table>
+<div class="layui-tab-content" style="margin-left: 200px;">
+    <table class="layui-table">
+        <thead>
+            <tr>
+                <th>昵称</th>
+                <th>邮箱</th>
+                <th>创建时间</th>
+                <th>性别</th>
+                <th>城市</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{range .users}}
+            <tr>
+                <td>{{.Nickname}}</td>
+                <td>{{.Email}}</td>
+                <td>{{date .Ctime "Y-m-d H:i:s"}}</td>
+                <td>{{if eq .Sex 0}}男{{else if eq .Sex 1}}女{{else if eq .Sex 2}}保密{{end}}</td>
+                <td>{{.City}}</td>
+                <td>
+                        <button class="layui-btn layui-btn-mini">禁用</button>
+                </td>
+            </tr>
+            {{end}}
+        </tbody>
+    </table>
 </div>
 </div>
 </body>
+
 </html>

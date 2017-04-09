@@ -1,28 +1,34 @@
-<div class="layui-tab-content"  style="margin-left: 200px;">
-<table class="layui-table">
-    <thead>
-        <tr>
-            <th>标题</th>
-            <th>作者</th>
-            <th>创建时间</th>
-            <th>浏览数</th>
-            <th>评论数</th>
-        </tr>
-    </thead>
-    <tbody>
-    {{range .topic}}
-        <tr>
-            <td>{{.Title}}</td>
-            <td>{{.Author.Nickname}}</td>
-            <td>{{.Ctime}}</td>
-            <td>{{.View}}</td>
-            <td>{{.Reply_count}}</td>
-            
-        </tr>
-    {{end}}    
-    </tbody>
-</table>
+<div class="layui-tab-content" style="margin-left: 200px;">
+    <table class="layui-table">
+        <thead>
+            <tr>
+                <th>标题</th>
+                <th>作者</th>
+                <th>创建时间</th>
+                <th>浏览数</th>
+                <th>评论数</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{range .topics}}
+            <tr>
+                <td>{{.Title}}</td>
+                <td>{{.Author.Nickname}}</td>
+                <td>{{date .Ctime "Y-m-d H:i:s"}}</td>
+                <td>{{.View}}</td>
+                <td>{{.ReplyCount}}</td>
+                <td>
+                    <a href="/topic/{{.Id}}" target="_blank"><button class="layui-btn layui-btn-mini" >浏览</button></a>
+                    <button class="layui-btn layui-btn-mini">屏蔽</button>
+                </td>
+
+            </tr>
+            {{end}}
+        </tbody>
+    </table>
 </div>
 </div>
 </body>
+
 </html>

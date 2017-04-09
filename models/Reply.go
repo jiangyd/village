@@ -70,6 +70,6 @@ func GetAllReply() []*Reply {
 	o := orm.NewOrm()
 	var reply Reply
 	var replys []*Reply
-	o.QueryTable(reply).OrderBy("-Ctime").All(&replys)
+	o.QueryTable(reply).OrderBy("-Ctime").RelatedSel().All(&replys)
 	return replys
 }
