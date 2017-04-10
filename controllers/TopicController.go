@@ -81,7 +81,7 @@ func (self *TopicController) CreateTopic() {
 	} else {
 		uid := self.GetSession("uid")
 		fmt.Println(uid)
-		topic := models.Topic{Title: title, Content: content, Author: &models.User{Id: uid.(int)}, Category: &models.Categorys{Id: category_id}}
+		topic := models.Topic{Title: title, Content: content, Author: &models.User{Id: uid.(int)}, Category: &models.Categorys{Id: category_id}, Disable: false}
 		tid := models.SaveTopic(&topic)
 		msg := map[string]interface{}{"code": 0, "msg": "success", "tid": tid}
 		self.Data["json"] = &msg

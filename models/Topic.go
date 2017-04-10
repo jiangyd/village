@@ -19,6 +19,7 @@ type Topic struct {
 	Up            int        `orm:"default(0)"`
 	Category      *Categorys `orm:"rel(fk)"`
 	Adopt         *Reply     `orm:"rel(fk);null"`
+	Disable       bool       `orm:"default(false)"`
 }
 
 type QiNiuFile struct {

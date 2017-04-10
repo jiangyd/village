@@ -12,6 +12,7 @@ type Reply struct {
 	User    *User     `orm:"rel(fk)"`
 	Up      int       `orm:"default(0)"`
 	Ctime   time.Time `orm:"auto_now_add;type(datetime)"`
+	Disable bool      `orm:"default(false)"` //是否屏蔽
 }
 
 func SaveReply(reply *Reply) int64 {
@@ -47,11 +48,20 @@ func FindReplyByTid(tid *Topic) []*Reply {
 	return replys
 }
 
+//更新评论
+func UpdateReply(reply *Reply) int64 {
+	o := orm.NewOrm()
+	id, _ := o.Update(reply)
+	return id
+}
+
+//删除评论
 func DeleteReply(reply *Reply) {
 	o := orm.NewOrm()
 	o.Delete(reply)
 }
 
+//更新点赞数
 func UpReply(reply *Reply) {
 	o := orm.NewOrm()
 	reply.Up = reply.Up + 1

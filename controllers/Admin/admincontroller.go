@@ -223,3 +223,93 @@ func (self *Admin) CategoryAction() {
 	}
 
 }
+
+//帖子操作
+func (self *Admin) TopicAction() {
+	action := self.Ctx.Input.Param(":action")
+	switch action {
+	case "disable":
+		id := self.Input().Get("id")
+		tid, _ := strconv.Atoi(id)
+		topic := models.FindTopicById(tid)
+		topic.Disable = true
+		models.UpdateTopic(&topic)
+		msg := map[string]interface{}{"code": 0, "msg": "屏蔽帖子成功"}
+		self.Data["json"] = &msg
+		self.ServeJSON()
+	case "enable":
+		id := self.Input().Get("id")
+		tid, _ := strconv.Atoi(id)
+		topic := models.FindTopicById(tid)
+		topic.Disable = false
+		models.UpdateTopic(&topic)
+		msg := map[string]interface{}{"code": 0, "msg": "取消屏蔽帖子成功"}
+		self.Data["json"] = &msg
+		self.ServeJSON()
+	default:
+		msg := map[string]interface{}{"code": 1, "msg": "未找到方法"}
+		self.Data["json"] = &msg
+		self.ServeJSON()
+	}
+
+}
+
+//评论操作
+func (self *Admin) ReplyAction() {
+	action := self.Ctx.Input.Param(":action")
+	switch action {
+	case "disable":
+		id := self.Input().Get("id")
+		rid, _ := strconv.Atoi(id)
+		reply := models.FindReplyByRid(rid)
+		reply.Disable = true
+		models.UpdateReply(&reply)
+		msg := map[string]interface{}{"code": 0, "msg": "屏蔽评论成功"}
+		self.Data["json"] = &msg
+		self.ServeJSON()
+	case "enable":
+		id := self.Input().Get("id")
+		rid, _ := strconv.Atoi(id)
+		reply := models.FindReplyByRid(rid)
+		reply.Disable = false
+		models.UpdateReply(&reply)
+		msg := map[string]interface{}{"code": 0, "msg": "屏蔽评论成功"}
+		self.Data["json"] = &msg
+		self.ServeJSON()
+	default:
+		msg := map[string]interface{}{"code": 1, "msg": "未找到方法"}
+		self.Data["json"] = &msg
+		self.ServeJSON()
+	}
+
+}
+
+//用户操作
+func (self *Admin) UserAction() {
+	action := self.Ctx.Input.Param(":action")
+	switch action {
+	case "disable":
+		id := self.Input().Get("id")
+		uid, _ := strconv.Atoi(id)
+		user := models.FindUserDetialById(uid)
+		user.Status = 1
+		models.UpdateUser(&user)
+		msg := map[string]interface{}{"code": 0, "msg": "用户禁用成功"}
+		self.Data["json"] = &msg
+		self.ServeJSON()
+	case "enable":
+		id := self.Input().Get("id")
+		uid, _ := strconv.Atoi(id)
+		user := models.FindUserDetialById(uid)
+		user.Status = 0
+		models.UpdateUser(&user)
+		msg := map[string]interface{}{"code": 0, "msg": "用户启用成功"}
+		self.Data["json"] = &msg
+		self.ServeJSON()
+	default:
+		msg := map[string]interface{}{"code": 1, "msg": "未找到方法"}
+		self.Data["json"] = &msg
+		self.ServeJSON()
+	}
+
+}

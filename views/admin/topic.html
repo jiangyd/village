@@ -20,7 +20,11 @@
                 <td>{{.ReplyCount}}</td>
                 <td>
                     <a href="/topic/{{.Id}}" target="_blank"><button class="layui-btn layui-btn-mini" >浏览</button></a>
-                    <button class="layui-btn layui-btn-mini">屏蔽</button>
+                    {{if eq .Disable true}}
+                    <button class="layui-btn layui-btn-mini layui-btn-danger" onclick="enabletopic({{.Id}})">取消屏蔽</button>
+                    {{else if eq .Disable false}}
+                    <button class="layui-btn layui-btn-mini" onclick="disabletopic({{.Id}})">屏蔽</button>
+                    {{end}}
                 </td>
 
             </tr>
@@ -29,6 +33,12 @@
     </table>
 </div>
 </div>
+<script>
+    layui.config({
+        base: '/static/js/'
+    }).use('admin');
+</script>
+<script src="/static/js/jQuery.js"></script>
 </body>
 
 </html>

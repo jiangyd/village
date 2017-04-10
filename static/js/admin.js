@@ -209,3 +209,143 @@ function delcategory(id) {
         }
     })
 }
+//屏蔽帖子
+function disabletopic(id){
+    layer.confirm("屏蔽此贴后将不可见,是否确认？", {
+        btn: ["是", "否"],
+        yes: function() {
+            $.ajax({
+                type: "post",
+                url: "/topic/disable",
+                data: {
+                   "id":id
+                },
+                success: function(data) {
+                    if (data.code == 0) {
+                        location.href = '/admin/topicmanagelist';
+
+                    } else if (data.code != 0) {
+                        layer.msg(data.msg);
+                    };
+                }
+            })
+        }
+    })
+}
+//取消屏蔽帖子
+function enabletopic(id){
+    layer.confirm("取消屏蔽此贴后将可见,是否确认？", {
+        btn: ["是", "否"],
+        yes: function() {
+            $.ajax({
+                type: "post",
+                url: "/topic/enable",
+                data: {
+                   "id":id
+                },
+                success: function(data) {
+                    if (data.code == 0) {
+                        location.href = '/admin/topicmanagelist';
+
+                    } else if (data.code != 0) {
+                        layer.msg(data.msg);
+                    };
+                }
+            })
+        }
+    })
+}
+//屏蔽评论
+function disablereply(id){
+    layer.confirm("屏蔽此评论后将不可见,是否确认？", {
+        btn: ["是", "否"],
+        yes: function() {
+            $.ajax({
+                type: "post",
+                url: "/reply/disable",
+                data: {
+                   "id":id
+                },
+                success: function(data) {
+                    if (data.code == 0) {
+                        location.href = '/admin/replymanagelist';
+
+                    } else if (data.code != 0) {
+                        layer.msg(data.msg);
+                    };
+                }
+            })
+        }
+    })
+}
+//取消屏蔽评论
+function enablereply(id){
+    layer.confirm("取消屏蔽此评论后将可见,是否确认？", {
+        btn: ["是", "否"],
+        yes: function() {
+            $.ajax({
+                type: "post",
+                url: "/reply/enable",
+                data: {
+                   "id":id
+                },
+                success: function(data) {
+                    if (data.code == 0) {
+                        location.href = '/admin/replymanagelist';
+
+                    } else if (data.code != 0) {
+                        layer.msg(data.msg);
+                    };
+                }
+            })
+        }
+    })
+}
+
+//禁用用户
+function disableuser(id){
+    layer.confirm("禁用此用户将不能登录,是否确认？", {
+        btn: ["是", "否"],
+        yes: function() {
+            $.ajax({
+                type: "post",
+                url: "/user/disable",
+                data: {
+                   "id":id
+                },
+                success: function(data) {
+                    if (data.code == 0) {
+                        location.href = '/admin/usermanagelist';
+
+                    } else if (data.code != 0) {
+                        layer.msg(data.msg);
+                    };
+                }
+            })
+        }
+    })
+}
+//启用用户
+function enableuser(id){
+    layer.confirm("启用此用户将恢复登录,是否确认？", {
+        btn: ["是", "否"],
+        yes: function() {
+            $.ajax({
+                type: "post",
+                url: "/user/enable",
+                data: {
+                   "id":id
+                },
+                success: function(data) {
+                    if (data.code == 0) {
+                        location.href = '/admin/usermanagelist';
+
+                    } else if (data.code != 0) {
+                        layer.msg(data.msg);
+                    };
+                }
+            })
+        }
+    })
+}
+
