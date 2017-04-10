@@ -57,4 +57,5 @@ func init() {
 	beego.Router("/getsubmenuinfo", &admin.Admin{}, "GET:GetSubMenuInfo")
 	beego.Router("/getmenuinfo", &admin.Admin{}, "GET:GetMenuInfo")
 	beego.Router("/getcategoryinfo", &admin.Admin{}, "GET:GetCategoryInfo")
+	beego.Router("/document", &admin.Admin{}, "GET:DocumentInfo")
 }

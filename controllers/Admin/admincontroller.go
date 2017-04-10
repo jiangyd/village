@@ -76,6 +76,12 @@ func (self *Admin) TopicManageList() {
 	self.Data["topics"] = models.GetAllTopic()
 }
 
+//文档页面
+func (self *Admin) DocumentInfo() {
+	self.Layout = "admin/nav.html"
+	self.TplName = "admin/document.html"
+}
+
 //编辑子菜单页面
 func (self *Admin) GetSubMenuInfo() {
 	key := self.Input().Get("key")
