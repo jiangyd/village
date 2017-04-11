@@ -1,6 +1,33 @@
 <div class="layui-tab-content" style="margin-left: 200px;">
-<ul id="demo"></ul>
+<button class="layui-btn" id="addnode">添加</button>
+<div id="tree1" data-url="/getdocnodes/">
+
 </div>
+</div>
+
+
+<div id="div_addnode" style="display: none;">
+	<form class="layui-form" method="post" style="margin:20px 20px 0px">
+	<div class="layui-form-item">
+<label class="layui-form-label">节点</label>
+<div class="layui-input-block">
+<input type="text" name="node" required  lay-verify="required" placeholder="请输入key" autocomplete="off" class="layui-input">
+</div>
+</div>
+<div class="layui-form-item">
+<label class="layui-form-label">内容</label>
+<div class="layui-input-block">
+<input type="text" name="content" required  lay-verify="required" placeholder="请输入key" autocomplete="off" class="layui-input">
+<button class="layui-btn layui-btn-normal" lay-filter="addnode" lay-submit type="button" style="float: right;">确认</button>
+</div>
+</div>
+</div>
+<script src="/static/js/jQuery.js"></script>
+<script src="/static/js/tree.jquery.js"></script>
+
+<script>
+	$('#tree1').tree();
+</script>
 
 <script>
     layui.config({

@@ -1,6 +1,7 @@
 package admin
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/astaxie/beego"
 	"strconv"
@@ -318,4 +319,51 @@ func (self *Admin) UserAction() {
 		self.ServeJSON()
 	}
 
+}
+
+//节点操作
+func (self *Admin) DocNodeAction() {
+	action := self.Ctx.Input.Param(":action")
+	switch action {
+	case "add":
+		id, node, content := self.Input().Get("pid"), self.Input().Get("node"), self.Input().Get("content")
+		pid, _ := strconv.Atoi(id)
+		doc := admin.Document{Title: node, Pid: pid, Content: content}
+		admin.AddDoc(&doc)
+		msg := map[string]interface{}{"code": 0, "msg": "用户禁用成功"}
+		self.Data["json"] = &msg
+		self.ServeJSON()
+	case "modify":
+		id := self.Input().Get("id")
+		uid, _ := strconv.Atoi(id)
+		user := models.FindUserDetialById(uid)
+		user.Status = 0
+		models.UpdateUser(&user)
+		msg := map[string]interface{}{"code": 0, "msg": "用户启用成功"}
+		self.Data["json"] = &msg
+		self.ServeJSON()
+	case "del":
+		id := self.Input().Get("id")
+		uid, _ := strconv.Atoi(id)
+		user := models.FindUserDetialById(uid)
+		user.Status = 0
+		models.UpdateUser(&user)
+		msg := map[string]interface{}{"code": 0, "msg": "用户启用成功"}
+		self.Data["json"] = &msg
+		self.ServeJSON()
+	default:
+		msg := map[string]interface{}{"code": 1, "msg": "未找到方法"}
+		self.Data["json"] = &msg
+		self.ServeJSON()
+	}
+}
+
+func (self *Admin) GetDocNodes() {
+	// nodes := admin.GetDoc()
+	var v []map[string]interface{}
+	msg := `[{"name": "aa", "id": 1,"children":[{ "name": "child3", "id":2},{ "name": "child2", "id":3}]}]`
+	json.Unmarshal([]byte(msg), &v)
+	self.Data["json"] = &v
+	fmt.Println(&v)
+	self.ServeJSON()
 }

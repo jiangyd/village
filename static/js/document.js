@@ -3,24 +3,38 @@ layui.define(['layer', 'form', 'element','tree'], function(exports) {
     var elements = layui.element();
     var $ = layui.jquery;
     var form = layui.form();
-    layui.tree({
-  elem: '#demo' //传入元素选择器
-  ,nodes: [{ //节点
-    name: '父节点1'
-    ,children: [{
-      name: '子节点11'
-    },{
-      name: '子节点12'
-    }]
-  },{
-    name: '父节点2（可以点左侧箭头，也可以双击标题）'
-    ,children: [{
-      name: '子节点21'
-      ,children: [{
-        name: '子节点211'
-      }]
-    }]
-  }]
-});
     exports('document', {});
+        //添加分类单弹出
+    $("#addnode").on('click', function() {
+        layer.open({
+            type: 1,
+            title: "添加分类",
+            area: ['500px', '260px'],
+            content: $("#div_addnode")
+        });
+        form.render('select');
+    });
+    //添加子菜单form
+    form.on('submit(addnode)', function(data) {
+        $.ajax({
+            async: false,
+            url: "/docnode/add",
+            data: {
+                
+                "pid": "",
+                "node": data.field.node,
+                "content": data.field.content
+            },
+            type: 'POST',
+            success: function(text) {
+                if (text.code == 0) {
+                    location.href = '/admin/submenumanagelist'
+
+                } else if (text.code != 0) {
+                    layer.msg(text.msg)
+                }
+            }
+        });
+        return false;
+    });
 });

@@ -28,6 +28,7 @@ func init() {
 		new(models.QiNiuFile),
 		new(admin.Menu),
 		new(admin.SubMenu),
+		new(admin.Document),
 	)
 	orm.RunSyncdb("default", false, true)
 }

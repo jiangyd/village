@@ -58,4 +58,6 @@ func init() {
 	beego.Router("/getmenuinfo", &admin.Admin{}, "GET:GetMenuInfo")
 	beego.Router("/getcategoryinfo", &admin.Admin{}, "GET:GetCategoryInfo")
 	beego.Router("/document", &admin.Admin{}, "GET:DocumentInfo")
+	beego.Router("/getdocnodes", &admin.Admin{}, "GET:GetDocNodes")
+	beego.Router("/docnode/:action([a-z]+)", &admin.Admin{}, "POST:DocNodeAction")
 }
