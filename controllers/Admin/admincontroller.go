@@ -383,15 +383,15 @@ type Node struct {
 	Children []*Node `json:"children"`
 }
 
-//var msg []*Node
+var msg []*Node
 
-func dg(doc *admin.Document, node, msg []*Node) []*Node {
+func dg(doc *admin.Document, node []*Node) {
 	//判断当前树是否顶级树
 	if doc.Pid == 0 {
 		//直接把树加到数组中
 		msg = append(msg, &Node{Name: doc.Title, Id: doc.Id, Children: []*Node{}})
-		fmt.Println(msg, "bbbbbbb")
-		return msg
+
+		return
 	} else {
 		//不是顶级树
 		//遍历顶级树，查找当前树的父级
@@ -399,24 +399,22 @@ func dg(doc *admin.Document, node, msg []*Node) []*Node {
 			//如果是当前树的父级,把当前树加到父级的子树中
 			if doc.Pid == v.Id {
 				v.Children = append(v.Children, &Node{Name: doc.Title, Id: doc.Id, Children: []*Node{}})
-				fmt.Println(msg, "cccccccc")
-				return msg
+
+				return
 			} else {
 				//递归遍历
-				dg(doc, v.Children, msg)
+				dg(doc, v.Children)
 			}
 		}
 	}
-	return msg
+	return
 }
 
 func (self *Admin) GetDocNodes() {
 	nodes := admin.GetDoc()
-	var msg []*Node
-	var node []*Node
+	msg = []*Node{}
 	for _, i := range nodes {
-		dg(i, node, msg)
-		fmt.Println(msg, "pppppp")
+		dg(i, msg)
 	}
 	fmt.Println(&msg, "asddsfdfs")
 	self.Data["json"] = &msg
