@@ -4,7 +4,7 @@ layui.define(['layer', 'form', 'element','tree'], function(exports) {
     var $ = layui.jquery;
     var form = layui.form();
     exports('document', {});
-        //添加分类单弹出
+    //添加根目录弹出
     $("#addnode").on('click', function() {
         layer.open({
             type: 1,
@@ -14,7 +14,7 @@ layui.define(['layer', 'form', 'element','tree'], function(exports) {
         });
         form.render('select');
     });
-    //添加子菜单form
+    //添加根目录
     form.on('submit(addnode)', function(data) {
         $.ajax({
             async: false,
@@ -28,7 +28,7 @@ layui.define(['layer', 'form', 'element','tree'], function(exports) {
             type: 'POST',
             success: function(text) {
                 if (text.code == 0) {
-                    location.href = '/admin/submenumanagelist'
+                    location.href = '/admin/document'
 
                 } else if (text.code != 0) {
                     layer.msg(text.msg)
@@ -37,4 +37,40 @@ layui.define(['layer', 'form', 'element','tree'], function(exports) {
         });
         return false;
     });
+
+    //添加子目录弹出
+    $("#addsubnode").on('click', function() {
+        layer.open({
+            type: 1,
+            title: "添加分类",
+            area: ['500px', '260px'],
+            content: $("#div_addsubnode")
+        });
+        form.render('select');
+    });
+    //添加子目录
+    form.on('submit(addsubnode)', function(data) {
+        $.ajax({
+            async: false,
+            url: "/docnode/add",
+            data: {
+                
+                "pid": "",
+                "node": data.field.node,
+                "content": data.field.content
+            },
+            type: 'POST',
+            success: function(text) {
+                if (text.code == 0) {
+                    location.href = '/admin/document'
+
+                } else if (text.code != 0) {
+                    layer.msg(text.msg)
+                }
+            }
+        });
+        return false;
+    });
+
+    exports('admin', {});
 });

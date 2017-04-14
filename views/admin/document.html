@@ -1,5 +1,7 @@
 <div class="layui-tab-content" style="margin-left: 200px;">
-<button class="layui-btn" id="addnode">添加</button>
+<button class="layui-btn" id="addnode">添加根目录</button>
+<button class="layui-btn" id="addsubnode">添加子目录</button>
+<button class="layui-btn" id="delnode">删除目录</button>
 <div id="tree1" data-url="/getdocnodes/">
 
 </div>
@@ -27,6 +29,15 @@
 
 <script>
 	$('#tree1').tree();
+	// bind 'tree.click' event
+	$('#tree1').bind(
+    'tree.click',
+    function(event) {
+        // The clicked node is 'event.node'
+        var node = event.node;
+        alert(node.name);
+    }
+);
 </script>
 
 <script>
