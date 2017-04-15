@@ -79,6 +79,8 @@ func (self *Admin) TopicManageList() {
 
 //文档页面
 func (self *Admin) DocumentInfo() {
+	self.Data["menu"] = admin.GetAllMenu()
+	self.Data["submenu"] = admin.GetAllSubMenu()
 	self.Layout = "admin/nav.html"
 	self.TplName = "admin/document.html"
 }
@@ -326,31 +328,36 @@ func (self *Admin) DocNodeAction() {
 	action := self.Ctx.Input.Param(":action")
 	switch action {
 	case "add":
-		id, node, content := self.Input().Get("pid"), self.Input().Get("node"), self.Input().Get("content")
+		id, node, content := self.Input().Get("pid"), self.Input().Get("title"), self.Input().Get("content")
 		pid, _ := strconv.Atoi(id)
 		doc := admin.Document{Title: node, Pid: pid, Content: content}
 		admin.AddDoc(&doc)
-		msg := map[string]interface{}{"code": 0, "msg": "用户禁用成功"}
+		msg := map[string]interface{}{"code": 0, "msg": "节点添加成功"}
 		self.Data["json"] = &msg
 		self.ServeJSON()
 	case "modify":
-		id := self.Input().Get("id")
-		uid, _ := strconv.Atoi(id)
-		user := models.FindUserDetialById(uid)
-		user.Status = 0
-		models.UpdateUser(&user)
-		msg := map[string]interface{}{"code": 0, "msg": "用户启用成功"}
+		id, title, content := self.Input().Get("id"), self.Input().Get("title"), self.Input().Get("content")
+		nid, _ := strconv.Atoi(id)
+		doc := admin.GetDocById(nid)
+		doc.Title = title
+		doc.Content = content
+		admin.UpdateDoc(&doc)
+		msg := map[string]interface{}{"code": 0, "msg": "节点编辑成功"}
 		self.Data["json"] = &msg
 		self.ServeJSON()
 	case "del":
 		id := self.Input().Get("id")
-		uid, _ := strconv.Atoi(id)
-		user := models.FindUserDetialById(uid)
-		user.Status = 0
-		models.UpdateUser(&user)
-		msg := map[string]interface{}{"code": 0, "msg": "用户启用成功"}
-		self.Data["json"] = &msg
-		self.ServeJSON()
+		nid, _ := strconv.Atoi(id)
+		if admin.IsExitSubDoc(nid) {
+			msg := map[string]interface{}{"code": 1, "msg": "当前节点下存在子节点,无法删除!"}
+			self.Data["json"] = &msg
+			self.ServeJSON()
+		} else {
+			admin.DelDoc(nid)
+			msg := map[string]interface{}{"code": 0, "msg": "节点删除成功"}
+			self.Data["json"] = &msg
+			self.ServeJSON()
+		}
 	default:
 		msg := map[string]interface{}{"code": 1, "msg": "未找到方法"}
 		self.Data["json"] = &msg
@@ -358,24 +365,28 @@ func (self *Admin) DocNodeAction() {
 	}
 }
 
-// func GetS(msg[]map[string]interface{})[]map[string]interface{}{
-// 	for _,v:=range msg{
-// 		if v["children"]==nil{
+//添加目录页面
+func (self *Admin) AddDocumentPage() {
+	pid := self.Ctx.Input.Param(":pid")
+	self.Data["pid"] = pid
+	self.Data["menu"] = admin.GetAllMenu()
+	self.Data["submenu"] = admin.GetAllSubMenu()
+	self.Layout = "admin/nav.html"
+	self.TplName = "admin/adddocument.html"
 
-// 		}
-// 	}
-// }
+}
 
-// func GetTree(*admin.Document, msg []map[string]interface{}) []map[string]interface{} {
-// 	if Pid == 0 {
-// 		msg=append(msg,map[string]interface{}{"name": i.Title, "id": i.Id})
-// 		return msg
-// 	}else{
+//编辑目录页面
+func (self *Admin) EditDocumentPage() {
+	id := self.Ctx.Input.Param(":id")
+	nid, _ := strconv.Atoi(id)
+	self.Data["menu"] = admin.GetAllMenu()
+	self.Data["submenu"] = admin.GetAllSubMenu()
+	self.Data["node"] = admin.GetDocById(nid)
+	self.Layout = "admin/nav.html"
+	self.TplName = "admin/editdocument.html"
 
-// 	}
-// }
-
-//type Data Node
+}
 
 type Node struct {
 	Name     string  `json:"name"`
@@ -385,7 +396,7 @@ type Node struct {
 
 var msg []*Node
 
-func dg(doc *admin.Document, node []*Node) {
+func SetNodeArray(doc *admin.Document, node []*Node) {
 	//判断当前树是否顶级树
 	if doc.Pid == 0 {
 		//直接把树加到数组中
@@ -403,7 +414,7 @@ func dg(doc *admin.Document, node []*Node) {
 				return
 			} else {
 				//递归遍历
-				dg(doc, v.Children)
+				SetNodeArray(doc, v.Children)
 			}
 		}
 	}
@@ -414,7 +425,7 @@ func (self *Admin) GetDocNodes() {
 	nodes := admin.GetDoc()
 	msg = []*Node{}
 	for _, i := range nodes {
-		dg(i, msg)
+		SetNodeArray(i, msg)
 	}
 	fmt.Println(&msg, "asddsfdfs")
 	self.Data["json"] = &msg

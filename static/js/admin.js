@@ -4,7 +4,7 @@ layui.define(['layer', 'form', 'element'], function(exports) {
     var $ = layui.jquery;
     var form = layui.form();
 
-    //添加菜单form
+    //添加根目录
     form.on('submit(addmenu)', function(data) {
         $.ajax({
             async: false,

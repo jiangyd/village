@@ -27,6 +27,11 @@ func (self *ContentController) Index() {
 
 }
 
+func (self *ContentController) About() {
+	self.TplName = "about.html"
+
+}
+
 func (self *ContentController) TopicList() {
 	t := self.Ctx.Input.Param(":type")
 	switch t {

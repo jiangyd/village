@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+{{template "public/header.html" .}}
+<title>测试君|社区</title>
+</head>
+
+<body>
+    {{template "public/nav.html" .}}
+     <div id="tree" data-url="/getdocnodes/">
+    </div>
+
+<script src="/static/js/jQuery.js"></script>
+<script src="/static/js/tree.jquery.js"></script>
+
+<script>
+$('#tree').tree();
+</script>

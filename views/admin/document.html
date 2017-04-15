@@ -1,47 +1,38 @@
 <div class="layui-tab-content" style="margin-left: 200px;">
-<button class="layui-btn" id="addnode">添加根目录</button>
-<button class="layui-btn" id="addsubnode">添加子目录</button>
-<button class="layui-btn" id="delnode">删除目录</button>
-<div id="tree1" data-url="/getdocnodes/">
-
-</div>
-</div>
-
-
-<div id="div_addnode" style="display: none;">
-	<form class="layui-form" method="post" style="margin:20px 20px 0px">
-	<div class="layui-form-item">
-<label class="layui-form-label">节点</label>
-<div class="layui-input-block">
-<input type="text" name="node" required  lay-verify="required" placeholder="请输入key" autocomplete="off" class="layui-input">
-</div>
-</div>
-<div class="layui-form-item">
-<label class="layui-form-label">内容</label>
-<div class="layui-input-block">
-<input type="text" name="content" required  lay-verify="required" placeholder="请输入key" autocomplete="off" class="layui-input">
-<button class="layui-btn layui-btn-normal" lay-filter="addnode" lay-submit type="button" style="float: right;">确认</button>
-</div>
-</div>
+    <a href="/adddocument/">
+        <button id="addnode">添加根目录</button>
+    </a>
+    <button id="addsubnode" disabled="disabled">添加子目录</button>
+    <button id="editnode" disabled="disabled">编辑目录</button>
+    <button id="delnode" disabled="disabled">删除目录</button>
+    <div id="tree" data-url="/getdocnodes/">
+    </div>
 </div>
 <script src="/static/js/jQuery.js"></script>
 <script src="/static/js/tree.jquery.js"></script>
-
+<script src="/static/editor.md/editormd.min.js"></script>
 <script>
-	$('#tree1').tree();
-	// bind 'tree.click' event
-	$('#tree1').bind(
-    'tree.click',
+$('#tree').tree();
+</script>
+<script type="text/javascript">
+$('#tree').bind(
+    'tree.select',
     function(event) {
-        // The clicked node is 'event.node'
-        var node = event.node;
-        alert(node.name);
+        if (event.node) {
+            $("#addsubnode").removeAttr("disabled", "disabled");
+            $("#delnode").removeAttr("disabled", "disabled");
+             $("#editnode").removeAttr("disabled", "disabled");
+
+        } else {
+            $("#addsubnode").attr("disabled", "disabled");
+            $("#editnode").attr("disabled", "disabled");
+            $("#delnode").attr("disabled", "disabled");
+        }
     }
 );
 </script>
-
 <script>
-    layui.config({
-        base: '/static/js/'
-    }).use('document');
+layui.config({
+    base: '/static/js/'
+}).use('document');
 </script>

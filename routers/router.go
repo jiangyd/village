@@ -39,6 +39,8 @@ func init() {
 	beego.Router("/qiniucallback", &controllers.UploadImg{}, "POST:QiNiuCallBack")
 	beego.Router("/topicupload", &controllers.UploadImg{}, "POST:TopicUpload")
 	beego.Router("/site", &controllers.SiteController{}, "GET:SitePage")
+	beego.Router("/wiki", &controllers.WiKi{}, "GET:WiKiPage")
+	beego.Router("/about", &controllers.ContentController{}, "GET:About")
 
 	//admin
 	beego.Router("/admin", &admin.Admin{}, "GET:Login")
@@ -58,6 +60,8 @@ func init() {
 	beego.Router("/getmenuinfo", &admin.Admin{}, "GET:GetMenuInfo")
 	beego.Router("/getcategoryinfo", &admin.Admin{}, "GET:GetCategoryInfo")
 	beego.Router("/document", &admin.Admin{}, "GET:DocumentInfo")
+	beego.Router("/adddocument/:pid([0-9]{0,}?)", &admin.Admin{}, "GET:AddDocumentPage")
+	beego.Router("/editdocument/:id([0-9]+)", &admin.Admin{}, "GET:EditDocumentPage")
 	beego.Router("/getdocnodes", &admin.Admin{}, "GET:GetDocNodes")
 	beego.Router("/docnode/:action([a-z]+)", &admin.Admin{}, "POST:DocNodeAction")
 }
