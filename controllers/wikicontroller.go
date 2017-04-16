@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"github.com/astaxie/beego"
+	"strconv"
 	"village/models/admin"
 )
 
@@ -44,11 +45,14 @@ func SetNodeArray(doc *admin.Document, node []*Node) {
 
 func (self *WiKi) WiKiPage() {
 	self.TplName = "wiki.html"
-	// nodes := admin.GetDoc()
-	// msg = []*Node{}
-	// for _, i := range nodes {
-	// 	SetNodeArray(i, msg)
-	// }
-	// self.Data["json"] = &msg
-	// self.ServeJSON()
+	self.Data["root"] = admin.GetRootDoc()
+}
+
+func (self *WiKi) WiKiDoc() {
+	id := self.Ctx.Input.Param(":id")
+	nid, _ := strconv.Atoi(id)
+	doc := admin.GetDocById(nid)
+	self.Layout = "wiki.html"
+	self.TplName = "doc.html"
+	self.Data["doc"] = doc
 }

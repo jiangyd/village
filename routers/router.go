@@ -41,6 +41,7 @@ func init() {
 	beego.Router("/site", &controllers.SiteController{}, "GET:SitePage")
 	beego.Router("/wiki", &controllers.WiKi{}, "GET:WiKiPage")
 	beego.Router("/about", &controllers.ContentController{}, "GET:About")
+	beego.Router("/wiki/:id([0-9]+)", &controllers.WiKi{}, "GET:WiKiDoc")
 
 	//admin
 	beego.Router("/admin", &admin.Admin{}, "GET:Login")

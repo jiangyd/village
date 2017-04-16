@@ -36,6 +36,15 @@ func GetDocById(id int) Document {
 	return doc
 }
 
+//获取根目录
+func GetRootDoc() []*Document {
+	o := orm.NewOrm()
+	var doc Document
+	var docs []*Document
+	o.QueryTable(doc).Filter("Pid", 0).All(&docs)
+	return docs
+}
+
 //更新节点
 func UpdateDoc(doc *Document) int64 {
 	o := orm.NewOrm()

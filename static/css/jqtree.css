@@ -2,7 +2,9 @@ ul.jqtree-tree {
   list-style: none outside;
   margin-left: 0;
   margin-bottom: 0;
-  padding: 0; }
+  width: 200px;
+  padding: 0;
+  background-color: #FFFFFF }
   ul.jqtree-tree ul.jqtree_common {
     list-style: none outside;
     margin-left: 12px;

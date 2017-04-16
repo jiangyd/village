@@ -2,16 +2,23 @@
 <html>
 {{template "public/header.html" .}}
 <title>测试君|社区</title>
+<link rel="stylesheet" type="text/css" href="/static/css/jqtree.css">
 </head>
 
 <body>
     {{template "public/nav.html" .}}
-     <div id="tree" data-url="/getdocnodes/">
+    <div class="main layui-clear">
+        <div class="wrap">
+            <div class="content">
+    
+     <div id="t_content" class="t_content">
+                    <ul>
+                    {{range .root}}
+                    	<a href="{{.Id}}"><li>{{.Title}}</li></a>
+                    {{end}}
+                    </ul>
+                </div>
+    </div>
+    </div>
     </div>
 
-<script src="/static/js/jQuery.js"></script>
-<script src="/static/js/tree.jquery.js"></script>
-
-<script>
-$('#tree').tree();
-</script>
