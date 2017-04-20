@@ -59,6 +59,15 @@ func IsExitSubDoc(pid int) bool {
 	return o.QueryTable(doc).Filter("Pid", pid).Exist()
 }
 
+//通过父节点查找子节点
+func GetDocByPid(pid int) []*Document {
+	o := orm.NewOrm()
+	var doc Document
+	var docs []*Document
+	o.QueryTable(doc).Filter("Pid", pid).All(&docs)
+	return docs
+}
+
 //删除节点
 func DelDoc(id int) {
 	o := orm.NewOrm()
