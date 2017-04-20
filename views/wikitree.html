@@ -1,0 +1,17 @@
+<div class="layui-tab-content" style="margin-left: 200px;">
+   
+    <div id="tree" data-url="/wiki/rootdoc/{{.id}}">
+    </div>
+</div>
+<script src="/static/js/jQuery.js"></script>
+<script src="/static/js/tree.jquery.js"></script>
+<script src="/static/editor.md/editormd.min.js"></script>
+<script>
+$('#tree').tree();
+</script>
+
+<script>
+layui.config({
+    base: '/static/js/'
+}).use('document');
+</script>

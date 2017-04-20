@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	// "fmt"
+	"fmt"
 	"github.com/astaxie/beego"
 	"strconv"
 	"village/models/admin"
@@ -18,26 +18,36 @@ type Node struct {
 	Children []*Node `json:"children"`
 }
 
-var msg *Node
+var msg []*Node
 var subtree []*Node
 
-func SetNodeArray(node []*Node, p []*Node) {
-	for _, n := range node {
-		if n.Pid == 0 {
-			msg = &Node{Name: n.Name, Id: n.Id, Pid: n.Pid, Children: []*Node{}}
-		} else {
-			for _, k := range node {
-				if n.Pid == k.Id {
-					p = append(k.Children, &Node{Name: n.Name, Id: n.Id, Pid: n.Pid, Children: []*Node{}})
-				}
+func SetNodeArray(doc *Node, node []*Node) {
+	//判断当前树是否顶级树
+	if doc.Pid == 0 {
+		//直接把树加到数组中
+		msg = append(msg, &Node{Name: doc.Name, Id: doc.Id, Pid: doc.Pid, Children: []*Node{}})
+
+		return
+	} else {
+		//不是顶级树
+		//遍历顶级树，查找当前树的父级
+		for _, v := range node {
+			//如果是当前树的父级,把当前树加到父级的子树中
+			if doc.Pid == v.Id {
+				v.Children = append(v.Children, &Node{Name: doc.Name, Id: doc.Id, Pid: doc.Pid, Children: []*Node{}})
+
+				return
+			} else {
+				//递归遍历
+				SetNodeArray(doc, v.Children)
 			}
 		}
 	}
-	msg.Children = p
+	return
 }
 
 func (self *WiKi) WiKiPage() {
-	self.TplName = "wiki.html"
+	self.TplName = "wikilist.html"
 	self.Data["root"] = admin.GetRootDoc()
 }
 
@@ -45,26 +55,36 @@ func (self *WiKi) WiKiDoc() {
 	id := self.Ctx.Input.Param(":id")
 	nid, _ := strconv.Atoi(id)
 	doc := admin.GetDocById(nid)
-	self.Layout = "wiki.html"
+	self.Layout = "wikilist.html"
 	self.TplName = "doc.html"
 	self.Data["doc"] = doc
+}
+
+func (self *WiKi) WiKiRoot() {
+	id := self.Ctx.Input.Param(":id")
+	self.Data["id"] = id
+	self.TplName = "wikitree.html"
 }
 
 func (self *WiKi) WiKiRootDoc() {
 	id := self.Ctx.Input.Param(":id")
 	pid, _ := strconv.Atoi(id)
+
 	doc := admin.GetDocById(pid)
 	subtree = []*Node{}
-	var p []*Node
-	p = []*Node{}
+	msg = []*Node{}
 	subtree = append(subtree, &Node{Name: doc.Title, Id: doc.Id, Pid: doc.Pid, Children: []*Node{}})
 
 	//通过父id查出的数据
 	rootdoc := admin.GetDocByPid(pid)
 	GetRootTree(rootdoc)
+	// for _, s := range subtree {
+	// 	fmt.Println(s.Name)
+	// }
+	for _, k := range subtree {
+		SetNodeArray(k, msg)
+	}
 
-	self.TplName = "wiki.html"
-	SetNodeArray(subtree, p)
 	self.Data["json"] = &msg
 	self.ServeJSON()
 }
@@ -72,11 +92,12 @@ func (self *WiKi) WiKiRootDoc() {
 func GetRootTree(doc []*admin.Document) {
 	//获取子树
 	for _, d := range doc {
+		fmt.Println(d.Title)
 		subtree = append(subtree, &Node{Name: d.Title, Id: d.Id, Pid: d.Pid, Children: []*Node{}})
 		if len(admin.GetDocByPid(d.Id)) > 0 {
+			fmt.Println(d.Title, "yyyyy")
 			GetRootTree(admin.GetDocByPid(d.Id))
-		} else {
-			return
 		}
 	}
+
 }
