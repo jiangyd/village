@@ -2,7 +2,7 @@
 <html>
 {{template "public/header.html" .}}
 <title>测试君|社区</title>
-<link rel="stylesheet" type="text/css" href="/static/css/jqtree.css">
+
 </head>
 
 <body>
@@ -11,14 +11,27 @@
         <div class="wrap">
             <div class="content">
     
-     <div id="t_content" class="t_content">
-                    <ul>
-                    {{range .root}}
-                    	<a href="/wiki/root/{{.Id}}"><li>{{.Title}}</li></a>
-                    {{end}}
-                    </ul>
-                </div>
+      <div class="layui-collapse">
+ {{range .root}}
+  <div class="layui-colla-item">
+    <h2 class="layui-colla-title">{{.Title}}</h2>
+    <div class="layui-colla-content layui-show">
+    {{.Content}}
+  </div>
+  </div>
+{{end}}
+</div>
     </div>
     </div>
     </div>
+<script>
+//注意：折叠面板 依赖 element 模块，否则无法进行功能性操作
+layui.use('element', function(){
+  var element = layui.element();
+  
+  //…
+});
+</script>
+</body>
+
 
