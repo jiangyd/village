@@ -46,18 +46,21 @@ func SetNodeArray(doc *Node, node []*Node) {
 	return
 }
 
-func (self *WiKi) WiKiPage() {
+func (self *WiKi) WiKiList() {
 	self.TplName = "wikilist.html"
 	self.Data["root"] = admin.GetRootDoc()
 }
 
-func (self *WiKi) WiKiDoc() {
+func (self *WiKi) WiKiDetial() {
 	id := self.Ctx.Input.Param(":id")
+	root := self.Ctx.Input.Param(":root")
 	nid, _ := strconv.Atoi(id)
 	doc := admin.GetDocById(nid)
-	self.Layout = "wikilist.html"
-	self.TplName = "doc.html"
+	self.Layout = "wikitree.html"
+	self.TplName = "wikidetial.html"
+	self.Data["id"] = root
 	self.Data["doc"] = doc
+
 }
 
 func (self *WiKi) WiKiRoot() {
@@ -66,7 +69,7 @@ func (self *WiKi) WiKiRoot() {
 	self.TplName = "wikitree.html"
 }
 
-func (self *WiKi) WiKiRootDoc() {
+func (self *WiKi) WiKiRootTree() {
 	id := self.Ctx.Input.Param(":id")
 	pid, _ := strconv.Atoi(id)
 

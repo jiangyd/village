@@ -1,7 +1,8 @@
-<div class="layui-tab-content" style="margin-left: 200px;">
+
    
-    <div id="tree" data-url="/wiki/rootdoc/{{.id}}">
+    <div id="tree" data-url="/wiki/tree/{{.id}}">
     </div>
+    {{.LayoutContent}}
 </div>
 <script src="/static/js/jQuery.js"></script>
 <script src="/static/js/tree.jquery.js"></script>
@@ -10,8 +11,15 @@
 $('#tree').tree();
 </script>
 
-<script>
-layui.config({
-    base: '/static/js/'
-}).use('document');
+<script type="text/javascript">
+$('#tree').bind(
+    'tree.select',
+    function(event) {
+        if (event.node) {
+            var tree_data = $('#tree').tree('getTree');
+           var tnode = $("#tree").tree('getSelectedNode');
+           location.href ="/wiki/detial/"+tree_data["children"][0]["id"]+"/"+tnode.id
+        } 
+    }
+);
 </script>

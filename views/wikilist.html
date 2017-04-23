@@ -11,12 +11,13 @@
         <div class="wrap">
             <div class="content">
     
-      <div class="layui-collapse">
+      <div class="layui-collapse" lay-accordion>
  {{range .root}}
   <div class="layui-colla-item">
     <h2 class="layui-colla-title">{{.Title}}</h2>
-    <div class="layui-colla-content layui-show">
+    <div class="layui-colla-content">
     {{.Content}}
+    <a href="/wiki/{{.Id}}">查看</a>
   </div>
   </div>
 {{end}}
@@ -33,5 +34,6 @@ layui.use('element', function(){
 });
 </script>
 </body>
+</html>
 
 
