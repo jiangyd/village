@@ -1,9 +1,24 @@
+<style type="text/css">
+.layui-main {
+    position: relative;
+    width: 1140px;
+    margin: 0 auto;
+}
+    .site-inline{font-size: 0;}
+.site-tree, .site-content{display: inline-block;  *display:inline; *zoom:1; vertical-align: top; font-size: 14px;}
+.site-tree{width: 220px; min-height: 900px; padding: 5px 0 20px;}
+.site-content{width: 899px; min-height: 900px; padding: 20px 0 10px 20px;}
 
-   
+</style>
+
+   <div class="site-tree">
     <div id="tree" data-url="/wiki/tree/{{.id}}">
     </div>
+    </div>
     {{.LayoutContent}}
+
 </div>
+
 <script src="/static/js/jQuery.js"></script>
 <script src="/static/js/tree.jquery.js"></script>
 <script src="/static/editor.md/editormd.min.js"></script>
