@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html>
+{{template "public/header.html" .}}
+<link rel="stylesheet" type="text/css" href="/static/css/jqtree.css">
+<title>测试君|社区</title>
+</head>
+
+<body>
+    {{template "public/nav.html" .}}
 <style type="text/css">
 .layui-main {
     position: relative;
@@ -10,12 +19,13 @@
 .site-content{width: 899px; min-height: 900px; padding: 20px 0 10px 20px;}
 
 </style>
-
+<div class="layui-tab-content"  style="margin-left: 200px;">
    <div class="site-tree">
     <div id="tree" data-url="/wiki/tree/{{.id}}">
     </div>
     </div>
     {{.LayoutContent}}
+    <input type="hidden" name="" value="{{.selectnode}}" id="selectnode">
 
 </div>
 
@@ -23,17 +33,29 @@
 <script src="/static/js/tree.jquery.js"></script>
 <script src="/static/editor.md/editormd.min.js"></script>
 <script>
-$('#tree').tree();
+$('#tree').tree({
+    autoOpen: true
+});
+
 </script>
 
 <script type="text/javascript">
+var $tree = $('#tree');
+var selectnode = $("#selectnode").val()
+setTimeout(function() { var node = $tree.tree('getNodeById', selectnode);$tree.tree('selectNode', node); }, 100);
+
+
+ 
 $('#tree').bind(
-    'tree.select',
+    'tree.click',
     function(event) {
         if (event.node) {
+            // event.preventDefault();
             var tree_data = $('#tree').tree('getTree');
-           var tnode = $("#tree").tree('getSelectedNode');
-           location.href ="/wiki/detial/"+tree_data["children"][0]["id"]+"/"+tnode.id
+           // var tnode = $("#tree").tree('getSelectedNode');
+           var node=event.node;
+           location.href ="/wiki/detial/"+tree_data["children"][0]["id"]+"/"+node.id
+           // location.href ="/wiki/detial/"+tree_data["children"][0]["id"]+"/"+tnode.id
         } 
     }
 );

@@ -59,6 +59,7 @@ func (self *WiKi) WiKiDetial() {
 	self.Layout = "wikitree.html"
 	self.TplName = "wikidetial.html"
 	self.Data["id"] = root
+	self.Data["selectnode"] = id
 	self.Data["doc"] = doc
 
 }
