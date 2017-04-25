@@ -3,6 +3,7 @@ package controllers
 import (
 	"fmt"
 	"github.com/astaxie/beego"
+	"github.com/golang-commonmark/markdown"
 	"strconv"
 	"village/models/admin"
 )
@@ -61,6 +62,9 @@ func (self *WiKi) WiKiDetial() {
 	self.Data["id"] = root
 	self.Data["selectnode"] = id
 	self.Data["doc"] = doc
+	md := markdown.New(markdown.HTML(true))
+	cc := md.RenderToString([]byte(doc.Content))
+	self.Data["content"] = cc
 
 }
 

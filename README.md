@@ -15,7 +15,8 @@
 3. go get -u qiniupkg.com/api.v7
 4. go get github.com/go-sql-driver/mysql
 5. go get -u github.com/astaxie/beego/session/mysql
-
+6. go get github.com/golang-commonmark/markdown
+7. go get github.com/golang-commonmark/mdtool
 
 ## 使用mysql数据库:
 1. 创建village数据库

@@ -7,56 +7,74 @@
 
 <body>
     {{template "public/nav.html" .}}
-<style type="text/css">
-.layui-main {
-    position: relative;
-    width: 1140px;
-    margin: 0 auto;
-}
-    .site-inline{font-size: 0;}
-.site-tree, .site-content{display: inline-block;  *display:inline; *zoom:1; vertical-align: top; font-size: 14px;}
-.site-tree{width: 220px; min-height: 900px; padding: 5px 0 20px;}
-.site-content{width: 899px; min-height: 900px; padding: 20px 0 10px 20px;}
-
-</style>
-<div class="layui-tab-content"  style="margin-left: 200px;">
-   <div class="site-tree">
-    <div id="tree" data-url="/wiki/tree/{{.id}}">
-    </div>
-    </div>
-    {{.LayoutContent}}
-    <input type="hidden" name="" value="{{.selectnode}}" id="selectnode">
-
-</div>
-
-<script src="/static/js/jQuery.js"></script>
-<script src="/static/js/tree.jquery.js"></script>
-<script src="/static/editor.md/editormd.min.js"></script>
-<script>
-$('#tree').tree({
-    autoOpen: true
-});
-
-</script>
-
-<script type="text/javascript">
-var $tree = $('#tree');
-var selectnode = $("#selectnode").val()
-setTimeout(function() { var node = $tree.tree('getNodeById', selectnode);$tree.tree('selectNode', node); }, 100);
-
-
- 
-$('#tree').bind(
-    'tree.click',
-    function(event) {
-        if (event.node) {
-            // event.preventDefault();
-            var tree_data = $('#tree').tree('getTree');
-           // var tnode = $("#tree").tree('getSelectedNode');
-           var node=event.node;
-           location.href ="/wiki/detial/"+tree_data["children"][0]["id"]+"/"+node.id
-           // location.href ="/wiki/detial/"+tree_data["children"][0]["id"]+"/"+tnode.id
-        } 
+    <style type="text/css">
+    .layui-main {
+        position: relative;
+        width: 1140px;
+        margin: 0 auto;
     }
-);
-</script>
+    
+    .site-inline {
+        font-size: 0;
+    }
+    
+    .site-tree,
+    .site-content {
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
+        vertical-align: top;
+        font-size: 14px;
+    }
+    
+    .site-tree {
+        width: 220px;
+        min-height: 900px;
+        padding: 5px 0 20px;
+    }
+    
+    .site-content {
+        width: 899px;
+        min-height: 900px;
+        padding: 20px 0 10px 20px;
+    }
+    </style>
+    <div class="layui-tab-content" style="margin-left: 200px;">
+        <div class="site-tree">
+            <div id="tree" data-url="/wiki/tree/{{.id}}">
+            </div>
+        </div>
+        {{.LayoutContent}}
+        <input type="hidden" name="" value="{{.selectnode}}" id="selectnode">
+    </div>
+    <script src="/static/js/jQuery.js"></script>
+    <script src="/static/js/tree.jquery.js"></script>
+    <script>
+    $('#tree').tree({
+        autoOpen: true
+    });
+    </script>
+    <script type="text/javascript">
+    var $tree = $('#tree');
+    var selectnode = $("#selectnode").val()
+    setTimeout(function() {
+        var node = $tree.tree('getNodeById', selectnode);
+        $tree.tree('selectNode', node);
+    }, 100);
+
+
+
+    $('#tree').bind(
+        'tree.click',
+        function(event) {
+            if (event.node) {
+                // event.preventDefault();
+                var tree_data = $('#tree').tree('getTree');
+                // var tnode = $("#tree").tree('getSelectedNode');
+                var node = event.node;
+                location.href = "/wiki/detial/" + tree_data["children"][0]["id"] + "/" + node.id
+                    // location.href ="/wiki/detial/"+tree_data["children"][0]["id"]+"/"+tnode.id
+            }
+        }
+    );
+    </script>

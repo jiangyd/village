@@ -2,7 +2,6 @@
 <html>
 {{template "public/header.html" .}}
 <title>测试君|社区</title>
-
 </head>
 
 <body>
@@ -10,30 +9,28 @@
     <div class="main layui-clear">
         <div class="wrap">
             <div class="content">
-    
-      <div class="layui-collapse" lay-accordion>
- {{range .root}}
-  <div class="layui-colla-item">
-    <h2 class="layui-colla-title">{{.Title}}</h2>
-    <div class="layui-colla-content">
-    {{.Content}}
-    <a href="/wiki/{{.Id}}">查看</a>
-  </div>
-  </div>
-{{end}}
-</div>
+                <div class="layui-collapse" lay-accordion>
+                    {{range .root}}
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">{{.Title}}</h2>
+                        <div class="layui-colla-content">
+                            {{.Content}}
+                            <a href="/wiki/{{.Id}}">查看</a>
+                        </div>
+                    </div>
+                    {{end}}
+                </div>
+            </div>
+        </div>
     </div>
-    </div>
-    </div>
-<script>
-//注意：折叠面板 依赖 element 模块，否则无法进行功能性操作
-layui.use('element', function(){
-  var element = layui.element();
-  
-  //…
-});
-</script>
+    <script>
+    //注意：折叠面板 依赖 element 模块，否则无法进行功能性操作
+    layui.use('element', function() {
+        var element = layui.element();
+
+        //…
+    });
+    </script>
 </body>
+
 </html>
-
-
