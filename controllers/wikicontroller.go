@@ -54,6 +54,7 @@ func (self *WiKi) WiKiList() {
 
 func (self *WiKi) WiKiDetial() {
 	id := self.Ctx.Input.Param(":id")
+	fmt.Println(id, "iiiiiiii")
 	root := self.Ctx.Input.Param(":root")
 	nid, _ := strconv.Atoi(id)
 	doc := admin.GetDocById(nid)
@@ -64,6 +65,7 @@ func (self *WiKi) WiKiDetial() {
 	self.Data["doc"] = doc
 	md := markdown.New(markdown.HTML(true))
 	cc := md.RenderToString([]byte(doc.Content))
+	fmt.Println(cc)
 	self.Data["content"] = cc
 
 }

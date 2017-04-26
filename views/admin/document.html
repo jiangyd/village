@@ -1,3 +1,4 @@
+<link rel="stylesheet" type="text/css" href="/static/css/jqtree.css">
 <div class="layui-tab-content" style="margin-left: 200px;">
     <a href="/adddocument/">
         <button id="addnode">添加根目录</button>
@@ -12,7 +13,7 @@
 <script src="/static/js/tree.jquery.js"></script>
 <script src="/static/editor.md/editormd.min.js"></script>
 <script>
-$('#tree').tree();
+$('#tree').tree({autoOpen: true});
 </script>
 <script type="text/javascript">
 $('#tree').bind(

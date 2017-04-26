@@ -2,6 +2,12 @@
 <html>
 {{template "public/header.html" .}}
 <link rel="stylesheet" type="text/css" href="/static/css/jqtree.css">
+
+
+<link rel="stylesheet" type="text/css" href="/static/css/editormd/planeui.min.css">
+
+<link rel="stylesheet" type="text/css" href="/static/css/editormd/editormd.min.css">
+<link rel="stylesheet" type="text/css" href="/static/css/editormd/index.css">
 <title>测试君|社区</title>
 </head>
 
@@ -14,10 +20,6 @@
         margin: 0 auto;
     }
     
-    .site-inline {
-        font-size: 0;
-    }
-    
     .site-tree,
     .site-content {
         display: inline-block;
@@ -26,7 +28,8 @@
         vertical-align: top;
         font-size: 14px;
     }
-    
+    .site-content li{list-style:disc;}
+    .site-content ol li{list-style:decimal}
     .site-tree {
         width: 220px;
         min-height: 900px;
@@ -37,6 +40,7 @@
         width: 899px;
         min-height: 900px;
         padding: 20px 0 10px 20px;
+        margin: 0 20px;
     }
     </style>
     <div class="layui-tab-content" style="margin-left: 200px;">

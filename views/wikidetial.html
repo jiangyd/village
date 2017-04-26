@@ -1,5 +1,9 @@
 <div class="site-content">
-    <h1 class="site-h1">{{.doc.Title}}</h1> {{str2html .content}}
+    <h1>{{.doc.Title}}</h1>
+<div class="markdown-body editormd-preview-container" previewcontainer="true" style="padding: 20px;">
+     {{str2html .content}}
+     </div>
+     </div>
 </div>
 <script src="/static/js/jQuery.js"></script>
 <script src="/static/editor.md/editormd.min.js"></script>
