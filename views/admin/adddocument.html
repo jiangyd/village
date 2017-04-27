@@ -17,7 +17,7 @@
                 </div>
             </div>
             <button class="layui-btn layui-btn-normal" lay-filter="addnode" lay-submit type="button" style="float: right;">
-                确认
+                确认a
             </button>
         </form>
     </div>
@@ -26,7 +26,9 @@
 $(function() {
     var editor = editormd("editormd", {
         path: "/static/editor.md/lib/", // Autoload modules mode, codemirror, marked... dependents libs path
-        height: "500px"
+        height: "100px",
+        flowChart : true
+
 
     });
 });

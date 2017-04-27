@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="/static/editor.md/css/editormd.min.css" />
 <script src="/static/js/jQuery.js"></script>
 <script src="/static/editor.md/editormd.min.js"></script>
+
 <div class="layui-tab-content" style="margin-left: 200px;">
     <div class="layui-form layui-form-pane">
         <form class="layui-form" method="post">
@@ -26,8 +27,18 @@
 $(function() {
     var editor = editormd("editormd", {
         path: "/static/editor.md/lib/", // Autoload modules mode, codemirror, marked... dependents libs path
-        height: "500px"
-
+        height: "500px",
+        flowChart : true,//流程图显示
+        autoHeight : true,//自动高亮
+        htmlDecode : true,
+        htmlDecode : "style,script,iframe,sub,sup|on*" ,
+        toolbarIcons : function() {
+            // Or return editormd.toolbarModes[name]; // full, simple, mini
+            // Using "||" set icons align right.
+            return ["undo", "redo", "|", "bold", "hr","list-ul","list-ol","link","del","quote","ucwords","h1","h2","h3","h4","h5","h6","code","preformatted-text","code-block","image","table","datetime","goto-line", "|", "file", "faicon", "search","help","||", "watch"]},
+            imageUpload    : true,
+    imageFormats   : ["jpg", "jpeg", "gif", "png"],
+    imageUploadURL : "/topicupload",
     });
 });
 </script>

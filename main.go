@@ -38,6 +38,7 @@ func main() {
 	beego.BConfig.WebConfig.Session.SessionName = "SessionId"
 	beego.BConfig.WebConfig.Session.SessionProvider = "memory"
 	beego.BConfig.CopyRequestBody = true
+	beego.BConfig.WebConfig.Session.SessionGCMaxLifetime = 3600
 	beego.BConfig.WebConfig.Session.SessionProviderConfig = "root:123456@tcp(192.168.56.102.1:3377)/village?charset=utf8&loc=Asia%2FShanghai"
 	/*end*/
 	beego.Run()

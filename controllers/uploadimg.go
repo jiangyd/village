@@ -52,8 +52,9 @@ func (self *UploadImg) Upload() {
 //发帖上传的附件图片
 func (self *UploadImg) TopicUpload() {
 	sessionid := self.GetSession("uid")
+	fmt.Println(sessionid, "sessionid")
 	if sessionid == nil {
-		msg := map[string]interface{}{"code": 1, "msg": "need loging"}
+		msg := map[string]interface{}{"code": 1, "message": "need loging"}
 		self.Data["json"] = &msg
 		self.ServeJSON()
 	} else {
@@ -65,7 +66,7 @@ func (self *UploadImg) TopicUpload() {
 		self.SaveToFile("file", "."+path)
 		//传入文件路径，及七牛保存的文件名
 		body := UpQiNiu("."+path, "/static/images/"+timestr+"_"+h.Filename)
-		msg := map[string]interface{}{"code": 0, "msg": "", "data": map[string]interface{}{"src": "http://file.testwd.cn/" + body.Key, "title": ""}}
+		msg := map[string]interface{}{"code": 0, "msg": "", "message": "", "url": "http://file.testwd.cn/" + body.Key, "data": map[string]interface{}{"src": "http://file.testwd.cn/" + body.Key, "title": ""}}
 		self.Data["json"] = &msg
 		self.ServeJSON()
 	}
