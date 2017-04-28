@@ -1,9 +1,19 @@
-layui.define(['layer', 'form', 'element'], function(exports) {
+layui.define(['layer', 'form', 'element','upload'], function(exports) {
     var layer = layui.layer;
     var elements = layui.element();
     var $ = layui.jquery;
     var form = layui.form();
+    var siteupload=layui.upload;
+    //上传站点图片
 
+    siteupload({
+        url:"/topicupload",
+        success:function(data){
+                
+                $("#site_file").value("wwww")
+            
+        }
+    });
     //添加根目录
     form.on('submit(addmenu)', function(data) {
         $.ajax({
@@ -71,6 +81,31 @@ layui.define(['layer', 'form', 'element'], function(exports) {
         return false;
     });
 
+    //添加站点
+        form.on('submit(addsite)', function(data) {
+        $.ajax({
+            async: false,
+            url: "/site/add",
+            data: {
+                "category":data.field.category,
+                "url": data.field.url,
+                "title": data.field.title,
+                "content":data.field.content,
+                "img":data.field.img
+            },
+            type: 'POST',
+            success: function(text) {
+                if (text.code == 0) {
+                    location.href = '/admin/sitemanagelist'
+
+                } else if (text.code != 0) {
+                    layer.msg(text.msg)
+                }
+            }
+        });
+        return false;
+    });    
+
     //添加菜单弹出
     $("#addmenu").on('click', function() {
         layer.open({
@@ -92,7 +127,7 @@ layui.define(['layer', 'form', 'element'], function(exports) {
         form.render('select');
     });
 
-    //添加分类单弹出
+    //添加分类弹出
     $("#addcategory").on('click', function() {
         layer.open({
             type: 1,
@@ -102,10 +137,54 @@ layui.define(['layer', 'form', 'element'], function(exports) {
         });
         form.render('select');
     });
+    //添加站点弹出
+    $("#addsite").on('click', function() {
+        layer.open({
+            type: 1,
+            title: "添加站点",
+            area: ['500px', '560px'],
+            content: $("#div_addsite")
+        });
+        form.render('select');
+    });
 
 
     exports('admin', {});
 });
+
+//修改站点
+function modifysite(id){
+layer.open({
+        type: 2,
+        title: "修改站点",
+        resize: false,
+        area: ['500px', '560px'],
+        content: ["/getsiteinfo?siteid=" + id]
+    });
+}
+//删除站点
+function delsite(id) {
+    layer.confirm("是否确认删除？", {
+        btn: ["是", "否"],
+        yes: function() {
+            $.ajax({
+                type: "post",
+                url: "/site/del",
+                data: {
+                    "id": id
+                },
+                success: function(data) {
+                    if (data.code == 0) {
+                        location.href = '/admin/sitemanagelist';
+
+                    } else if (data.code != 0) {
+                        layer.msg(data.msg);
+                    };
+                }
+            })
+        }
+    })
+};
 
 
 //修改菜单
@@ -174,7 +253,10 @@ function delsubmenu(key) {
             })
         }
     })
-}
+};
+
+
+
 
 //修改分类
 function modifycategory(id) {

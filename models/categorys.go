@@ -8,7 +8,7 @@ import (
 type Categorys struct {
 	Id           int
 	Category     string `orm:"unique"`
-	CategoryType string //topic:主题,cite:站点
+	CategoryType string //topic:主题,site:站点
 }
 
 //获取所有分类
@@ -63,6 +63,6 @@ func GetCiteCategory() []*Categorys {
 	o := orm.NewOrm()
 	var category Categorys
 	var categorys []*Categorys
-	o.QueryTable(category).Filter("CategoryType", "cite").All(&categorys)
+	o.QueryTable(category).Filter("CategoryType", "site").All(&categorys)
 	return categorys
 }

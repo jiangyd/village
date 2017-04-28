@@ -12,7 +12,7 @@
             {{range .categorys}}
             <tr>
                 <td>{{.Category}}</td>
-                <td>{{if eq .CategoryType "topic"}}主题{{else if eq .CategoryType "cite"}}站点{{end}}</td>
+                <td>{{if eq .CategoryType "topic"}}主题{{else if eq .CategoryType "site"}}站点{{end}}</td>
                 <td><button class="layui-btn layui-btn-mini" onclick="modifycategory({{.Id}})">修改</button>
 <button class="layui-btn layui-btn-mini" onclick="delcategory({{.Id}})">删除</button></td>
             </tr>
@@ -36,7 +36,7 @@
                     <option value=""></option>
                     
                     <option value="topic">主题分类</option>
-                    <option value="cite">站点分类</option>
+                    <option value="site">站点分类</option>
                 </select>
             </div>
         </div>

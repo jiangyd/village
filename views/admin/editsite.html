@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/layui/css/layui.css">
+    <script type="text/javascript" src="/static/layui/layui.js"></script>
+    <title></title>
+</head>
+<body>
+	<div id="div_editsite">
+    <form class="layui-form" method="post" style="margin:20px 20px 0px">
+                <div class="layui-form-item">
+                <label class="layui-form-label">所属类别</label>
+<div class="layui-input-block">
+<select name="category" lay-verify="required">
+<option value="">选择所属类别</option>
+{{range .sitecategory}}
+<option value="{{.Id}}" {{if eq $.site.Category.Id .Id}}selected{{end}}>{{.Category}}</option>
+{{end}}
+</select>
+</div>
+</div>
+<div class="layui-form-item">
+<label class="layui-form-label">url</label>
+<div class="layui-input-block">
+<input type="text" name="url" required  lay-verify="required" placeholder="请输入站点URL" autocomplete="off" class="layui-input" value="{{.site.Url}}">
+</div>
+</div>
+<div class="layui-form-item">
+<label class="layui-form-label">名称</label>
+<div class="layui-input-block">
+<input type="text" name="title" required  lay-verify="required" placeholder="请输入站点名称" autocomplete="off" class="layui-input" value="{{.site.Title}}">
+</div>
+</div>
+<div class="layui-form-item">
+<label class="layui-form-label">描述</label>
+<div class="layui-input-block">
+<textarea id="site_content" name="content" placeholder="请输入站点描述" class="layui-textarea fly-editor" style="height:160px;">{{.site.Content}}</textarea>
+</div>
+</div>
+<div class="layui-form-item">
+<label class="layui-form-label">图片</label>
+<div class="layui-input-block">
+<input type="file" id="site_file" name="img" class="layui-upload-file">
+</div>
+</div>
+<input type="hidden" name="id" value="{{.site.Id}}">
+<button class="layui-btn layui-btn-normal" lay-filter="editsite" lay-submit type="button" style="float: right;">确认</button>
+</form>
+</div>
+</body>
+<script>
+    layui.use(['form'], function() {
+        var form = layui.form();
+        var $ = layui.jquery;
+        //监听提交
+        form.on('submit(editsite)', function(data) {
+            $.ajax({
+                async: false,
+                url: "/site/modify",
+                data: {
+                	"id":data.field.id,
+                	"category":data.field.category,
+                "url": data.field.url,
+                "title": data.field.title,
+                "content":data.field.content,
+                "img":data.field.img
+                   
+                },
+                type: 'POST',
+                success: function(text) {
+                    if (text.code == 0) {
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index); 
+                        location.href = '/admin/submenumanagelist'
+
+                    } else if (text.code != 0) {
+                        layer.msg(text.msg)
+                    }
+                }
+            });
+            return false;
+        });
+    });
+    </script>
+    </html>

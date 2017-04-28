@@ -85,6 +85,16 @@ func (self *Admin) DocumentInfo() {
 	self.TplName = "admin/document.html"
 }
 
+//站点页面
+func (self *Admin) SiteManageList() {
+	self.Data["menu"] = admin.GetAllMenu()
+	self.Data["submenu"] = admin.GetAllSubMenu()
+	self.Data["site"] = models.GetAllSite()
+	self.Data["sitecategory"] = models.GetCiteCategory()
+	self.Layout = "admin/nav.html"
+	self.TplName = "admin/site.html"
+}
+
 //编辑子菜单页面
 func (self *Admin) GetSubMenuInfo() {
 	key := self.Input().Get("key")
@@ -114,6 +124,15 @@ func (self *Admin) GetCategoryInfo() {
 	id, _ := strconv.Atoi(categoryid)
 	self.TplName = "admin/editcategory.html"
 	self.Data["category"] = models.FindCategory(id)
+}
+
+//编辑站点页面
+func (self *Admin) GetSiteInfo() {
+	siteid := self.Input().Get("siteid")
+	sid, _ := strconv.Atoi(siteid)
+	self.Data["sitecategory"] = models.GetCiteCategory()
+	self.Data["site"] = models.FindSiteById(sid)
+	self.TplName = "admin/editsite.html"
 }
 
 //菜单操作
@@ -222,6 +241,50 @@ func (self *Admin) CategoryAction() {
 		id, _ := strconv.Atoi(categoryid)
 		categorys := models.FindCategory(id)
 		models.DelCategory(&categorys)
+		msg := map[string]interface{}{"code": 0, "msg": "删除成功"}
+		self.Data["json"] = &msg
+		self.ServeJSON()
+	default:
+		msg := map[string]interface{}{"code": 1, "msg": "未找到方法"}
+		self.Data["json"] = &msg
+		self.ServeJSON()
+	}
+
+}
+
+//站点操作
+func (self *Admin) SiteAction() {
+	action := self.Ctx.Input.Param(":action")
+	uid := self.GetSession("uid")
+	switch action {
+	case "add":
+		categoryid, url, title, content, img := self.Input().Get("category"), self.Input().Get("url"), self.Input().Get("title"), self.Input().Get("content"), self.Input().Get("img")
+		fmt.Println(img, "img")
+		cid, _ := strconv.Atoi(categoryid)
+		site := models.Sites{Category: &models.Categorys{Id: cid}, Url: url, Title: title, Content: content, Img: img, User: &models.User{Id: uid.(int)}}
+		models.AddSite(&site)
+		msg := map[string]interface{}{"code": 0, "msg": "添加成功"}
+		self.Data["json"] = &msg
+		self.ServeJSON()
+	case "modify":
+		id, categoryid, url, title, content, img := self.Input().Get("id"), self.Input().Get("category"), self.Input().Get("url"), self.Input().Get("title"), self.Input().Get("content"), self.Input().Get("img")
+		cid, _ := strconv.Atoi(categoryid)
+		sid, _ := strconv.Atoi(id)
+		site := models.FindSiteById(sid)
+		site.User = &models.User{Id: uid.(int)}
+		site.Category = &models.Categorys{Id: cid}
+		site.Url = url
+		site.Title = title
+		site.Content = content
+		site.Img = img
+		models.UpdateSite(&site)
+		msg := map[string]interface{}{"code": 0, "msg": "修改成功"}
+		self.Data["json"] = &msg
+		self.ServeJSON()
+	case "del":
+		id := self.Input().Get("id")
+		sid, _ := strconv.Atoi(id)
+		models.DelSite(sid)
 		msg := map[string]interface{}{"code": 0, "msg": "删除成功"}
 		self.Data["json"] = &msg
 		self.ServeJSON()

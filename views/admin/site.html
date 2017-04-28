@@ -1,0 +1,86 @@
+
+
+<div class="layui-tab-content"  style="margin-left: 200px;">
+<button class="layui-btn" id="addsite">添加</button>
+
+
+<table class="layui-table">
+    <thead>
+        <tr>
+            <th>url</th>
+            <th>名称</th>
+            <th>描述</th>
+            <th>图片</th>
+            <th>收录时间</th>
+            <th>所属分类</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+    {{range .site}}
+        <tr>
+            <td>{{.Url}}</td>
+            <td>{{.Title}}</td>
+            <td>{{.Content}}</td>
+            <td>{{.Img}}</td>
+            <td>{{date .Ctime "Y-m-d H:i:s"}}</td>
+            <td>{{.Category.Category}}</td>
+            
+
+
+            <td><button class="layui-btn layui-btn-mini" onclick="modifysite('{{.Id}}')">修改</button>
+<button class="layui-btn layui-btn-mini" onclick="delsite('{{.Id}}')">删除</button></td>
+        </tr>
+    {{end}}    
+    </tbody>
+</table>
+</div>
+</div>
+<script>
+    layui.config({
+        base: '/static/js/'
+    }).use('admin');
+</script>
+<script src="/static/js/jQuery.js"></script>
+</body>
+<div id="div_addsite" style="display: none;">
+    <form class="layui-form" method="post" style="margin:20px 20px 0px">
+                <div class="layui-form-item">
+                <label class="layui-form-label">所属类别</label>
+<div class="layui-input-block">
+<select name="category" lay-verify="required">
+<option value="">选择所属类别</option>
+{{range .sitecategory}}
+<option value="{{.Id}}">{{.Category}}</option>
+{{end}}
+</select>
+</div>
+</div>
+<div class="layui-form-item">
+<label class="layui-form-label">url</label>
+<div class="layui-input-block">
+<input type="text" name="url" required  lay-verify="required" placeholder="请输入站点URL" autocomplete="off" class="layui-input">
+</div>
+</div>
+<div class="layui-form-item">
+<label class="layui-form-label">名称</label>
+<div class="layui-input-block">
+<input type="text" name="title" required  lay-verify="required" placeholder="请输入站点名称" autocomplete="off" class="layui-input">
+</div>
+</div>
+<div class="layui-form-item">
+<label class="layui-form-label">描述</label>
+<div class="layui-input-block">
+<textarea id="site_content" name="content" placeholder="请输入站点描述" class="layui-textarea fly-editor" style="height:160px;"></textarea>
+</div>
+</div>
+<div class="layui-form-item">
+<label class="layui-form-label">图片</label>
+<div class="layui-input-block">
+<input type="file" id="site_file" name="img" class="layui-upload-file" value="dssdssd"></input>
+</div>
+</div>
+<button class="layui-btn layui-btn-normal" lay-filter="addsite" lay-submit type="button" style="float: right;">确认</button>
+</form>
+</div>
+</html>
