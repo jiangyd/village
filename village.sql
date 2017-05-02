@@ -24,3 +24,4 @@ INSERT INTO `village`.`sub_menu` (`key`, `title`, `url`, `parent_id`) VALUES ('r
 INSERT INTO `village`.`sub_menu` (`key`, `title`, `url`, `parent_id`) VALUES ('submenu', '子菜单', '/admin/submenumanagelist', 'system');
 INSERT INTO `village`.`sub_menu` (`key`, `title`, `url`, `parent_id`) VALUES ('topic', '帖子', '/admin/topicmanagelist', 'content');
 INSERT INTO `village`.`sub_menu` (`key`, `title`, `url`, `parent_id`) VALUES ('user', '用户', '/admin/usermanagelist', 'system');
+INSERT INTO `village`.`sub_menu` (`key`, `title`, `url`, `parent_id`) VALUES ('site', '站点', '/admin/sitemanagelist', 'content');

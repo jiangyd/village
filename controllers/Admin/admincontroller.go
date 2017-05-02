@@ -14,15 +14,7 @@ type Admin struct {
 }
 
 func (self *Admin) Login() {
-	self.TplName = "admin/menu.html"
-	self.Data["menu"] = admin.GetAllMenu()
-	fmt.Println(admin.GetAllSubMenu())
-	self.Data["submenu"] = admin.GetAllSubMenu()
-	for a, b := range admin.GetAllSubMenu() {
-		fmt.Println(a, "a")
-		fmt.Println(b.Parent.Key, "key")
-		fmt.Println(b.Parent.Title, "title")
-	}
+	self.TplName = "admin/login.html"
 }
 
 //菜单页面
