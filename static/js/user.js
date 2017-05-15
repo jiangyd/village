@@ -81,6 +81,32 @@ layui.define(['layer', 'form', 'element', 'upload'], function(exports) {
 
     });
 
+    form.on('submit(forgetgo)',function(data){
+        $.ajax({
+            async:false,
+            url:"/user/forgetpwd",
+            data:{"email":data.field.email,
+            "vercode": data.field.vercode,
+                "captcha_id": data.field.captcha_id
+        },
+            type:'POST',
+            success:function(text){
+                if(text.msg=='success'){
+                    
+                    layer.msg('已发送找回密码邮件,前往重置')
+                }else if(text.code!=0){
+                    layer.msg(text.msg)
+
+                }
+            }
+
+
+        });
+        
+        return false;
+
+    });
+
 
 
 

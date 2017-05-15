@@ -16,6 +16,27 @@ func (self *UserController) LoginPage() {
 	self.TplName = "user/login.html"
 }
 
+func (self *UserController) ForGetPwd() {
+	email, vercode, captcha_id := self.Input().Get("email"), self.Input().Get("vercode"), self.Input().Get("captcha_id")
+	// if !CheckCode(vercode, captcha_id) {
+	// 	msg := map[string]interface{}{"code": 1, "msg": "验证码错误"}
+	// 	self.Data["json"] = &msg
+	// 	self.ServeJSON()
+	// 	return
+	// }
+	fmt.Println(vercode, captcha_id)
+	if models.IsUserExitByEmail(email) {
+		SendMail(email, "<h1>rere</h2>", "测试")
+		msg := map[string]interface{}{"code": 0, "msg": "success"}
+		self.Data["json"] = &msg
+		self.ServeJSON()
+	} else {
+		msg := map[string]interface{}{"code": 1, "msg": "邮箱不存在"}
+		self.Data["json"] = &msg
+		self.ServeJSON()
+	}
+}
+
 //登录接口
 func (self *UserController) Login() {
 	email, password, vercode, captcha_id := self.Input().Get("email"), self.Input().Get("password"), self.Input().Get("vercode"), self.Input().Get("captcha_id")

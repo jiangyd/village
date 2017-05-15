@@ -14,6 +14,7 @@ func init() {
 	beego.Router("/user/forget", &controllers.UserController{}, "GET:Forget")
 	beego.Router("/user/set", &controllers.UserController{}, "GET:Set")      //设置信息页面
 	beego.Router("/user/set", &controllers.UserController{}, "POST:SetInfo") //修改基本信息
+	beego.Router("/user/forgetpwd", &controllers.UserController{}, "POST:ForGetPwd")
 	beego.Router("/user/message", &controllers.UserController{}, "GET:Message")
 	beego.Router("/user/message", &controllers.UserController{}, "POST:SendMsg")
 	beego.Router("/user/topic", &controllers.UserController{}, "GET:UserTopic")
