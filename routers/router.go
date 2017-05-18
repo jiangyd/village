@@ -46,6 +46,7 @@ func init() {
 	beego.Router("/wiki/tree/:id([0-9]+)", &controllers.WiKi{}, "GET:WiKiRootTree")
 	//admin
 	beego.Router("/admin", &admin.Admin{}, "GET:Login")
+	beego.Router("/admin", &admin.Admin{}, "GET:AdminPost")
 	beego.Router("/menu/:action([a-z]+)", &admin.Admin{}, "POST:MenuAction")
 	beego.Router("/submenu/:action([a-z]+)", &admin.Admin{}, "POST:SubMenuAction")
 	beego.Router("/category/:action([a-z]+)", &admin.Admin{}, "POST:CategoryAction")
