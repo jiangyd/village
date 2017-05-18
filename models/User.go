@@ -43,6 +43,12 @@ func IsUserExit(uid *User) bool {
 
 }
 
+func IsUserExitByEmail(email string) bool {
+	o := orm.NewOrm()
+	var user User
+	return o.QueryTable(user).Filter("Email", email).Exist()
+}
+
 //查看用户详细信息
 func FindUserDetialById(id int) User {
 	o := orm.NewOrm()

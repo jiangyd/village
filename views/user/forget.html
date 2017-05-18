@@ -25,10 +25,12 @@
                                     <label class="layui-form-label" for="L_vercode">验证码</label>
                                     <div class="layui-input-inline">
                                         <input type="text" class="layui-input" autocomplete="off" placeholder="请输入验证码" lay-verify="required" required="" name="vercode" id="L_vercode"> </div>
-                                    <div class="layui-form-mid"> </div>
+                                    <div class="layui-form-mid"> 
+                                        {{template "public/captcha.html"}}
+                                    </div>
                                 </div>
                                 <div class="layui-form-item">
-                                    <button lay-submit="" lay-filter="*" alert="1" class="layui-btn">提交</button>
+                                    <button class="layui-btn" lay-filter="forgetgo" lay-submit type="button">提交</button>
                                 </div>
                             </form>
                         </div>
@@ -37,3 +39,9 @@
             </div>
         </div>
     </div>
+    <script>
+        layui.config({
+            base: '/static/js/'
+        }).use('user')
+        </script>
+
