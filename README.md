@@ -17,6 +17,7 @@
 5. go get -u github.com/astaxie/beego/session/mysql
 6. go get github.com/golang-commonmark/markdown
 7. go get github.com/golang-commonmark/mdtool
+8. go get github.com/satori/go.uuid
 
 ## 使用mysql数据库:
 1. 创建village数据库

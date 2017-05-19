@@ -57,7 +57,7 @@ func GetUtcTime() string {
 	return s
 }
 
-func SendMail(toaddress, htmlbody, subject string) {
+func SendMail(toaddress, htmlbody, subject string) *map[string]interface{} {
 	//组织请求数据，方法get
 	urldata := url.Values{}
 	//获取utc时间
@@ -100,6 +100,5 @@ func SendMail(toaddress, htmlbody, subject string) {
 		fmt.Println(err)
 	}
 	json.Unmarshal(data, &Aliyun)
-	fmt.Println(&Aliyun)
-
+	return &Aliyun
 }
