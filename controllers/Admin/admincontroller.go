@@ -17,6 +17,10 @@ func (self *Admin) Login() {
 	self.TplName = "admin/login.html"
 }
 
+func (self *Admin) AdminPost() {
+
+}
+
 //菜单页面
 func (self *Admin) MenuManageList() {
 	self.Data["menu"] = admin.GetAllMenu()

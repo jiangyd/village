@@ -31,7 +31,7 @@ func UpdateMenu(menu *Menu) int64 {
 	o := orm.NewOrm()
 	id, err := o.Update(menu)
 	if err != nil {
-		fmt.Println(err, "rrrrrrrrrrrrrrrrrrrrrrr")
+		fmt.Println(err)
 	}
 	return id
 }

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+{{template "public/header.html" .}}
+<title>测试村|重设密码</title>
+</head>
+
+<body>
+    {{template "public/nav.html" .}}
+    <div class="main layui-clear">
+        <div class="fly-panel fly-panel-user" pad20="">
+            <div class="layui-tab layui-tab-brief" lay-filter="user">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">重设密码</li>
+                </ul>
+                <div id="LAY_ucm" class="layui-form layui-tab-content" style="padding: 20px 0;">
+                    <div class="layui-tab-item layui-show">
+                        <div class="layui-form layui-form-pane">
+                            <form method="post">
+                                <div class="layui-form-item">
+                                    <label for="L_pass" class="layui-form-label">新密码</label>
+                                    <div class="layui-input-inline">
+                                        <input type="password" id="L_pass" name="password" required lay-verify="required" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label for="L_pass" class="layui-form-label">确认密码</label>
+                                    <div class="layui-input-inline">
+                                        <input type="password" id="rL_pass" name="repassword" required lay-verify="required" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                    <div class="layui-form-mid">
+                                        <span style="color: #c00;"></span>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="uuid" value="{{.uuid}}">
+                                <div class="layui-form-item">
+                                    <button class="layui-btn" lay-filter="forgetpwd" lay-submit type="button">确定</button>
+                                    <span style="padding-left:20px;">
+                           
+                        </span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+        layui.config({
+            base: '/static/js/'
+        }).use('forgetpwd')
+        </script>

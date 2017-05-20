@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/astaxie/beego"
 	"strconv"
+	"time"
 	"village/models"
 )
 
@@ -16,6 +17,32 @@ func (self *UserController) LoginPage() {
 	self.TplName = "user/login.html"
 }
 
+func (self *UserController) ForGetPwdPage() {
+	uuid := self.Input().Get("uuid")
+	self.Data["uuid"] = uuid
+	self.TplName = "user/forgetpwd.html"
+
+}
+
+func (self *UserController) SetNewPwd() {
+	uuid, password := self.Input().Get("uuid"), self.Input().Get("password")
+	now := time.Now()
+	fmt.Println(uuid, password, "bbbbbbbbaaaaa")
+	if models.CheckForGet(uuid, now) {
+		u := models.FindForGetPwdByUuid(uuid)
+		user := models.FindUserDetialById(u.Name.Id)
+		user.Password = password
+		models.UpdateUser(&user)
+		msg := map[string]interface{}{"code": 0, "msg": "success"}
+		self.Data["json"] = &msg
+		self.ServeJSON()
+	}
+	msg := map[string]interface{}{"code": 1, "msg": "invalid token"}
+	self.Data["json"] = &msg
+	self.ServeJSON()
+
+}
+
 func (self *UserController) ForGetPwd() {
 	email, vercode, captcha_id := self.Input().Get("email"), self.Input().Get("vercode"), self.Input().Get("captcha_id")
 	// if !CheckCode(vercode, captcha_id) {
@@ -26,7 +53,28 @@ func (self *UserController) ForGetPwd() {
 	// }
 	fmt.Println(vercode, captcha_id)
 	if models.IsUserExitByEmail(email) {
-		SendMail(email, "<h1>rere</h2>", "测试")
+		_, user := models.FindUserByEmail(email)
+		uuid := Encrypt(email + Getuuid())
+		//当前时间
+		now := time.Now()
+		//1小时后
+		h, _ := time.ParseDuration("1h")
+		//添加时间
+		m := now.Add(h)
+
+		//判断当前用户是否存在密码找回表里
+		if models.IsExitForGetPwdByuser(user.Id) {
+			forgetpwd := models.FindForGetPwdByuser(user.Id)
+			forgetpwd.Uuid = uuid
+			forgetpwd.Etime = m
+			models.UpdateForGetPwd(&forgetpwd)
+		} else {
+			forgetpwd := models.ForGetPwd{Uuid: uuid, Name: &models.User{Id: user.Id}, Etime: m}
+			models.AddForGetPwd(&forgetpwd)
+		}
+
+		url := "http://192.168.1.11:8080/forgetpwd/?uuid=" + uuid
+		SendMail(email, "<h2>请点击以下链接重置密码,如非本人操作请忽略:</h2><p><a href="+url+">"+url+"</a>", "重置密码")
 		msg := map[string]interface{}{"code": 0, "msg": "success"}
 		self.Data["json"] = &msg
 		self.ServeJSON()
