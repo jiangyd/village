@@ -12,6 +12,7 @@ type ForGetPwd struct {
 	Etime time.Time
 }
 
+//检测uuid是否过期
 func CheckForGet(uuid string, t time.Time) bool {
 	o := orm.NewOrm()
 	var forgetpwd ForGetPwd

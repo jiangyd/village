@@ -16,6 +16,8 @@ type User struct {
 	Sex      int       //0:男,1:女，2:保密
 	City     string
 	Status   int `orm:"default(0)"` //0:启用 1:禁用
+	Secret   string
+	Mfa      bool `orm:"default(false)"`
 }
 
 //获取所有用户

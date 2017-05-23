@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+{{template "public/header.html" .}}
+<title>测试君|测试</title>
+</head>
+
+<body>
+    {{template "public/nav.html" .}}
+    <div class="main fly-user-main layui-clear">
+        {{template "user/center.html" .}}
+        <div class="fly-panel fly-panel-user" pad20="">
+            <div class="layui-tab layui-tab-brief" lay-filter="mfa">
+                <ul id="LAY_mine" class="layui-tab-title">
+                    <li class="layui-this">扫码开启</li>
+                    <li>手动添加</li>
+                </ul>
+                <div class="layui-tab-content" style="padding: 20px 0;">
+                    <div class="layui-form layui-form-pane layui-tab-item layui-show">
+                        <form method="post">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" for="code1">第一组code</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" autocomplete="off" required="" name="acode1">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" for="code2">第二组code</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" autocomplete="off" required="" name="acode2">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <button class="layui-btn" lay-submit="" lay-filter="mfa_a" type="button" key="set-mine">确认</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="layui-form layui-form-pane layui-tab-item">
+                        <form method="post">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" for="code1">用户名</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" autocomplete="off" required="" name="user" value="{{.userinfo.Nickname}}" disabled="disabled">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" for="code1">密钥</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" autocomplete="off" required="" name="mcode1" value="{{.secret}}" disabled="disabled">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" for="code1">第一组code</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" autocomplete="off" required="" name="mcode1">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label" for="code2">第二组code</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" autocomplete="off" required="" name="mcode2">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <button class="layui-btn" lay-submit="" lay-filter="mfa_m" type="button" key="set-mine">确认</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <script>
+                layui.config({
+                    base: '/static/js/'
+                }).use('mfa')
+                </script>
+</body>
+
+</html>

@@ -15,8 +15,8 @@ import (
 )
 
 const (
-	secret      = "c8kiOwVaSSB3k13oNY0h7ZT9JSt3qe"
-	AccessKeyId = "LTAIjsEviSFAO1wp"
+	secret      = "i9IkzpKWCuSwK808iNR6awWREjsvU4"
+	AccessKeyId = "LTAIVF29fBCXjmYC"
 )
 
 // type Aliyun struct {
