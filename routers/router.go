@@ -14,6 +14,9 @@ func init() {
 	beego.Router("/user/forget", &controllers.UserController{}, "GET:Forget")
 	beego.Router("/user/mfa", &controllers.UserController{}, "GET:MFAPage") //mfa页面
 	beego.Router("/user/setmfa", &controllers.UserController{}, "POST:SetMfa")
+	beego.Router("/user/closemfa", &controllers.UserController{}, "POST:CloseMfa") //关闭mfa
+	beego.Router("/user/mfaverify", &controllers.UserController{}, "GET:MfaVerifyPage")
+	beego.Router("/user/mfaverify", &controllers.UserController{}, "POST:MfaVerify")
 	beego.Router("/user/set", &controllers.UserController{}, "GET:Set")      //设置信息页面
 	beego.Router("/user/set", &controllers.UserController{}, "POST:SetInfo") //修改基本信息
 	beego.Router("/user/forgetpwd", &controllers.UserController{}, "POST:ForGetPwd")

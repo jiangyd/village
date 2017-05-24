@@ -98,12 +98,21 @@ func (self *UserController) Login() {
 	// }
 	fmt.Println(vercode, captcha_id)
 	userinfo := models.CheckLogin(email, password)
+
 	if len(userinfo.Email) > 0 {
+		self.SetSession("email", userinfo.Email)
+		if userinfo.Mfa {
+			msg := map[string]interface{}{"code": 0, "mfa": true}
+			self.Data["json"] = &msg
+			self.ServeJSON()
+			return
+		}
 		self.SetSession("uid", userinfo.Id)
 		self.SetSession("nickname", userinfo.Nickname)
 		msg := map[string]interface{}{"code": 0, "msg": "success"}
 		self.Data["json"] = &msg
 		self.ServeJSON()
+		return
 	} else {
 		msg := map[string]interface{}{"code": 1, "msg": "用户名或密码错误!"}
 		self.Data["json"] = &msg
@@ -230,6 +239,31 @@ func (self *UserController) SetInfo() {
 
 }
 
+func (self *UserController) MfaVerifyPage() {
+	self.TplName = "user/mfapwd.html"
+}
+func (self *UserController) MfaVerify() {
+	email := self.GetSession("email")
+	code := self.Input().Get("code")
+	if email == nil {
+		self.Data["islogin"] = false
+		self.Ctx.Redirect(302, "/")
+	} else {
+		_, user := models.FindUserByEmail(email.(string))
+		if code == Totp(user.Secret, 0) {
+			self.SetSession("uid", user.Id)
+			msg := map[string]interface{}{"code": 0, "msg": "success"}
+			self.Data["json"] = &msg
+			self.ServeJSON()
+		} else {
+			msg := map[string]interface{}{"code": 1, "msg": "invalid code"}
+			self.Data["json"] = &msg
+			self.ServeJSON()
+		}
+	}
+
+}
+
 func (self *UserController) MFAPage() {
 	uid := self.GetSession("uid")
 	if uid == nil {
@@ -237,8 +271,10 @@ func (self *UserController) MFAPage() {
 		self.Ctx.Redirect(302, "/")
 	} else {
 		user := models.FindUserDetialById(uid.(int))
-		// secret := GetSecret()
-		secret := "vbj6je5hx7nttlh6"
+		secret := GetSecret()
+		// secret := "vbj6je5hx7nttlh6"
+		qrdata := Getotpauth(user.Nickname, secret, "测试村")
+		self.Data["qrimg"] = GetQrCode(qrdata)
 		if user.Mfa != true {
 			user.Secret = secret
 			models.UpdateUser(&user)
@@ -266,6 +302,31 @@ func (self *UserController) SetMfa() {
 		fmt.Println(Totp(user.Secret, 30), Totp(user.Secret, 0))
 		if code1 == Totp(user.Secret, 30) && code2 == Totp(user.Secret, 0) {
 			user.Mfa = true
+			models.UpdateUser(&user)
+			msg := map[string]interface{}{"code": 0, "msg": "success"}
+			self.Data["json"] = &msg
+			self.ServeJSON()
+
+		} else {
+			msg := map[string]interface{}{"code": 1, "msg": "无效密码"}
+			self.Data["json"] = &msg
+			self.ServeJSON()
+		}
+	}
+}
+
+func (self *UserController) CloseMfa() {
+	code1, code2 := self.Input().Get("code1"), self.Input().Get("code2")
+	uid := self.GetSession("uid")
+	if uid == nil {
+		self.Data["islogin"] = false
+		self.Ctx.Redirect(302, "/")
+	} else {
+		user := models.FindUserDetialById(uid.(int))
+		fmt.Println(code1, code2)
+		fmt.Println(Totp(user.Secret, 30), Totp(user.Secret, 0))
+		if code1 == Totp(user.Secret, 30) && code2 == Totp(user.Secret, 0) {
+			user.Mfa = false
 			models.UpdateUser(&user)
 			msg := map[string]interface{}{"code": 0, "msg": "success"}
 			self.Data["json"] = &msg

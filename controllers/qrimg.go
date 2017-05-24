@@ -9,8 +9,8 @@ import (
 	"os"
 )
 
-func WritePng(filename string, img image.Image) {
-	file, err := os.Create(filename)
+func WritePng(filename string, img image.Image) string {
+	file, err := os.Create("./static/images/" + filename)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -20,9 +20,10 @@ func WritePng(filename string, img image.Image) {
 	}
 	file.Close()
 	log.Println(file.Name())
+	return "/static/images/" + filename
 }
 
-func GetQrCode(str string) {
+func GetQrCode(str string) string {
 	code, err := qr.Encode(str, qr.L, qr.Unicode)
 	if err != nil {
 		log.Fatal(err)
@@ -31,9 +32,9 @@ func GetQrCode(str string) {
 	if str != code.Content() {
 		log.Fatal("data differs")
 	}
-	code, err = barcode.Scale(code, 300, 300)
+	code, err = barcode.Scale(code, 200, 200)
 	if err != nil {
 		log.Fatal(err)
 	}
-	WritePng("test.png", code)
+	return WritePng("test.png", code)
 }

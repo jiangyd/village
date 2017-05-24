@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+{{template "public/header.html" .}}
+<title>测试君|社区</title>
+</head>
+
+<body>
+    {{template "public/nav.html" .}}
+    <div class="main layui-clear">
+    <div class="fly-panel" pad20>
+        <h2 class="page-title">验证MFA设备</h2>
+        <div class="layui-form layui-form-pane">
+            <form method="post">
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <input type="text"  name="code" required lay-verify="required" placeholder="输入6位数字安全码" autocomplete="off" class="layui-input"  maxlength="6">
+                        
+                    </div>
+                    <button class="layui-btn layui-btn-normal" lay-filter="mfasend" lay-submit type="button" style="float: right;">提交验证</button>
+                    
+                </div>
+                
+            </form>
+        </div>
+    </div>
+    </div>
+    </body>
+    <script>
+    layui.config({
+        base: '/static/js/'
+    }).use('mfa')
+    </script>

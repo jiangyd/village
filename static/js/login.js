@@ -26,8 +26,13 @@ layui.define(['layer', 'form'], function(exports) {
             },
             type: 'POST',
             success: function(text) {
-                if (text.msg == 'success') {
-                    location.href = '/'
+                if (text.code == 0) {
+                    if(text.mfa==true){
+                        location.href = '/user/mfaverify'
+                    }else{
+                        location.href = '/'
+                    }
+                    
                 } else if (text.code != 0) {
                     layer.msg(text.msg)
                 }
