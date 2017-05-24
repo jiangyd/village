@@ -23,7 +23,7 @@ func WritePng(filename string, img image.Image) string {
 	return "/static/images/" + filename
 }
 
-func GetQrCode(str string) string {
+func GetQrCode(str string, filename string) string {
 	code, err := qr.Encode(str, qr.L, qr.Unicode)
 	if err != nil {
 		log.Fatal(err)
@@ -36,5 +36,5 @@ func GetQrCode(str string) string {
 	if err != nil {
 		log.Fatal(err)
 	}
-	return WritePng("test.png", code)
+	return WritePng(filename+".png", code)
 }

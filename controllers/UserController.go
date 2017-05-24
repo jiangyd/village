@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"crypto/md5"
 	"fmt"
 	"github.com/astaxie/beego"
 	"strconv"
@@ -274,7 +275,13 @@ func (self *UserController) MFAPage() {
 		secret := GetSecret()
 		// secret := "vbj6je5hx7nttlh6"
 		qrdata := Getotpauth(user.Nickname, secret, "测试村")
-		self.Data["qrimg"] = GetQrCode(qrdata)
+		//把邮箱md5加密成字符串，当作二维码文件名,这样文件名应该是每个用户只有一个
+		//不会因为用户多次刷新而生成不必要的文件,以防造成空间浪费
+		md5ctx := md5.New()
+		md5ctx.Write([]byte(user.Email))
+		filename := fmt.Sprintf("%x", md5ctx.Sum(nil))
+		fmt.Println(filename, "pppp")
+		self.Data["qrimg"] = GetQrCode(qrdata, filename)
 		if user.Mfa != true {
 			user.Secret = secret
 			models.UpdateUser(&user)
