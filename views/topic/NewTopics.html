@@ -11,9 +11,10 @@
             <span><a href="/user/detial/{{.Author.Id}}">{{.Author.Nickname}}</a></span>
             <span>{{date .Ctime "Y-m-d H:i:s"}}</span>
             <a href="" class="label-item" style="margin: 0;">{{.Category.Category}}</a>
-            <span class="fly-list-hint" style="margin-top: 10px;">
-                        <i class="layui-icon" title="回答" style="font-size: 10px; color: #1E9FFF;margin-right: 5px;">&#xe63a;</i>{{.ReplyCount}}
-                        <i class="layui-icon" title="人气" style="font-size: 10px; color: #1E9FFF;margin-right: 5px;">&#xe60b;</i>{{.View}}
+            <span class="fly-list-hint">
+                        <span>评论 :&nbsp{{.ReplyCount}}</span>
+                        <span>&nbsp浏览 :&nbsp{{.View}}</span>
+                        <span><a href="/topic/{{.Id}}">&nbsp阅读全文&raquo;</a></span>
                     </span>
         </p>
     </li>

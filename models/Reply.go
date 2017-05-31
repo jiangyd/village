@@ -13,6 +13,7 @@ type Reply struct {
 	Up      int       `orm:"default(0)"`
 	Ctime   time.Time `orm:"auto_now_add;type(datetime)"`
 	Disable bool      `orm:"default(false)"` //是否屏蔽
+	Adopt   bool      `orm:"default(false)"` //是否采纳
 }
 
 func SaveReply(reply *Reply) int64 {
@@ -39,12 +40,35 @@ func FindReplyByUid(uid *User) []*Reply {
 
 }
 
+//查找所有满意答案的帖子
+func GetAllAdoptReply() []*Reply {
+	o := orm.NewOrm()
+	var reply Reply
+	var replys []*Reply
+	o.QueryTable(reply).Filter("Adopt", true).RelatedSel().All(&replys, "Topic")
+	return replys
+}
+
+//当前评论是否是满意答案
+func IsAdoptReply(tid *Topic, id int) bool {
+	o := orm.NewOrm()
+	var reply Reply
+	return o.QueryTable(reply).Filter("Topic", tid).Filter("Id", id).Filter("Adopt", true).Exist()
+}
+
+//查看帖子是否存在满意答案
+func IsAdoptReplyByTid(tid *Topic) bool {
+	o := orm.NewOrm()
+	var reply Reply
+	return o.QueryTable(reply).Filter("Topic", tid).Filter("Adopt", true).Exist()
+}
+
 //通过主题id,查找评论
 func FindReplyByTid(tid *Topic) []*Reply {
 	o := orm.NewOrm()
 	var reply Reply
 	var replys []*Reply
-	o.QueryTable(reply).Filter("Topic", tid).OrderBy("-Up", "-Ctime").RelatedSel().All(&replys)
+	o.QueryTable(reply).Filter("Topic", tid).OrderBy("-Adopt", "-Up", "-Ctime").RelatedSel().All(&replys)
 	return replys
 }
 

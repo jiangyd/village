@@ -51,7 +51,7 @@ function Collec(tp, tpid) {
             } else if (text.msg == "取消收藏成功") {
                 $("#collection").text("收藏")
             } else if (text.code != 0) {
-                layer.msg(text.msg)
+                location.href="/user/login"
             }
         }
     })

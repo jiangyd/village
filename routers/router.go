@@ -26,7 +26,7 @@ func init() {
 	beego.Router("/user/message", &controllers.UserController{}, "POST:SendMsg")
 	beego.Router("/user/topic", &controllers.UserController{}, "GET:UserTopic")
 	beego.Router("/user/collection", &controllers.UserController{}, "GET:Collection")
-	beego.Router("/collection", &controllers.CollecController{}, "POST:Collec")
+	beego.Router("/collection", &controllers.CollecController{}, "POST:Collec") //收藏
 	beego.Router("/user/follow", &controllers.UserController{}, "GET:FollowPage")
 	beego.Router("/user/firend", &controllers.FirendController{}, "POST:Firend")
 	beego.Router("/user/register", &controllers.UserController{}, "GET:RegisterPage")
@@ -42,7 +42,7 @@ func init() {
 	beego.Router("/topic/edit/", &controllers.TopicController{}, "POST:EditTopic")
 	beego.Router("/topic/reply", &controllers.TopicController{}, "POST:ReplyTopic")
 	beego.Router("/dz", &controllers.DzController{}, "POST:Dz")
-	beego.Router("/topic/adopt", &controllers.TopicController{}, "POST:Adopt")
+	beego.Router("/topic/adopt", &controllers.TopicController{}, "POST:Adopt") //采纳
 	beego.Router("/topic/:type([a-z]+)", &controllers.ContentController{}, "GET:TopicList")
 	beego.Router("/qiniucallback", &controllers.UploadImg{}, "POST:QiNiuCallBack")
 	beego.Router("/topicupload", &controllers.UploadImg{}, "POST:TopicUpload")

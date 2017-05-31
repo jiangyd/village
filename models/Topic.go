@@ -18,7 +18,6 @@ type Topic struct {
 	LastReplyTime time.Time  `orm:"null;type(datetime);"`
 	Up            int        `orm:"default(0)"`
 	Category      *Categorys `orm:"rel(fk)"`
-	Adopt         *Reply     `orm:"rel(fk);null"`
 	Disable       bool       `orm:"default(false)"`
 }
 

@@ -49,7 +49,7 @@ func (self *TopicController) TopicDetial() {
 			}
 			self.Data["islogin"] = true
 			self.Data["userinfo"] = models.FindUserDetialById(sessionid.(int))
-			self.Data["collection"] = models.FindCollec("tid", tid, &models.User{Id: sessionid.(int)})
+			self.Data["collection"] = models.IsCollecExit("tid", tid, &models.User{Id: sessionid.(int)})
 			self.Data["isdz"] = models.IsDz("tid", tid, &models.User{Id: sessionid.(int)})
 		}
 
@@ -161,7 +161,9 @@ func (self *TopicController) ReplyTopic() {
 func (self *TopicController) Adopt() {
 	uid := self.GetSession("uid")
 	if uid == nil {
-		self.Ctx.Redirect(302, "/")
+		msg := map[string]interface{}{"code": 2, "msg": "need login"}
+		self.Data["json"] = &msg
+		self.ServeJSON()
 	} else {
 		t_id, r_id := self.Input().Get("tid"), self.Input().Get("rid")
 		tid, _ := strconv.Atoi(t_id)
@@ -170,11 +172,34 @@ func (self *TopicController) Adopt() {
 		//判断是否是作者
 		if topic.Author.Id == uid.(int) {
 			//更新满意答案了，同样会更新该topic记录的更新时间
-			topic.Adopt = &models.Reply{Id: rid}
-			models.UpdateTopic(&topic)
-			msg := map[string]interface{}{"code": 0, "msg": "success", "tid": tid}
-			self.Data["json"] = &msg
-			self.ServeJSON()
+			//当前帖子ID,回复id,是否是满意答案
+			if models.IsAdoptReply(&models.Topic{Id: tid}, rid) {
+				//有则删除
+				reply := models.FindReplyByRid(rid)
+				reply.Adopt = false
+				models.UpdateReply(&reply)
+				msg := map[string]interface{}{"code": 0, "msg": "success", "tid": tid}
+				self.Data["json"] = &msg
+				self.ServeJSON()
+			} else {
+				//检测当前帖子有满意答案
+				if models.IsAdoptReplyByTid(&models.Topic{Id: tid}) {
+					//有则不添加
+					msg := map[string]interface{}{"code": 1, "msg": "已有满意评论,请先取消!再重新采纳,", "tid": tid}
+					self.Data["json"] = &msg
+					self.ServeJSON()
+				} else {
+					//没有则添加
+					reply := models.FindReplyByRid(rid)
+					reply.Adopt = true
+					models.UpdateReply(&reply)
+					msg := map[string]interface{}{"code": 0, "msg": "success", "tid": tid}
+					self.Data["json"] = &msg
+					self.ServeJSON()
+				}
+
+			}
+
 		} else {
 			msg := map[string]interface{}{"code": 1, "msg": "无操作权限", "tid": tid}
 			self.Data["json"] = &msg

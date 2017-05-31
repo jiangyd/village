@@ -2,6 +2,7 @@ package models
 
 import (
 	"github.com/astaxie/beego/orm"
+	"log"
 )
 
 type Collection struct {
@@ -12,14 +13,13 @@ type Collection struct {
 }
 
 //添加收藏
-func AddCollection(collection *Collection) int64 {
+func AddCollection(collection *Collection) {
 
 	o := orm.NewOrm()
-	id, err := o.Insert(collection)
+	_, err := o.Insert(collection)
 	if err != nil {
-		return -1
+		log.Fatalln(err.Error())
 	}
-	return id
 }
 
 //通过用户id查找收藏
@@ -38,19 +38,13 @@ func DelCollection(t string, typeid int, uid *User) {
 
 	o := orm.NewOrm()
 	var collection Collection
-	// id, err := o.Delete(collection)
-	// o.Commit()
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// return id
 	o.QueryTable(collection).Filter("Type", t).Filter("TypeId", typeid).Filter("Uid", uid).Delete()
 }
 
 //查找收藏
-func FindCollec(t string, typeid int, uid *User) Collection {
+func IsCollecExit(t string, typeid int, uid *User) bool {
 	o := orm.NewOrm()
 	var collection Collection
-	o.QueryTable(collection).Filter("Type", t).Filter("TypeId", typeid).Filter("Uid", uid).One(&collection)
-	return collection
+	return o.QueryTable(collection).Filter("Type", t).Filter("TypeId", typeid).Filter("Uid", uid).Exist()
+
 }

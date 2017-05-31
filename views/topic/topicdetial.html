@@ -31,8 +31,9 @@
                     <button type="button" onclick="dz('tid',{{.topic.Id}})" id='dz' class="layui-btn-small layui-btn-radius layui-btn-primary">
                         {{if .isdz}}已点赞{{else}}点赞{{end}}
                     </button>
-                    <button type="button" onclick="Collec('tid',{{.topic.Id}})" id="collection" class="layui-btn-small layui-btn-radius layui-btn-primary">
-                        {{if .collection.Id}}取消收藏{{else}}收藏{{end}}
+                    <button type="button" onclick="Collec('tid',
+                    {{.topic.Id}})" id="collection" class="layui-btn-small layui-btn-radius layui-btn-primary">
+                        {{if .collection }}取消收藏{{else}}收藏{{end}}
                     </button>
                 </div>
                 <div class="keywords" style="margin-top: 20px;">

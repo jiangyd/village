@@ -36,7 +36,6 @@ func (self *ContentController) TopicList() {
 	t := self.Ctx.Input.Param(":type")
 	switch t {
 	case "newtopic":
-		fmt.Println("当时发生的发生")
 		self.Data["newstopics"] = models.NewTopic()
 		self.Data["isnewtopic"] = true
 	case "waitreply":
@@ -52,7 +51,8 @@ func (self *ContentController) TopicList() {
 		self.Data["isuptopic"] = true
 		// self.Data["isnewtopic"] = false
 	case "adopt":
-		self.Data["adopts"] = models.AdoptTopicList()
+		fmt.Println("cc")
+		self.Data["adopts"] = models.GetAllAdoptReply()
 		self.Data["isadopt"] = true
 		// self.Data["isnewtopic"] = false
 	}
