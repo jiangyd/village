@@ -29,6 +29,7 @@ func toUint32(bytes []byte) uint32 {
 		(uint32(bytes[2]) << 8) + uint32(bytes[3])
 }
 
+//密钥生成
 func GetSecret() string {
 	str := "234567abcdefghijklmnopqrstuvwxyz"
 	bytes := []byte(str)
@@ -68,6 +69,7 @@ func oneTimePassword(key []byte, value []byte) uint32 {
 	return pwd
 }
 
+//动态6位密码
 func Totp(secret string, ago int64) string {
 	keynospaces := strings.Replace(secret, " ", "", -1)
 	keynospacesupper := strings.ToUpper(keynospaces)
@@ -86,6 +88,7 @@ func Totp(secret string, ago int64) string {
 
 }
 
+//二维码包含内容
 func Getotpauth(name, secret, issuer string) string {
 	otpauth := "otpauth://totp/" + "testwd" + ":" + name + "?secret=" + secret + "&issuer=" + issuer
 	return otpauth

@@ -6,18 +6,19 @@ import (
 )
 
 type User struct {
-	Id       int
-	Nickname string `orm:"unique"`
-	Password string
-	Email    string `orm:"unique"`
-	Avatar   string
-	Ctime    time.Time `orm:"auto_now_add;type(datetime)"`
-	Sign     string    `orm:"size(255)"`
-	Sex      int       //0:男,1:女，2:保密
-	City     string
-	Status   int `orm:"default(0)"` //0:启用 1:禁用
-	Secret   string
-	Mfa      bool `orm:"default(false)"`
+	Id        int
+	Nickname  string `orm:"unique"`
+	Password  string
+	Email     string `orm:"unique"`
+	Avatar    string
+	Ctime     time.Time `orm:"auto_now_add;type(datetime)"`
+	Sign      string    `orm:"size(255)"`
+	Superuser bool      `orm:"default(false)"`
+	Sex       int       //0:男,1:女，2:保密
+	City      string
+	Status    int `orm:"default(0)"` //0:启用 1:禁用
+	Secret    string
+	Mfa       bool `orm:"default(false)"`
 }
 
 //获取所有用户
@@ -30,10 +31,10 @@ func GetAllUser() []*User {
 }
 
 //检查用户名密码
-func CheckLogin(email, password string) User {
+func CheckLogin(email, password string, superuser bool) User {
 	o := orm.NewOrm()
 	var user User
-	o.QueryTable(user).Filter("Email", email).Filter("Password", password).RelatedSel().One(&user)
+	o.QueryTable(user).Filter("Email", email).Filter("Password", password).Filter("Superuser", Superuser).RelatedSel().One(&user)
 	return user
 }
 

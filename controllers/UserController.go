@@ -98,7 +98,7 @@ func (self *UserController) Login() {
 	// 	return
 	// }
 	fmt.Println(vercode, captcha_id)
-	userinfo := models.CheckLogin(email, password)
+	userinfo := models.CheckLogin(email, password, false)
 
 	if len(userinfo.Email) > 0 {
 		self.SetSession("email", userinfo.Email)

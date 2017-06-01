@@ -18,6 +18,37 @@ func (self *Admin) Login() {
 }
 
 func (self *Admin) AdminPost() {
+	email, password, vercode, captcha_id := self.Input().Get("email"), self.Input().Get("password"), self.Input().Get("vercode"), self.Input().Get("captcha_id")
+	// if !CheckCode(vercode, captcha_id) {
+	// 	msg := map[string]interface{}{"code": 1, "msg": "验证码错误"}
+	// 	self.Data["json"] = &msg
+	// 	self.ServeJSON()
+	// 	return
+	// }
+	fmt.Println(vercode, captcha_id)
+	userinfo := models.CheckLogin(email, password, true)
+
+	if len(userinfo.Email) > 0 {
+		self.SetSession("email", userinfo.Email)
+		if userinfo.Mfa {
+			msg := map[string]interface{}{"code": 0, "mfa": true}
+			self.Data["json"] = &msg
+			self.ServeJSON()
+			return
+		}
+		self.SetSession("uid", userinfo.Id)
+		self.SetSession("nickname", userinfo.Nickname)
+		msg := map[string]interface{}{"code": 0, "msg": "success"}
+		self.Data["json"] = &msg
+		self.ServeJSON()
+		return
+	} else {
+		msg := map[string]interface{}{"code": 1, "msg": "用户名或密码错误!"}
+		self.Data["json"] = &msg
+		self.ServeJSON()
+		return
+
+	}
 
 }
 
