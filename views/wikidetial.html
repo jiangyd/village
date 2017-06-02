@@ -1,16 +1,37 @@
 <div class="site-content">
-    <h1>{{.doc.Title}}</h1>
-    
-<div class="markdown-body editormd-preview-container" previewcontainer="true" >
+<h1>{{.doc.Title}}</h1>
+
+<input type="hidden" id="content" value="{{.doc.Content}}">
 
 
-<div id="content">
-     <textarea style="display:none;" name="editormd-markdown-doc"><!-- {{str2html .content}} -->
-     {{.doc.Content}}
-     </textarea>
-   
-     </div>
-     </div>
-     </div>
-</div>
 
+<div id="test-editormd-view">
+               <textarea style="display:none;" name="test-editormd-markdown-doc"></textarea>               
+            </div>
+            </div>
+
+<script src="/static/editor.md/lib/marked.min.js"></script>
+<script src="/static/editor.md/lib/prettify.min.js"></script>
+<script src="/static/editor.md/lib/flowchart.min.js"></script>
+<script src="/static/editor.md/lib/jquery.flowchart.min.js"></script>
+<script src="/static/editor.md/lib/raphael.min.js"></script>
+<script src="/static/editor.md/lib/underscore.min.js"></script>
+<script src="/static/editor.md/lib/sequence-diagram.min.js"></script>
+<script src="/static/editor.md/editormd.min.js"></script>
+<script type="text/javascript">
+var editor1,editor2
+
+$(function() {
+     editor = editormd.markdownToHTML("test-editormd-view", {
+     	markdown : $("#content").val(),
+        flowChart : true,//流程图显示
+        emoji:true,
+        tex:true,
+        tocm:true,
+        sequenceDiagram : true,
+        autoHeight : true,//自动高亮
+        htmlDecode : "style,script,iframe" ,
+    });
+
+});
+</script>

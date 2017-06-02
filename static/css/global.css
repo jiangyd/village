@@ -278,7 +278,8 @@ body .fly-user-main{position: relative; width: 1085px; min-height: 600px; margin
 .jieda .icon-caina{position:absolute; right:10px; top:15px; font-size:60px; color: #58A571;}
 .jieda-body{margin: 25px 0 20px; min-height: 0; line-height: 24px; font-size:14px;}
 .jieda-body p{margin-bottom: 10px;}
-.jieda-body a{color:#4f99cf}
+.jieda-body p a{color:#5a5442;}
+.jieda-body a{color:#4f99cf;}
 .jieda-reply{position:relative;}
 .jieda-reply span{padding-right:20px; color:#999; cursor:pointer;}
 .jieda-reply span:hover{color:#666;}
@@ -288,6 +289,7 @@ body .fly-user-main{position: relative; width: 1085px; min-height: 600px; margin
 .jieda-reply .zanok,
 .jieda-reply .jieda-zan:hover{color:#c00}
 .jieda-reply span .icon-svgmoban53{position: relative; top: 1px;}
+
 /* 广告 */
 .fly-ad{position: relative; background-color: #f2f2f2; overflow:hidden;}
 .fly-ad:before{content: '广告位'; position: absolute; z-index: 0; top: 50%; left: 50%; left: 50%; margin: -10px 0 0 -25px; color: #aaa; font-size: 18px; font-weight: 300;}

@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 {{template "public/header.html" .}}
+<link rel="stylesheet" href="/static/editor.md/css/editormd.min.css" />
+<script src="/static/js/jQuery.js"></script>
+<script src="/static/editor.md/editormd.min.js"></script>
 <title>测试君|社区</title>
 </head>
 
@@ -14,7 +17,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">所属分类</label>
                     <div class="layui-input-block">
-                        <select name="category" lay-verify="required">
+                        <select id="category" name="category" lay-verify="required">
                             <option value=""></option>
                             {{range .categorys}}
                             <option value="{{.Id}}" {{if eq .Id $.topic.Category.Id}}selected{{end}}>{{.Category}}</option>
@@ -30,15 +33,18 @@
                 </div>
                 <div class="layui-form-item layui-form-text">
                     <div class="layui-input-block">
-                        <textarea id="edittopic_content" name="content" placeholder="请输入内容" class="layui-textarea fly-editor" style="height:260px;">{{.topic.Content}}</textarea>
+                    <input type="hidden" id="content" value="{{.topic.Content}}">
+                        <!-- <textarea id="edittopic_content" name="content" placeholder="请输入内容" class="layui-textarea fly-editor" style="height:260px;">{{.topic.Content}}</textarea> -->
+                         <div id="editormd">
+                </div>
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <input type="hidden" name="topic_id" value="{{.topic.Id}}">
+                    <input type="hidden" id="topic_id" value="{{.topic.Id}}">
                     <label for="L_title" class="layui-form-label">验证码</label>
                     <div class="layui-input-block">
                         <input type="text" id="edit_vercode" name="vercode" required lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input" style="display: inline;width: 150px;"> {{template "public/captcha.html"}}
-                        <button class="layui-btn layui-btn-normal" lay-filter="edittopicgo" lay-submit type="button" style="float: right;">保存主题</button>
+                        <button class="layui-btn layui-btn-normal" id="edittopicgo" lay-submit type="button" style="float: right;">保存主题</button>
                     </div>
                 </div>
             </form>
@@ -50,4 +56,51 @@
     layui.config({
         base: '/static/js/'
     }).use('content')
+    var editor
+$(function() {
+     editor = editormd("editormd", {
+        height:740,
+        path: "/static/editor.md/lib/", // Autoload modules mode, codemirror, marked... dependents libs path
+        flowChart : true,//流程图显示
+        // autoHeight : true,//自动高亮
+        htmlDecode : false,
+        markdown:$("#content").val(),
+        height: 440,
+         htmlDecode : "style,script,iframe,sub,sup|on*" ,
+        toolbarIcons : function() {
+            // Or return editormd.toolbarModes[name]; // full, simple, mini
+            // Using "||" set icons align right.
+            return [ "bold", "hr","link","del","quote","code","preformatted-text","image","table","datetime", "|", "file", "faicon", "search","help","||", "watch"]},
+            imageUpload    : true,
+    imageFormats   : ["jpg", "jpeg", "gif", "png"],
+    imageUploadURL : "/topicupload",
+    });
+});
+    $("#edittopicgo").bind('click', function() {
+        
+   $.ajax({
+            async: false,
+            url: "/topic/edit",
+            data: {
+                "topic_id": $("#topic_id").val(),
+                "title": $("#edit_title").val(),
+                "content": editor.getMarkdown(),
+                "vercode": $("#edit_vercode").val(),
+                "captcha_id": $("[name='captcha_id']").val(),
+                "category": $("#category").val()
+            },
+            type: 'POST',
+            success: function(text) {
+                if (text.msg == 'success') {
+                    location.href = '/topic/' + text.tid
+                } else if (text.code != 0) {
+                    layer.msg(text.msg)
+                }
+            }
+
+        });
+
+        return false;
+
+    });
     </script>

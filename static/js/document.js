@@ -74,15 +74,15 @@ layui.define(['layer', 'form', 'element', 'tree'], function(exports) {
 
     //添加子目录
     form.on('submit(addnode)', function(data) {
-
+        console.log()
+        layer.msg(editor.getMarkdown()+"ss");
         $.ajax({
             async: false,
             url: "/docnode/add",
             data: {
-
                 "pid": data.field.pid,
                 "title": data.field.title,
-                "content": data.field.content
+                "content": editor.getMarkdown()
             },
             type: 'POST',
             success: function(text) {

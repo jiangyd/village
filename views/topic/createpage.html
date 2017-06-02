@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 {{template "public/header.html" .}}
+<link rel="stylesheet" href="/static/editor.md/css/editormd.min.css" />
+<script src="/static/js/jQuery.js"></script>
+<script src="/static/editor.md/editormd.min.js"></script>
 <title>测试君|社区</title>
 </head>
 
@@ -14,7 +17,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">所属分类</label>
                     <div class="layui-input-block">
-                        <select name="category" lay-verify="required">
+                        <select name="category" id="category" lay-verify="required">
                             <option value=""></option>
                             {{range .categorys}}
                             <option value="{{.Id}}">{{.Category}}</option>
@@ -30,14 +33,16 @@
                 </div>
                 <div class="layui-form-item layui-form-text">
                     <div class="layui-input-block">
-                        <textarea id="topic_content" name="content" placeholder="请输入内容" class="layui-textarea fly-editor" style="height:260px;"></textarea>
+                       <!--  <textarea id="topic_content" name="content" placeholder="请输入内容" class="layui-textarea fly-editor" style="height:260px;"></textarea> -->
+                       <div id="editormd">
+                </div>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label for="L_title" class="layui-form-label">验证码</label>
                     <div class="layui-input-block">
-                        <input type="text" id="L_vercode" name="vercode" required lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input" style="display: inline;width: 150px;"> {{template "public/captcha.html"}}
-                        <button class="layui-btn layui-btn-normal" lay-filter="topicgo" lay-submit type="button" style="float: right;">发表主题</button>
+                        <input type="text" id="L_vercode" name="vercode" required lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input" style="display: inline;width: 150px;"> {{template "public/captcha.html" }}
+                        <button class="layui-btn layui-btn-normal" id="topicgo"  type="button" style="float: right;">发表主题</button>
                     </div>
                 </div>
             </form>
@@ -45,8 +50,56 @@
     </div>
     </div>
     </body>
-    <script>
-    layui.config({
+    <script type="text/javascript">
+var editor
+$(function() {
+    editor = editormd("editormd", {
+        width:'100%',
+        height:440,
+        path: "/static/editor.md/lib/", // Autoload modules mode, codemirror, marked... dependents libs path
+        flowChart : true,//流程图显示
+        // autoHeight : true,//自动高亮
+        htmlDecode : false,
+        
+         htmlDecode : "style,script,iframe,sub,sup|on*" ,
+        toolbarIcons : function() {
+            // Or return editormd.toolbarModes[name]; // full, simple, mini
+            // Using "||" set icons align right.
+            return [ "bold", "hr","link","del","quote","code","preformatted-text","code-block","image","table","datetime", "|", "file", "faicon", "search","help","||", "watch"]},
+            imageUpload    : true,
+    imageFormats   : ["jpg", "jpeg", "gif", "png"],
+    imageUploadURL : "/topicupload",
+    });
+});
+        
+        layui.config({
         base: '/static/js/'
     }).use('content')
+
+    $("#topicgo").bind('click', function(data) {
+        $.ajax({
+            async: false,
+            url: "/topic/create",
+            data: {
+                "title": $("#L_title").val(),
+                "content": editor.getMarkdown(),
+                "vercode":$("#L_vercode").val(),
+                "captcha_id": $("[name='captcha_id']").val(),
+                "category": $("#category").val(),
+            },
+            type: 'POST',
+            success: function(text) {
+                if (text.msg == 'success') {
+                    location.href = '/topic/' + text.tid
+
+                } else if (text.code != 0) {
+                    layer.msg(text.msg)
+                }
+            }
+
+        });
+
+        return false;
+
+    });
     </script>

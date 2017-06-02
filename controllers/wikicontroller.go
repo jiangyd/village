@@ -3,7 +3,7 @@ package controllers
 import (
 	"fmt"
 	"github.com/astaxie/beego"
-	"github.com/golang-commonmark/markdown"
+	// "github.com/golang-commonmark/markdown"
 	"strconv"
 	"village/models/admin"
 )
@@ -54,19 +54,20 @@ func (self *WiKi) WiKiList() {
 
 func (self *WiKi) WiKiDetial() {
 	id := self.Ctx.Input.Param(":id")
-	fmt.Println(id, "iiiiiiii")
 	root := self.Ctx.Input.Param(":root")
 	nid, _ := strconv.Atoi(id)
 	doc := admin.GetDocById(nid)
 	self.Layout = "wikitree.html"
 	self.TplName = "wikidetial.html"
 	self.Data["id"] = root
+	fmt.Println("root", root)
 	self.Data["selectnode"] = id
+	fmt.Println("selectnode", id)
 	self.Data["doc"] = doc
-	md := markdown.New(markdown.HTML(true))
-	cc := md.RenderToString([]byte(doc.Content))
-	fmt.Println(cc)
-	self.Data["content"] = cc
+
+	// md := markdown.New(markdown.HTML(true))
+	// cc := md.RenderToString([]byte(doc.Content))
+	// self.Data["content"] = cc
 
 }
 

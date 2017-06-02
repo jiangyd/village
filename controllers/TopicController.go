@@ -74,6 +74,7 @@ func (self *TopicController) CreatePage() {
 func (self *TopicController) CreateTopic() {
 	title, content, vercode, captcha_id, category := self.Input().Get("title"), self.Input().Get("content"), self.Input().Get("vercode"), self.Input().Get("captcha_id"), self.Input().Get("category")
 	category_id, _ := strconv.Atoi(category)
+	fmt.Println(vercode, captcha_id)
 	if !CheckCode(vercode, captcha_id) {
 		msg := map[string]interface{}{"code": 1, "msg": "验证码错误"}
 		self.Data["json"] = &msg
@@ -136,7 +137,9 @@ func (self *TopicController) ReplyTopic() {
 	topic_id, content, vercode, captcha_id := self.Input().Get("topic_id"), self.Input().Get("content"), self.Input().Get("vercode"), self.Input().Get("captcha_id")
 	uid := self.GetSession("uid")
 	if uid == nil {
-		self.Ctx.Redirect(302, "/user/login")
+		msg := map[string]interface{}{"code": 2, "msg": "need login"}
+		self.Data["json"] = &msg
+		self.ServeJSON()
 	} else {
 		if !CheckCode(vercode, captcha_id) {
 			msg := map[string]interface{}{"code": 1, "msg": "验证码错误"}

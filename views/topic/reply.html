@@ -19,7 +19,8 @@
                 </div>
                 <div class="jieda-reply">
                     <span><a onclick="dzpl('rid',{{.Id}})"><img src="/static/images/dz.png" alt="支持" title="支持" ><cite>(<em id="rid{{.Id}}">{{.Up}}</em>)</cite></a></span>
-                    <span onclick="setreply()"><img src="/static/images/reply.png" alt="回复" title="回复此楼" >回复</span>
+<span onclick="setreply('{{.User.Id}}_{{.Id}}','{{.User.Nickname}}')" >
+                    <img src="/static/images/reply.png" alt="回复" title="回复此楼" >回复</span>
                     <div class="jieda-admin"> 
                     
                     <span type="accept" class="jieda-accept" onclick="caina({{$.topic.Id}},{{.Id}})">
@@ -69,8 +70,6 @@ function caina(tid, rid) {
         type: "POST",
         success: function(text) {
             if (text.code == 0) {
-                // var id = 'rid' + text.tid
-                // $("#" + id).text("已采纳")
                 location.replace(location.href);
             } else if (text.code == 2) {
                 location.href="/user/login"
@@ -81,7 +80,8 @@ function caina(tid, rid) {
     })
 };
 
-function setreply(){
-    $("#reply_content").append("aaaaaaaaaaaaa")
+function setreply(x,y){
+    location.href="#replymd"
+    editor_reply.replaceSelection("[@"+y+"]"+"("+"#"+x+') ')
 }
 </script>

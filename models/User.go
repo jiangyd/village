@@ -34,7 +34,7 @@ func GetAllUser() []*User {
 func CheckLogin(email, password string, superuser bool) User {
 	o := orm.NewOrm()
 	var user User
-	o.QueryTable(user).Filter("Email", email).Filter("Password", password).Filter("Superuser", Superuser).RelatedSel().One(&user)
+	o.QueryTable(user).Filter("Email", email).Filter("Password", password).Filter("Superuser", superuser).RelatedSel().One(&user)
 	return user
 }
 

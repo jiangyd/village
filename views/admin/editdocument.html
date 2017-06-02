@@ -5,47 +5,73 @@
 <div class="layui-tab-content" style="margin-left: 200px;">
     <div class="layui-form layui-form-pane">
         <form class="layui-form" method="post">
-        <input type="hidden" name="id" value="{{.node.Id}}">
+        <input type="hidden" id="id" value="{{.node.Id}}">
+        <input type="hidden" id="content" value="{{.node.Content}}">
             <div class="layui-form-item">
                 <label class="layui-form-label">标题</label>
                 <div class="layui-input-block">
-                    <input type="text" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input" value="{{.node.Title}}">
+                    <input type="text" id="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input" value="{{.node.Title}}">
                 </div>
             </div>
             <div class="layui-form-item">
                 <div id="editormd">
-                    <textarea name="content" style="display:none;">{{.node.Content}}</textarea>
                 </div>
             </div>
-            <button class="layui-btn layui-btn-normal" lay-filter="editnode" lay-submit type="button" style="float: right;">
+            <button class="layui-btn layui-btn-normal" id="editnode" style="float: right;">
                 确认
             </button>
         </form>
     </div>
 </div>
 <script type="text/javascript">
+var editor
 $(function() {
-    var editor = editormd("editormd", {
+     editor = editormd("editormd", {
+        height:740,
         path: "/static/editor.md/lib/", // Autoload modules mode, codemirror, marked... dependents libs path
-        height: "500px",
         flowChart : true,//流程图显示
-        autoHeight : true,//自动高亮
-        htmlDecode : true,
+        // autoHeight : true,//自动高亮
+        htmlDecode : false,
+        markdown:$("#content").val(),
+        height: 740,
          htmlDecode : "style,script,iframe,sub,sup|on*" ,
         toolbarIcons : function() {
             // Or return editormd.toolbarModes[name]; // full, simple, mini
             // Using "||" set icons align right.
-            return ["undo", "redo", "|", "bold", "hr","list-ul","list-ol","link","del","quote","ucwords","h1","h2","h3","h4","h5","h6","code","preformatted-text","code-block","image","table","datetime","goto-line", "|", "file", "faicon", "search","help","||", "watch"]},
+            return [ "bold", "hr","link","del","quote","code","preformatted-text","image","table","datetime", "|", "file", "faicon", "search","help","||", "watch"]},
             imageUpload    : true,
     imageFormats   : ["jpg", "jpeg", "gif", "png"],
     imageUploadURL : "/topicupload",
     });
 });
-</script>
-<script>
-layui.config({
-    base: '/static/js/'
-}).use('document');
+
+
+    //编辑目录
+    $("#editnode").bind('click', function(data) {
+        alert(editor.getMarkdown())
+        $.ajax({
+            async: false,
+            url: "/docnode/modify",
+            data: {
+
+                "id": $("#id").val(),
+                "title": $("#title").val(),
+                "content": editor.getMarkdown()
+            },
+            type: 'POST',
+            success: function(text) {
+                if (text.code == 0) {
+                    location.href = '/document'
+
+                } else if (text.code != 0) {
+                    layer.msg(text.msg)
+                }
+            }
+        });
+        return false;
+    });
+
+
 </script>
 </body>
 
