@@ -72,55 +72,7 @@ layui.define(['layer', 'form', 'element', 'tree'], function(exports) {
 
     });
 
-    //添加子目录
-    form.on('submit(addnode)', function(data) {
-        console.log()
-        layer.msg(editor.getMarkdown()+"ss");
-        $.ajax({
-            async: false,
-            url: "/docnode/add",
-            data: {
-                "pid": data.field.pid,
-                "title": data.field.title,
-                "content": editor.getMarkdown()
-            },
-            type: 'POST',
-            success: function(text) {
-                if (text.code == 0) {
-                    location.href = '/document'
-
-                } else if (text.code != 0) {
-                    layer.msg(text.msg)
-                }
-            }
-        });
-        return false;
-    });
-
-    //编辑目录
-    form.on('submit(editnode)', function(data) {
-
-        $.ajax({
-            async: false,
-            url: "/docnode/modify",
-            data: {
-
-                "id": data.field.id,
-                "title": data.field.title,
-                "content": data.field.content
-            },
-            type: 'POST',
-            success: function(text) {
-                if (text.code == 0) {
-                    location.href = '/document'
-
-                } else if (text.code != 0) {
-                    layer.msg(text.msg)
-                }
-            }
-        });
-        return false;
-    });
+    
 
 
     exports('document', {});
