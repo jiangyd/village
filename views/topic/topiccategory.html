@@ -1,0 +1,22 @@
+<ul class="fly-list">
+    {{range .topic}}
+    <li class="fly-list-li">
+        <a href="/user/detial/{{.Author.Id}}" class="fly-list-avatar">
+            <img src="/static/168.jpg" alt="测试">
+        </a>
+        <h2 class="fly-tip">
+                    <a href="/topic/{{.Id}}">{{.Title}}</a>
+                </h2>
+        <p>
+            <span><a href="/user/detial/{{.Author.Id}}">{{.Author.Nickname}}</a></span>
+            <span>{{date .Ctime "Y-m-d H:i:s"}}</span>
+            <a href="/topic/search?category={{.Category.Category}}" class="label-item" style="margin: 0;">{{.Category.Category}}</a>
+            <span class="fly-list-hint">
+                        <span>评论 :&nbsp{{.ReplyCount}}</span>
+                        <span>&nbsp浏览 :&nbsp{{.View}}</span>
+                        <span><a href="/topic/{{.Id}}">&nbsp阅读全文&raquo;</a></span>
+                    </span>
+        </p>
+    </li>
+    {{end}}
+</ul>

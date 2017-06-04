@@ -23,7 +23,7 @@ func init() {
 	beego.Router("/forgetpwd", &controllers.UserController{}, "GET:ForGetPwdPage")
 	beego.Router("/user/setnewpwd", &controllers.UserController{}, "POST:SetNewPwd") //重设密码
 	beego.Router("/user/message", &controllers.UserController{}, "GET:Message")
-	beego.Router("/user/message", &controllers.UserController{}, "POST:SendMsg")
+	beego.Router("/user/message", &controllers.UserController{}, "POST:SendMsg") //发送私信
 	beego.Router("/user/topic", &controllers.UserController{}, "GET:UserTopic")
 	beego.Router("/user/collection", &controllers.UserController{}, "GET:Collection")
 	beego.Router("/collection", &controllers.CollecController{}, "POST:Collec") //收藏
@@ -34,7 +34,8 @@ func init() {
 	beego.Router("/user/imgupload", &controllers.UploadImg{}, "POST:Upload")
 	beego.Router("/user/updatepwd", &controllers.UserController{}, "POST:UpdatePwd")
 	beego.Router("/user/detial/:uid([0-9]+)", &controllers.UserController{}, "GET:UserDetial")
-	beego.Router("/capt", &controllers.Capt{})
+	beego.Router("/capt", &controllers.Capt{})                                        //获取验证码
+	beego.Router("/topic/search/", &controllers.TopicController{}, "GET:TopicSearch") //通过分类查询帖子
 	beego.Router("/topic/:id([0-9]+)", &controllers.TopicController{}, "GET:TopicDetial")
 	beego.Router("/topic/create", &controllers.TopicController{}, "GET:CreatePage")
 	beego.Router("/topic/create", &controllers.TopicController{}, "POST:CreateTopic")
@@ -69,6 +70,8 @@ func init() {
 	beego.Router("/admin/replymanagelist", &admin.Admin{}, "GET:ReplyManageList")
 	beego.Router("/admin/categorymanagelist", &admin.Admin{}, "GET:CategoryManageList")
 	beego.Router("/admin/sitemanagelist", &admin.Admin{}, "GET:SiteManageList")
+	beego.Router("/admin/rolemanagelist", &admin.RolePermission{}, "GET:RoleManagelist")
+
 	beego.Router("/getsubmenuinfo", &admin.Admin{}, "GET:GetSubMenuInfo")
 	beego.Router("/getmenuinfo", &admin.Admin{}, "GET:GetMenuInfo")
 	beego.Router("/getcategoryinfo", &admin.Admin{}, "GET:GetCategoryInfo")

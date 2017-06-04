@@ -1,6 +1,6 @@
 <div class="fly-panel leifeng-rank">
 <h3 class="fly-panel-title"><i class="layui-icon">&#xe64c;</i> 标签云</h3>
     {{range .Categorys}}
-    <a href="" class="label-item">{{.Category}}</a>
+    <a href="/topic/search?category={{.Category}}" class="label-item">{{.Category}}</a>
     {{end}}
 </div>

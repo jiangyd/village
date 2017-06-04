@@ -461,7 +461,7 @@ func (self *UserController) Register() {
 func (self *UserController) SendMsg() {
 	sessionid := self.GetSession("uid")
 	if sessionid == nil {
-		msg := map[string]interface{}{"code": 1, "msg": "need loging"}
+		msg := map[string]interface{}{"code": 2, "msg": "need loging"}
 		self.Data["json"] = &msg
 		self.ServeJSON()
 	} else {

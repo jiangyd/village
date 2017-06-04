@@ -11,6 +11,15 @@ type TopicController struct {
 	beego.Controller
 }
 
+func (self *TopicController) TopicSearch() {
+	category := self.Input().Get("category")
+	categoryob := models.GetCategoryByName(category)
+	self.Data["cuscategory"] = category
+	self.Data["topic"] = models.FindTopicByCategory(&models.Categorys{Id: categoryob.Id})
+	self.Data["Categorys"] = models.GetTopicCategory()
+	self.TplName = "categorytopic.html"
+}
+
 func (self *TopicController) TopicDetial() {
 	id := self.Ctx.Input.Param(":id")
 	tid, _ := strconv.Atoi(id)

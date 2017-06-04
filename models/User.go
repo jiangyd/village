@@ -3,6 +3,7 @@ package models
 import (
 	"github.com/astaxie/beego/orm"
 	"time"
+	"village/models/admin"
 )
 
 type User struct {
@@ -18,7 +19,8 @@ type User struct {
 	City      string
 	Status    int `orm:"default(0)"` //0:启用 1:禁用
 	Secret    string
-	Mfa       bool `orm:"default(false)"`
+	Mfa       bool        `orm:"default(false)"`
+	Roles     *admin.Role `orm:"rel(fk);null"`
 }
 
 //获取所有用户

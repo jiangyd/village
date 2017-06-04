@@ -28,7 +28,6 @@ layui.define(['layer', 'layedit', 'form'], function(exports) {
 
         content: '<textarea id="sixin" name="sixin" placeholder="请输入内容" class="layui-textarea"></textarea>' ,//这里content是一个普通的String
               yes:function(){
-                layer.msg("cc")
                $.ajax({
                 async:false,
                 url:"/user/message",
@@ -38,8 +37,10 @@ layui.define(['layer', 'layedit', 'form'], function(exports) {
                 },
                 type:'POST',
                 success:function(text){
-                    if(text.msg=='success'){
+                    if(text.code==0){
                         layer.msg("发送成功")
+                    }else if(text.code==2){
+                        location.href="/user/login"
                     }
                 }
                 

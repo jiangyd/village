@@ -12,7 +12,7 @@
         <p>
             <span><a href="/user/detial/{{.Topic.Author.Id}}">{{.Topic.Author.Nickname}}</a></span>
             <span>{{date .Topic.Ctime "Y-m-d H:i:s"}}</span>
-            <a href="" class="label-item" style="margin: 0;">{{.Topic.Category.Category}}</a>
+            <a href="/topic/search?category={{.Topic.Category.Category}}" class="label-item" style="margin: 0;">{{.Topic.Category.Category}}</a>
             
             <span class="fly-list-hint">
                         <span>评论 :&nbsp{{.Topic.ReplyCount}}</span>

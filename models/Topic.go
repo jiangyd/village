@@ -102,6 +102,16 @@ func FindTopicByIds(ids []int) []*Topic {
 	return topics
 }
 
+//通过分类查询
+func FindTopicByCategory(category *Categorys) []*Topic {
+	o := orm.NewOrm()
+	var topic Topic
+	var topics []*Topic
+	o.QueryTable(topic).Filter("Category", category).RelatedSel().All(&topics)
+	return topics
+
+}
+
 //最新主题,通过更新时间倒序查询
 func NewTopic() []*Topic {
 	o := orm.NewOrm()

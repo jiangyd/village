@@ -66,3 +66,11 @@ func GetCiteCategory() []*Categorys {
 	o.QueryTable(category).Filter("CategoryType", "site").All(&categorys)
 	return categorys
 }
+
+//通过分类名称查询
+func GetCategoryByName(name string) Categorys {
+	o := orm.NewOrm()
+	var category Categorys
+	o.QueryTable(category).Filter("Category", name).One(&category)
+	return category
+}
