@@ -517,7 +517,6 @@ func (self *Admin) GetDocNodes() {
 	for _, i := range nodes {
 		SetNodeArray(i, msg)
 	}
-	fmt.Println(&msg, "asddsfdfs")
 	self.Data["json"] = &msg
 	self.ServeJSON()
 }

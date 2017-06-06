@@ -1,6 +1,10 @@
+<script src="/static/js/jQuery.js"></script>
+<script src="/static/js/tree.jquery.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/css/jqtree.css">
+
 
 <div class="layui-tab-content"  style="margin-left: 200px;">
-<button class="layui-btn" id="addmenu">添加</button>
+<button class="layui-btn" id="addrole">添加</button>
 
 
 <table class="layui-table">
@@ -28,45 +32,70 @@
         base: '/static/js/'
     }).use('admin');
 </script>
-<script src="/static/js/jQuery.js"></script>
+
 </body>
 <div id="div_addrole" style="display: none;">
     <form class="layui-form" method="post" style="margin:20px 20px 0px">
-                <div class="layui-form-item">
-                <label class="layui-form-label">角色名称</label>
-<div class="layui-input-block">
-<select name="category" lay-verify="required">
-<option value="">选择所属类别</option>
-{{range .sitecategory}}
-<option value="{{.Id}}">{{.Category}}</option>
-{{end}}
-</select>
-</div>
-</div>
+                
 <div class="layui-form-item">
-<label class="layui-form-label">url</label>
+<label class="layui-form-label">角色名称</label>
 <div class="layui-input-block">
-<input type="text" name="url" required  lay-verify="required" placeholder="请输入站点URL" autocomplete="off" class="layui-input">
-</div>
-</div>
-<div class="layui-form-item">
-<label class="layui-form-label">名称</label>
-<div class="layui-input-block">
-<input type="text" name="title" required  lay-verify="required" placeholder="请输入站点名称" autocomplete="off" class="layui-input">
+<input type="text" name="rolename" required  lay-verify="required"  autocomplete="off" class="layui-input">
 </div>
 </div>
 <div class="layui-form-item">
 <label class="layui-form-label">描述</label>
 <div class="layui-input-block">
-<textarea id="site_content" name="content" placeholder="请输入站点描述" class="layui-textarea fly-editor" style="height:160px;"></textarea>
+<input type="text" name="title" required  lay-verify="required" autocomplete="off" class="layui-input">
 </div>
 </div>
-<div class="layui-form-item">
-<label class="layui-form-label">图片</label>
-<div class="layui-input-block">
-<input type="file" id="site_file" name="img" class="layui-upload-file" value="dssdssd"></input>
-</div>
-</div>
-<button class="layui-btn layui-btn-normal" lay-filter="addsite" lay-submit type="button" style="float: right;">确认</button>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+  <legend>设置权限</legend>
+</fieldset>
+<div id="roletree" data-url="/getrolenodes"></div>
+<button class="layui-btn layui-btn-normal" lay-filter="addrole" lay-submit type="button" style="float: right;">确认</button>
 </form>
+</div>
+<script>
+var $tree=$('#roletree')
+$tree.tree({autoOpen: true,checkBoxes: true});
+$tree.on(
+        'tree.click',
+        function(e) {
+            // Disable single selection
+            e.preventDefault();
+
+            var selected_node = e.node;
+
+            if (selected_node.id == undefined) {
+                console.log('The multiple selection functions require that nodes have an id');
+            }
+
+
+            if ($tree.tree('isNodeSelected', selected_node)) {
+                $tree.tree('removeFromSelection', selected_node);
+                if (selected_node.children.length>0){
+                    for (var i=0; i < selected_node.children.length; i++) {
+                //遍历子节点,选中所有
+                var child = selected_node.children[i];
+                $tree.tree('removeFromSelection', child);
+            }
+                
+            }
+            }
+            else {
+                $tree.tree('addToSelection', selected_node);
+                $tree.tree('addToSelection', selected_node.parent);
+                if (selected_node.children.length>0){
+                    for (var i=0; i < selected_node.children.length; i++) {
+                //遍历子节点,选中所有
+                var child = selected_node.children[i];
+                $tree.tree('addToSelection', child);
+            }
+                
+            }
+            }
+        }
+    );
+</script>
 </html>

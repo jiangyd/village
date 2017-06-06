@@ -81,4 +81,6 @@ func init() {
 	beego.Router("/editdocument/:id([0-9]+)", &admin.Admin{}, "GET:EditDocumentPage")
 	beego.Router("/getdocnodes", &admin.Admin{}, "GET:GetDocNodes")
 	beego.Router("/docnode/:action([a-z]+)", &admin.Admin{}, "POST:DocNodeAction")
+
+	beego.Router("/getrolenodes", &admin.RolePermission{}, "GET:GetRoleDocNodes")
 }

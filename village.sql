@@ -26,3 +26,20 @@ INSERT INTO `village`.`sub_menu` (`key`, `title`, `url`, `parent_id`) VALUES ('s
 INSERT INTO `village`.`sub_menu` (`key`, `title`, `url`, `parent_id`) VALUES ('topic', '帖子', '/admin/topicmanagelist', 'content');
 INSERT INTO `village`.`sub_menu` (`key`, `title`, `url`, `parent_id`) VALUES ('user', '用户', '/admin/usermanagelist', 'system');
 INSERT INTO `village`.`sub_menu` (`key`, `title`, `url`, `parent_id`) VALUES ('site', '站点', '/admin/sitemanagelist', 'content');
+
+
+
+
+--权限
+insert into permission (`name`,`description`,`pname`) values ('content','内容管理','');
+insert into permission (`name`,`description`,`pname`) values ('document','文档','content');
+insert into permission (`name`,`description`,`pname`) values ('topic','帖子','content');
+insert into permission (`name`,`description`,`pname`) values ('site','站点','content');
+insert into permission (`name`,`description`,`pname`) values ('reply','评论','content');
+
+insert into permission (`name`,`description`,`pname`) values ('system','系统管理','');
+insert into permission (`name`,`description`,`pname`) values ('menu','菜单','system');	
+insert into permission (`name`,`description`,`pname`) values ('role','角色','system');
+insert into permission (`name`,`description`,`pname`) values ('category','分类','system');
+insert into permission (`name`,`description`,`pname`) values ('submenu','子菜单','system');
+insert into permission (`name`,`description`,`pname`) values ('user','用户','system');	

@@ -126,6 +126,16 @@ layui.define(['layer', 'form', 'element','upload'], function(exports) {
         });
         form.render('select');
     });
+        //添加角色弹出
+    $("#addrole").on('click', function() {
+        layer.open({
+            type: 1,
+            title: "添加角色",
+            area: ['500px', '560px'],
+            content: $("#div_addrole")
+        });
+        form.render('select');
+    });
 
     //添加分类弹出
     $("#addcategory").on('click', function() {
