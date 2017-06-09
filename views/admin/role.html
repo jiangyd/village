@@ -53,7 +53,7 @@
   <legend>设置权限</legend>
 </fieldset>
 <div id="roletree" data-url="/getrolenodes"></div>
-<button class="layui-btn layui-btn-normal" lay-filter="addrole" lay-submit type="button" style="float: right;">确认</button>
+<button class="layui-btn layui-btn-normal" id="postrole" type="button" style="float: right;">确认</button>
 </form>
 </div>
 <script>
@@ -92,10 +92,21 @@ $tree.on(
                 var child = selected_node.children[i];
                 $tree.tree('addToSelection', child);
             }
-                
+   
             }
             }
         }
+        
     );
+
+$("#postrole").bind('click',function(){
+    var r=new Array()
+    var nodes = $('#roletree').tree('getSelectedNodes')
+    console.log(nodes)
+    // for (var i=0; i < nodes.length; i++) {
+    //             console.log(nodes[i].id);
+                
+    //         }
+})
 </script>
 </html>
