@@ -35,7 +35,6 @@ func (self *TopicController) TopicDetial() {
 		self.Data["replyinfo"] = models.FindReplyByTid(&models.Topic{Id: tid})
 		self.Data["upper_topic"] = models.FindTopicById(tid - 1)
 		self.Data["lower_topic"] = models.FindTopicById(tid + 1)
-
 		self.TplName = "topic/topicdetial.html"
 		if sessionid == nil {
 			self.Data["islogin"] = false

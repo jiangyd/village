@@ -23,6 +23,14 @@ type User struct {
 	Roles     *admin.Role `orm:"rel(fk);null"`
 }
 
+//ys
+func Findys(id interface{}) []orm.Params {
+	o := orm.NewOrm()
+	var ys []orm.Params
+	o.Raw("select * from user where id=" + id.(string)).Values(&ys)
+	return ys
+}
+
 //获取所有用户
 func GetAllUser() []*User {
 	o := orm.NewOrm()

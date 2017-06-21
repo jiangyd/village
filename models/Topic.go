@@ -91,7 +91,16 @@ func FindTopicById(id int) Topic {
 	var topic Topic
 	o.QueryTable(topic).Filter("Id", id).RelatedSel().One(&topic)
 	return topic
+
 }
+
+//演示
+// func FindTopicById(id interface{}) []orm.Params {
+// 	o := orm.NewOrm()
+// 	var topic []orm.Params
+// 	o.Raw("select id, title, content, author_id, ctime, utime, view, reply_count, last_reply_user_id, last_reply_time, up, category_id, adopt_id, disable from topic  where id="+id.(string)).Values(&topic, "id", "title", "content", "author_id", "ctime", "utime", "view", "reply_count", "last_reply_user_id", "last_reply_time", "up", "category_id", "adopt_id", "disable")
+// 	return topic
+// }
 
 //通过一组主题id查询
 func FindTopicByIds(ids []int) []*Topic {

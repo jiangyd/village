@@ -475,3 +475,9 @@ func (self *UserController) SendMsg() {
 	}
 
 }
+
+func (self *UserController) Userys() {
+	self.TplName = "user/userys.html"
+	uid := self.Ctx.Input.Param(":id")
+	self.Data["userys"] = models.Findys(uid)
+}

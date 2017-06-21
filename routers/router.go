@@ -8,6 +8,7 @@ import (
 
 func init() {
 	beego.Router("/", &controllers.ContentController{}, "GET:Index")
+	beego.Router("/user/ys/:id", &controllers.UserController{}, "GET:Userys") //演示
 	beego.Router("/user/login", &controllers.UserController{}, "GET:LoginPage")
 	beego.Router("/user/login", &controllers.UserController{}, "POST:Login")
 	beego.Router("/user/logout", &controllers.UserController{}, "GET:Logout")
