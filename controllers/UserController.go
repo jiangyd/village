@@ -481,3 +481,17 @@ func (self *UserController) Userys() {
 	uid := self.Ctx.Input.Param(":id")
 	self.Data["userys"] = models.Findys(uid)
 }
+func (self *UserController) Usersessionys() {
+	uid := self.Ctx.Input.Param(":id")
+	if self.GetSession("uid") == nil {
+		fmt.Println("直接返回")
+		msg := map[string]interface{}{"code": 2, "msg": "need loging"}
+		self.Data["json"] = &msg
+		self.ServeJSON()
+	}
+	fmt.Println("goto here")
+	self.TplName = "user/userys.html"
+	self.Data["userys"] = models.Findys(uid)
+	fmt.Println(models.Findys(uid))
+
+}
