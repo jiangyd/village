@@ -121,11 +121,13 @@ func (self *TopicController) EditTopic() {
 	if uid == nil {
 		self.Ctx.Redirect(302, "/user/login")
 	} else {
-		if !CheckCode(vercode, captcha_id) {
-			msg := map[string]interface{}{"code": 1, "msg": "验证码错误"}
-			self.Data["json"] = &msg
-			self.ServeJSON()
-		} else {
+		fmt.Println(vercode, captcha_id)
+		// if !CheckCode(vercode, captcha_id) {
+		// 	msg := map[string]interface{}{"code": 1, "msg": "验证码错误"}
+		// 	self.Data["json"] = &msg
+		// 	self.ServeJSON()
+		// } else {
+		if models.IsTopicExit(tid) {
 			self.Data["islogin"] = true
 			self.Data["userinfo"] = models.FindUserDetialById(uid.(int))
 			topic := models.FindTopicById(tid)
@@ -136,7 +138,13 @@ func (self *TopicController) EditTopic() {
 			msg := map[string]interface{}{"code": 0, "msg": "success", "tid": tid}
 			self.Data["json"] = &msg
 			self.ServeJSON()
+		} else {
+			msg := map[string]interface{}{"code": 2, "msg": "帖子不存在"}
+			self.Data["json"] = &msg
+			self.ServeJSON()
 		}
+
+		// }
 
 	}
 }
