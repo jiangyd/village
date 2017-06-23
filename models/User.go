@@ -1,7 +1,9 @@
 package models
 
 import (
+	"fmt"
 	"github.com/astaxie/beego/orm"
+	"strconv"
 	"time"
 	"village/models/admin"
 )
@@ -29,6 +31,21 @@ func Findys(id interface{}) []orm.Params {
 	var ys []orm.Params
 	o.Raw("select * from user where id=" + id.(string)).Values(&ys)
 	return ys
+}
+
+func UpdateUsername(id int, username string) {
+	o := orm.NewOrm()
+	uid := strconv.Itoa(id)
+	sql := "update user set nickname='" + username + "' " + "where id=" + uid
+	fmt.Println("sql:" + sql)
+	o.Raw(sql).Exec()
+}
+
+func FindUserByUserName(username string) []orm.Params {
+	o := orm.NewOrm()
+	var user []orm.Params
+	o.Raw("select * from user where nickname='" + username + "'").Values(&user)
+	return user
 }
 
 //获取所有用户

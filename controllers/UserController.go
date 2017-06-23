@@ -476,6 +476,31 @@ func (self *UserController) SendMsg() {
 
 }
 
+//演示
+func (self *UserController) UserSearch() {
+	username := self.Input().Get("username")
+	fmt.Println(username, "username...")
+	self.TplName = "user/userys.html"
+	self.Data["userys"] = models.FindUserByUserName(username)
+}
+
+func (self *UserController) UserUpdate() {
+	username := self.Input().Get("username")
+	sessionid := self.GetSession("uid")
+	if sessionid == nil {
+		msg := map[string]interface{}{"code": 2, "msg": "need loging"}
+		self.Data["json"] = &msg
+		self.ServeJSON()
+	} else {
+		fmt.Println("session", sessionid.(int))
+		models.UpdateUsername(sessionid.(int), username)
+		msg := map[string]interface{}{"code": 0, "msg": "success"}
+		self.Data["json"] = &msg
+		self.ServeJSON()
+	}
+
+}
+
 func (self *UserController) Userys() {
 	self.TplName = "user/userys.html"
 	uid := self.Ctx.Input.Param(":id")

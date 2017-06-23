@@ -10,6 +10,8 @@ func init() {
 	beego.Router("/", &controllers.ContentController{}, "GET:Index")
 	beego.Router("/user/ys/:id", &controllers.UserController{}, "GET:Userys")             //演示
 	beego.Router("/user/session/:id", &controllers.UserController{}, "GET:Usersessionys") //演示
+	beego.Router("/user/search/", &controllers.UserController{}, "GET:UserSearch")        //ys
+	beego.Router("/user/update", &controllers.UserController{}, "POST:UserUpdate")
 	beego.Router("/user/login", &controllers.UserController{}, "GET:LoginPage")
 	beego.Router("/user/login", &controllers.UserController{}, "POST:Login")
 	beego.Router("/user/logout", &controllers.UserController{}, "GET:Logout")
