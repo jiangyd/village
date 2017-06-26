@@ -51,6 +51,30 @@ layui.define(['layer', 'form', 'element', 'upload'], function(exports) {
         })
         return false;
     });
+
+
+    form.on('submit(modify-nickname)', function(data) {
+        $.ajax({
+            async: false,
+            url: "/user/update",
+            data: {
+                // "email": data.field.Email,
+                "username": data.field.ldnickname,
+            },
+            type: 'POST',
+            success: function(text) {
+                if (text.msg == 'success') {
+                    setTimeout(function() { location.href = '/user/set' }, 1000);
+                } else if (text.code != 0) {
+                    layer.msg(text.msg)
+
+                }
+            }
+
+        })
+        return false;
+    });
+
     form.on('submit(modify-pwd)',function(data){
         if(data.field.newpassword!=data.field.repassword){
             layer.msg("两次密码输入不一致!")

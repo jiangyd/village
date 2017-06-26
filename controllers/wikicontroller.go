@@ -79,6 +79,7 @@ func (self *WiKi) WiKiRoot() {
 
 func (self *WiKi) WiKiRootTree() {
 	id := self.Ctx.Input.Param(":id")
+	fmt.Println("id:", id)
 	pid, _ := strconv.Atoi(id)
 
 	doc := admin.GetDocById(pid)

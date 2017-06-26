@@ -83,19 +83,19 @@ func (self *TopicController) CreateTopic() {
 	title, content, vercode, captcha_id, category := self.Input().Get("title"), self.Input().Get("content"), self.Input().Get("vercode"), self.Input().Get("captcha_id"), self.Input().Get("category")
 	category_id, _ := strconv.Atoi(category)
 	fmt.Println(vercode, captcha_id)
-	if !CheckCode(vercode, captcha_id) {
-		msg := map[string]interface{}{"code": 1, "msg": "验证码错误"}
-		self.Data["json"] = &msg
-		self.ServeJSON()
-	} else {
-		uid := self.GetSession("uid")
-		fmt.Println(uid)
-		topic := models.Topic{Title: title, Content: content, Author: &models.User{Id: uid.(int)}, Category: &models.Categorys{Id: category_id}, Disable: false}
-		tid := models.SaveTopic(&topic)
-		msg := map[string]interface{}{"code": 0, "msg": "success", "tid": tid}
-		self.Data["json"] = &msg
-		self.ServeJSON()
-	}
+	// if !CheckCode(vercode, captcha_id) {
+	// 	msg := map[string]interface{}{"code": 1, "msg": "验证码错误"}
+	// 	self.Data["json"] = &msg
+	// 	self.ServeJSON()
+	// } else {
+	uid := self.GetSession("uid")
+	fmt.Println(uid)
+	topic := models.Topic{Title: title, Content: content, Author: &models.User{Id: uid.(int)}, Category: &models.Categorys{Id: category_id}, Disable: false}
+	tid := models.SaveTopic(&topic)
+	msg := map[string]interface{}{"code": 0, "msg": "success", "tid": tid}
+	self.Data["json"] = &msg
+	self.ServeJSON()
+	// }
 
 }
 
@@ -157,20 +157,21 @@ func (self *TopicController) ReplyTopic() {
 		self.Data["json"] = &msg
 		self.ServeJSON()
 	} else {
-		if !CheckCode(vercode, captcha_id) {
-			msg := map[string]interface{}{"code": 1, "msg": "验证码错误"}
-			self.Data["json"] = &msg
-			self.ServeJSON()
-		} else {
-			tid, _ := strconv.Atoi(topic_id)
-			reply := models.Reply{Topic: &models.Topic{Id: tid}, Content: content, User: &models.User{Id: uid.(int)}}
-			models.SaveReply(&reply)
-			topic := models.FindTopicById(tid)
-			models.IncrReplyCount(&topic)
-			msg := map[string]interface{}{"code": 0, "msg": "success", "tid": tid}
-			self.Data["json"] = &msg
-			self.ServeJSON()
-		}
+		fmt.Println(vercode, captcha_id)
+		// if !CheckCode(vercode, captcha_id) {
+		// 	msg := map[string]interface{}{"code": 1, "msg": "验证码错误"}
+		// 	self.Data["json"] = &msg
+		// 	self.ServeJSON()
+		// } else {
+		tid, _ := strconv.Atoi(topic_id)
+		reply := models.Reply{Topic: &models.Topic{Id: tid}, Content: content, User: &models.User{Id: uid.(int)}}
+		models.SaveReply(&reply)
+		topic := models.FindTopicById(tid)
+		models.IncrReplyCount(&topic)
+		msg := map[string]interface{}{"code": 0, "msg": "success", "tid": tid}
+		self.Data["json"] = &msg
+		self.ServeJSON()
+		// }
 	}
 
 }
@@ -185,8 +186,15 @@ func (self *TopicController) Adopt() {
 		self.ServeJSON()
 	} else {
 		t_id, r_id := self.Input().Get("tid"), self.Input().Get("rid")
-		tid, _ := strconv.Atoi(t_id)
-		rid, _ := strconv.Atoi(r_id)
+		fmt.Println("tid:", t_id, "###rid:", r_id)
+		tid, err := strconv.Atoi(t_id)
+		if err != nil {
+			fmt.Println("tid转换:", err)
+		}
+		rid, err := strconv.Atoi(r_id)
+		if err != nil {
+			fmt.Println("tid转换:", err)
+		}
 		topic := models.FindTopicById(tid)
 		//判断是否是作者
 		if topic.Author.Id == uid.(int) {
