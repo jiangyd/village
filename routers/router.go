@@ -53,7 +53,7 @@ func init() {
 	beego.Router("/topicupload", &controllers.UploadImg{}, "POST:TopicUpload")
 	beego.Router("/site", &controllers.SiteController{}, "GET:SitePage")
 	beego.Router("/wiki", &controllers.WiKi{}, "GET:WiKiList")
-	beego.Router("/about", &controllers.ContentController{}, "GET:About")
+	beego.Router("/about/", &controllers.ContentController{}, "GET:About")
 	beego.Router("/wiki/:id([0-9]+)", &controllers.WiKi{}, "GET:WiKiRoot")
 	beego.Router("/wiki/detial/:root([0-9]+)/:id([0-9]+)", &controllers.WiKi{}, "GET:WiKiDetial")
 	beego.Router("/wiki/tree/:id([0-9]+)", &controllers.WiKi{}, "GET:WiKiRootTree")

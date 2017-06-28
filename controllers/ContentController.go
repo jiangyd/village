@@ -28,6 +28,10 @@ func (self *ContentController) Index() {
 }
 
 func (self *ContentController) About() {
+	message := self.Input().Get("message")
+	self.Data["message"] = message
+	fmt.Println(message)
+	self.Ctx.Output.Header("Content-Type", "text/html")
 	self.TplName = "about.html"
 
 }

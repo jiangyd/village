@@ -14,6 +14,7 @@ type TopicController struct {
 func (self *TopicController) TopicSearch() {
 	category := self.Input().Get("category")
 	categoryob := models.GetCategoryByName(category)
+	fmt.Println(category)
 	self.Data["cuscategory"] = category
 	self.Data["topic"] = models.FindTopicByCategory(&models.Categorys{Id: categoryob.Id})
 	self.Data["Categorys"] = models.GetTopicCategory()

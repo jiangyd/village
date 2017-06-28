@@ -11,7 +11,7 @@
             <div class="content">
                 <div class="layui-tab layui-tab-brief">
                     <ul class="layui-tab-title">
-                        <li class="layui-this"><a href="/topic/newtopic">{{.cuscategory}}</a></li>
+                        <li class="layui-this"><a href="/topic/newtopic">{{str2html .cuscategory}}</a></li>
                     </ul>
                     <div class="layui-tab-content" style="padding: 0px;">
                         <div class="layui-tab-item layui-show">{{template "topic/topiccategory.html" .}}</div>
