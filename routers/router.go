@@ -26,8 +26,9 @@ func init() {
 	beego.Router("/user/forgetpwd", &controllers.UserController{}, "POST:ForGetPwd")
 	beego.Router("/forgetpwd", &controllers.UserController{}, "GET:ForGetPwdPage")
 	beego.Router("/user/setnewpwd", &controllers.UserController{}, "POST:SetNewPwd") //重设密码
+	beego.Router("/user/msgpage", &controllers.UserController{}, "GET:MessagePage")  //消息页面
+	beego.Router("/user/message", &controllers.UserController{}, "POST:SendMsg")     //发送私信
 	beego.Router("/user/message", &controllers.UserController{}, "GET:Message")
-	beego.Router("/user/message", &controllers.UserController{}, "POST:SendMsg") //发送私信
 	beego.Router("/user/topic", &controllers.UserController{}, "GET:UserTopic")
 	beego.Router("/user/collection", &controllers.UserController{}, "GET:Collection")
 	beego.Router("/collection", &controllers.CollecController{}, "POST:Collec") //收藏

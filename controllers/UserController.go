@@ -347,8 +347,9 @@ func (self *UserController) CloseMfa() {
 	}
 }
 
-func (self *UserController) Message() {
+func (self *UserController) MessagePage() {
 	uid := self.GetSession("uid")
+
 	if uid == nil {
 		self.Data["islogin"] = false
 		self.Ctx.Redirect(302, "/")
@@ -358,6 +359,21 @@ func (self *UserController) Message() {
 		self.Data["userinfo"] = user
 		self.Data["IsMessage"] = true
 		self.TplName = "user/message.html"
+	}
+
+}
+
+func (self *UserController) Message() {
+	uid := self.GetSession("uid")
+	msgtype := self.Input().Get("msgtype")
+	fmt.Println(msgtype)
+	if uid == nil {
+		self.Data["islogin"] = false
+		self.Ctx.Redirect(302, "/")
+	} else {
+		msgdata := models.GetMyMsg(&models.User{Id: uid.(int)}, msgtype)
+		self.Data["json"] = &msgdata
+		self.ServeJSON()
 	}
 
 }
@@ -467,7 +483,7 @@ func (self *UserController) SendMsg() {
 	} else {
 		userb, msgcontent := self.Input().Get("userb"), self.Input().Get("content")
 		userbid, _ := strconv.Atoi(userb)
-		message := models.Message{Send: &models.User{Id: sessionid.(int)}, Recv: &models.User{Id: userbid}, Content: msgcontent}
+		message := models.Message{Send: &models.User{Id: sessionid.(int)}, Recv: &models.User{Id: userbid}, Content: msgcontent, Msgtype: "private"}
 		models.SendMsg(&message)
 		msg := map[string]interface{}{"code": 0, "msg": "success"}
 		self.Data["json"] = &msg
