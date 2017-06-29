@@ -26,6 +26,6 @@ func GetMyMsg(recv *User, msgtype string) []*Message {
 	o := orm.NewOrm()
 	var message Message
 	var messages []*Message
-	o.QueryTable(message).Filter("Recv", recv).Filter("Msgtype", msgtype).RelatedSel().All(&messages)
+	o.QueryTable(message).Filter("Recv", recv).Filter("Msgtype", msgtype).RelatedSel("Send").Filter("Id", recv).All(&messages)
 	return messages
 }
