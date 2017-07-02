@@ -373,7 +373,8 @@ func (self *UserController) Message() {
 	} else {
 		msgdata := models.GetMyMsg(&models.User{Id: uid.(int)}, msgtype)
 		for _, a := range msgdata {
-			fmt.Println(a.Content)
+			// fmt.Println(a.Content)
+			fmt.Println(a.Send.Id)
 		}
 		self.Data["json"] = &msgdata
 		self.ServeJSON()

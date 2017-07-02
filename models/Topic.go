@@ -184,3 +184,11 @@ func AdoptTopicList() []*Topic {
 	o.QueryTable(topic).Filter("Adopt__isnull", false).OrderBy("-Ctime").RelatedSel().All(&topics)
 	return topics
 }
+
+//
+func GetTopicDT(id interface{}) []orm.Params {
+	o := orm.NewOrm()
+	var topic []orm.Params
+	o.Raw("select title,content,ctime, view,reply_count from topic where id=", id).Exec()
+	return topic
+}

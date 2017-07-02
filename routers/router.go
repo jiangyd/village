@@ -47,6 +47,7 @@ func init() {
 	beego.Router("/topic/edit/:id([0-9]+)", &controllers.TopicController{}, "GET:EditPage")
 	beego.Router("/topic/edit/", &controllers.TopicController{}, "POST:EditTopic")
 	beego.Router("/topic/reply", &controllers.TopicController{}, "POST:ReplyTopic")
+	beego.Router("/topic/detial", &controllers.TopicController{}, "GET:TopicDT") //演示安全
 	beego.Router("/dz", &controllers.DzController{}, "POST:Dz")
 	beego.Router("/topic/adopt", &controllers.TopicController{}, "POST:Adopt") //采纳
 	beego.Router("/topic/:type([a-z]+)", &controllers.ContentController{}, "GET:TopicList")
