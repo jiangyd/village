@@ -2,6 +2,7 @@ package models
 
 import (
 	// "fmt"
+	"fmt"
 	"github.com/astaxie/beego/orm"
 	"time"
 )
@@ -189,6 +190,9 @@ func AdoptTopicList() []*Topic {
 func GetTopicDT(id interface{}) []orm.Params {
 	o := orm.NewOrm()
 	var topic []orm.Params
-	o.Raw("select title,content,ctime, view,reply_count from topic where id=", id).Exec()
+	// o.Raw("select id,title,content,ctime, view,reply_count from topic where id=?", id.(string)).Values(&topic)
+	sql := "select id,title,content,ctime, view,reply_count from topic where id=" + id.(string)
+	fmt.Println(sql)
+	o.Raw(sql).Values(&topic)
 	return topic
 }

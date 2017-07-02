@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+{{template "public/header.html" .}}
+<link rel="stylesheet" type="text/css" href="/static/css/editormd/planeui.min.css">
+
+<link rel="stylesheet" type="text/css" href="/static/css/editormd/editormd.min.css">
+<link rel="stylesheet" type="text/css" href="/static/css/editormd/index.css">
+<title>测试君|社区</title>
+</head>
+
+<body>
+    {{template "public/nav.html" .}}
+    <div class="main">
+        <div class="page_left">
+            <div class="detail_container trans_3">
+                <h1>{{.topic.Title}}</h1>
+                <div class="date_hits">
+                    <span><i>发表于：</i>{{ .topic.ctime }}</span>
+                    <span><i>标题：</i>{{.topic.title}}</span>
+                    <span><i>浏览数：</i> {{.topic.view}}</span>
+                    <span><i>评论数：</i> {{.topic.reply_count}}</a></span>
+                </div>
+                <input type="hidden" id="mkcontent" value="{{.topic.content}}">
+                <div id="test-editormd-view">
+               <textarea style="display:none;" name="test-editormd-markdown-doc"></textarea>               
+            </div>
+                
+               
+                <div class="keywords" style="margin-top: 20px;">
+                    转载文章时务必注明原作者及原始链接，并注明「发表于 TesterVillage 」，并不得对作品进行修改。
+                </div>
+             
+                <div class="layui-form layui-form-pane" style="margin: 0px 20px 0px 20px;">
+                    <form method="post">
+                        <div class="layui-form-item layui-form-text">
+                            <div class="layui-input-block">
+                                  <div id="replymd">
+                </div>
+                                <!-- <textarea id="reply_content" name="content" placeholder="请输入内容" class="layui-textarea fly-editor" style="height:260px;"></textarea> -->
+                            </div>
+                        </div>
+                        <div class="layui-form-item ">
+                            <label for="L_title" class="layui-form-label">验证码</label>
+                            <div class="layui-input-block">
+                                <input type="hidden" id="topic_id" value="{{.topic.id}}">
+                                <input type="text" id="L_vercode" name="vercode" required lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input" style="display: inline;width: 150px;"> {{template "public/captcha.html"}}
+                                <button class="layui-btn layui-btn-normal" id="replygo" lay-submit type="button" style="float: right;">
+                                    提交回复
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script>
+        window._bd_share_config = {
+            "common": {
+                "bdSnsKey": {},
+                "bdText": "",
+                "bdMini": "1",
+                "bdMiniList": ["weixin", "sqq", "youdao", "evernotecn", "copy"],
+                "bdPic": "",
+                "bdStyle": "2",
+                "bdSize": "16"
+            },
+            "slide": {
+                "type": "slide",
+                "bdImg": "0",
+                "bdPos": "left",
+                "bdTop": "112.5"
+            },
+            "image": {
+                "viewList": ["weixin"],
+                "viewText": "分享到：",
+                "viewSize": "16"
+            },
+            "selectShare": {
+                "bdContainerClass": null,
+                "bdSelectMiniList": ["weixin"]
+            }
+        };
+        with(document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
+        </script>
+        <script>
+        layui.config({
+            base: '/static/js/'
+        }).use('content')
+        </script>
+    </div>
+    </div>
+    </div>
+    </div>
+    <script src="/static/js/jQuery.js"></script>
+    <script src="/static/js/village.js"></script>
+    <script src="/static/editor.md/lib/marked.min.js"></script>
+<script src="/static/editor.md/lib/prettify.min.js"></script>
+<script src="/static/editor.md/lib/flowchart.min.js"></script>
+<script src="/static/editor.md/lib/jquery.flowchart.min.js"></script>
+<script src="/static/editor.md/lib/raphael.min.js"></script>
+<script src="/static/editor.md/lib/underscore.min.js"></script>
+<script src="/static/editor.md/lib/sequence-diagram.min.js"></script>
+<script src="/static/editor.md/editormd.min.js"></script>
+    <script type="text/javascript">
+var editor
+
+$(function() {
+     editor = editormd.markdownToHTML("test-editormd-view", {
+        markdown : $("#mkcontent").val(),
+        flowChart : true,//流程图显示
+        emoji:true,
+        tex:true,
+        tocm:true,
+        sequenceDiagram : true,
+        autoHeight : true,//自动高亮
+        htmlDecode : "style,script,iframe" ,
+    });
+
+});
+var editor_reply
+$(function() {
+    editor_reply = editormd("replymd", {
+        width:'100%',
+        height:250,
+        path: "/static/editor.md/lib/", // Autoload modules mode, codemirror, marked... dependents libs path
+        // flowChart : true,//流程图显示
+        // autoHeight : true,//自动高亮
+        watch:false,
+        saveHTMLToTextarea : true,
+         htmlDecode : "style,script,iframe,sub,sup|on*" ,
+        toolbarIcons : function() {
+            // Or return editormd.toolbarModes[name]; // full, simple, mini
+            // Using "||" set icons align right.
+            return [ "bold", "hr","link","del","quote","code","preformatted-text","image", "|", "file", "faicon","||", "watch"]},
+            imageUpload    : true,
+    imageFormats   : ["jpg", "jpeg", "gif", "png"],
+    imageUploadURL : "/topicupload",
+    });
+});
+
+    $("#replygo").bind('click', function() {
+        $.ajax({
+            async: false,
+            url: "/topic/reply",
+            data: {
+                "topic_id": $("#topic_id").val(),
+                "content": editor_reply.getHTML(),
+                "vercode": $("#L_vercode").val(),
+                "captcha_id": $("[name='captcha_id']").val()
+            },
+            type: 'POST',
+            success: function(text) {
+                if (text.code == 0) {
+                    location.href = '/topic/' + text.tid
+
+                } else if (text.code == 2) {
+                    location.href="/user/login"
+                }else{
+                    layer.msg(text.msg)
+                }
+            }
+
+        });
+
+        return false;
+
+    });
+    </script>
+</body>

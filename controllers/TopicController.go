@@ -68,6 +68,14 @@ func (self *TopicController) TopicDetial() {
 
 }
 
+func (self *TopicController) TopicDT() {
+	id := self.Input().Get("id")
+	topdata := models.GetTopicDT(id)
+	self.Data["topic"] = topdata[0]
+
+	self.TplName = "topic/ystopicdetial.html"
+}
+
 func (self *TopicController) CreatePage() {
 	uid := self.GetSession("uid")
 	if uid == nil {
