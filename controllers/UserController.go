@@ -372,10 +372,6 @@ func (self *UserController) Message() {
 		self.Ctx.Redirect(302, "/")
 	} else {
 		msgdata := models.GetMyMsg(&models.User{Id: uid.(int)}, msgtype)
-		for _, a := range msgdata {
-			// fmt.Println(a.Content)
-			fmt.Println(a.Send.Id)
-		}
 		self.Data["json"] = &msgdata
 		self.ServeJSON()
 	}

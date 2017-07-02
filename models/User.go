@@ -10,19 +10,19 @@ import (
 
 type User struct {
 	Id        int
-	Nickname  string `orm:"unique"`
-	Password  string
-	Email     string `orm:"unique"`
-	Avatar    string
-	Ctime     time.Time `orm:"auto_now_add;type(datetime)"`
-	Sign      string    `orm:"size(255)"`
-	Superuser bool      `orm:"default(false)"`
-	Sex       int       //0:男,1:女，2:保密
-	City      string
-	Status    int `orm:"default(0)"` //0:启用 1:禁用
-	Secret    string
-	Mfa       bool        `orm:"default(false)"`
-	Roles     *admin.Role `orm:"rel(fk);null"`
+	Nickname  string      `orm:"unique"`
+	Password  string      `json:"-"`
+	Email     string      `orm:"unique" json:"-"`
+	Avatar    string      `json:"-"`
+	Ctime     time.Time   `orm:"auto_now_add;type(datetime)" json:"-"`
+	Sign      string      `orm:"size(255)" json:"-"`
+	Superuser bool        `orm:"default(false)" json:"-"`
+	Sex       int         `json:"-"` //0:男,1:女，2:保密
+	City      string      `json:"-"`
+	Status    int         `orm:"default(0)"  json:"-"` //0:启用 1:禁用
+	Secret    string      `json:"-"`
+	Mfa       bool        `orm:"default(false)"  json:"-"`
+	Roles     *admin.Role `orm:"rel(fk);null"  json:"-"`
 }
 
 //ys

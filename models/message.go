@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"github.com/astaxie/beego/orm"
 	"time"
 )
@@ -22,10 +23,9 @@ func SendMsg(message *Message) int64 {
 }
 
 //获取自己收到的私信
-func GetMyMsg(recv *User, msgtype string) []*Message {
+func GetMyMsg(recv *User, msgtype string) []orm.Params {
 	o := orm.NewOrm()
-	var message Message
-	var messages []*Message
-	o.QueryTable(message).Filter("Recv", recv).Filter("Msgtype", msgtype).RelatedSel().All(&messages)
-	return messages
+	var msg []orm.Params
+	o.Raw("select a.id,a.send_id,a.content,a.ctime,a.read,a.msgtype,u.nickname from message a , user u  where a.recv_id=u.id and a.recv_id=? and a.msgtype=?", recv, msgtype).Values(&msg)
+	return msg
 }
