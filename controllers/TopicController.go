@@ -71,8 +71,8 @@ func (self *TopicController) TopicDetial() {
 func (self *TopicController) TopicDT() {
 	id := self.Input().Get("id")
 	topdata := models.GetTopicDT(id)
-	self.Data["topic"] = topdata[0]
-
+	self.Data["topic"] = topdata[len(topdata)-1]
+	self.Data["islogin"] = true
 	self.TplName = "topic/ystopicdetial.html"
 }
 

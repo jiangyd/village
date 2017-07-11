@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/astaxie/beego"
 	"strconv"
+	"text/template"
 	"time"
 	"village/models"
 )
@@ -110,6 +111,7 @@ func (self *UserController) Login() {
 		}
 		self.SetSession("uid", userinfo.Id)
 		self.SetSession("nickname", userinfo.Nickname)
+		self.Ctx.SetCookie("uuid", Getuuid())
 		msg := map[string]interface{}{"code": 0, "msg": "success"}
 		self.Data["json"] = &msg
 		self.ServeJSON()
@@ -483,6 +485,8 @@ func (self *UserController) SendMsg() {
 	} else {
 		userb, msgcontent := self.Input().Get("userb"), self.Input().Get("content")
 		userbid, _ := strconv.Atoi(userb)
+		msgcontent1 := template.HTMLEscapeString(msgcontent) //过滤不可信内容
+		fmt.Println(msgcontent1)
 		message := models.Message{Send: &models.User{Id: sessionid.(int)}, Recv: &models.User{Id: userbid}, Content: msgcontent, Msgtype: "private"}
 		models.SendMsg(&message)
 		msg := map[string]interface{}{"code": 0, "msg": "success"}

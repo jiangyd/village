@@ -2,6 +2,7 @@
 <html>
 {{template "public/header.html" .}}
 <title>测试君|测试</title>
+<script src="/static/js/jQuery.js"></script>
 </head>
 
 <body>
@@ -15,7 +16,8 @@
                 <li>系统消息</li>
             </ul>
             <div class="layui-tab-content" style="padding: 20px 0;">
-                <div class="layui-form layui-form-pane layui-tab-item layui-show">
+                <div id="mymessage" class="layui-form layui-form-pane layui-tab-item layui-show">
+                
                 </div>
             </div>
         </div>
@@ -25,6 +27,60 @@
         base: '/static/js/'
     }).use('user')
     </script>
+
+<script type="text/javascript">
+    function mymessage(){
+        $.ajax({
+            url:"/user/message",
+            data:{
+                "msgtype":"private"
+            },
+            success:function(data){
+
+                var html="<table class='layui-table'><colgroup><col width='150'><col width='200'><col></colgroup><thead><tr><th>内容</th><th>接收时间</th><th>id</th><th>nickname</th><th>是否已读</th><th>发送人ID</th></tr> </thead><tbody>"
+                // for (var x=0;x<=data.length;x++){
+                //     console.log(data[x].content)
+                //     html+="<tr><th>"
+                //     html+=data[x].content
+                //     html+="</th><th>"
+                //     html+=data[x].ctime
+                //     html+="</th><th>"
+                //     html+=data[x].id
+                //     html+="</th><th>"
+                //     html+=data[x].nickname
+                //     html+="</th><th>"
+                //     html+=data[x].read
+                //     html+="</th><th>"
+                //     html+=data[x].send_id
+                //     html+="</th><tr>"
+                // }
+                $.each(data,function(index,d){
+                           html+="<tr><th>"
+                    html+=d.content
+                    html+="</th><th>"
+                    html+=d.ctime
+                    html+="</th><th>"
+                    html+=d.id
+                    html+="</th><th>"
+                    html+=d.nickname
+                    html+="</th><th>"
+                    html+=d.read
+                    html+="</th><th>"
+                    html+= d.send_id
+                    html+="</th><tr>"
+                })
+                html+="</tbody>"
+                $("#mymessage").html(html)
+            }
+        })
+            
+    }
+    $(document).ready(function(){
+        mymessage()
+    })
+
+
+</script>
 </body>
 
 </html>
