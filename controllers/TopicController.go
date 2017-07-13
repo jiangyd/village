@@ -21,6 +21,39 @@ func (self *TopicController) TopicSearch() {
 	self.TplName = "categorytopic.html"
 }
 
+func (self *TopicController) DaShang() {
+	//给用户打赏
+	userb := self.Input().Get("userb")
+	money := self.Input().Get("money")
+	moneyint, _ := strconv.Atoi(money)
+	userbint, _ := strconv.Atoi(userb)
+	sessionid := self.GetSession("uid")
+	if sessionid == nil {
+		msg := map[string]interface{}{"code": 2, "msg": "need login"}
+		self.Data["json"] = &msg
+		self.ServeJSON()
+	} else {
+		if sessionid.(int) == userbint {
+			msg := map[string]interface{}{"code": 3, "msg": "不能给自己打赏"}
+			self.Data["json"] = &msg
+			self.ServeJSON()
+		} else {
+			//被打赏的人金钱要增加
+			userbinfo := models.FindUserDetialById(userbint)
+			userbinfo.Money += moneyint
+			models.UpdateUser(&userbinfo)
+			//打赏的人金钱则要减少
+			userainfo := models.FindUserDetialById(sessionid.(int))
+			userainfo.Money -= moneyint
+			models.UpdateUser(&userainfo)
+			msg := map[string]interface{}{"code": 0, "msg": "打赏成功"}
+			self.Data["json"] = &msg
+			self.ServeJSON()
+		}
+
+	}
+}
+
 func (self *TopicController) TopicDetial() {
 	id := self.Ctx.Input.Param(":id")
 	tid, _ := strconv.Atoi(id)

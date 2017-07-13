@@ -23,6 +23,7 @@ type User struct {
 	Secret    string      `json:"-"`
 	Mfa       bool        `orm:"default(false)"  json:"-"`
 	Roles     *admin.Role `orm:"rel(fk);null"  json:"-"`
+	Money     int         `orm:"default(0)"  json:"-"`
 }
 
 //ys
