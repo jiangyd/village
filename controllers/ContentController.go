@@ -28,12 +28,10 @@ func (self *ContentController) Index() {
 }
 
 func (self *ContentController) About() {
-	message := self.Input().Get("message")
-	self.Data["message"] = message
-	fmt.Println(message)
-	self.Ctx.Output.Header("Content-Type", "text/html")
+	data := models.GetLiuYan()
+	self.Data["liuyan"] = data
+	fmt.Println(data)
 	self.TplName = "about.html"
-
 }
 
 func (self *ContentController) TopicList() {

@@ -43,6 +43,9 @@
                     {{.topic.Id}})" id="collection" class="layui-btn-small layui-btn-radius layui-btn-primary">
                         {{if .collection }}取消收藏{{else}}收藏{{end}}
                     </button>
+                    <button type="button"  id="dashang" class="layui-btn-small layui-btn-radius layui-btn-primary">
+                        打赏
+                    </button>
                 </div>
                 <div class="keywords" style="margin-top: 20px;">
                     转载文章时务必注明原作者及原始链接，并注明「发表于 TesterVillage 」，并不得对作品进行修改。
@@ -205,6 +208,31 @@ $(function() {
             success: function(text) {
                 if (text.code == 0) {
                     location.href = '/topic/' + text.tid
+
+                } else if (text.code == 2) {
+                    location.href="/user/login"
+                }else{
+                    layer.msg(text.msg)
+                }
+            }
+
+        });
+
+        return false;
+
+    });
+    $("#dashang").bind('click', function() {
+        $.ajax({
+            async: false,
+            url: "/topic/dashang",
+            data: {
+                "userb": $("#userb").val(),
+                "money":10
+            },
+            type: 'POST',
+            success: function(text) {
+                if (text.code == 0) {
+                    alert(text.msg)
 
                 } else if (text.code == 2) {
                     location.href="/user/login"

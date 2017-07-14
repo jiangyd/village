@@ -14,6 +14,16 @@ type UserController struct {
 	beego.Controller
 }
 
+//留言墙
+func (self *UserController) LiuYan() {
+	email, content := self.Input().Get("email"), self.Input().Get("content")
+	liuyan := models.Liuyan{Email: email, Content: content}
+	models.AddLiuYan(&liuyan)
+	msg := map[string]interface{}{"code": 0, "msg": "success"}
+	self.Data["json"] = &msg
+	self.ServeJSON()
+}
+
 //登录页面
 func (self *UserController) LoginPage() {
 	self.TplName = "user/login.html"
@@ -37,9 +47,6 @@ func (self *UserController) SetNewPwd() {
 		user := models.FindUserDetialById(u.Name.Id)
 		user.Password = password
 		models.UpdateUser(&user)
-		msg := map[string]interface{}{"code": 0, "msg": "success"}
-		self.Data["json"] = &msg
-		self.ServeJSON()
 	}
 	msg := map[string]interface{}{"code": 1, "msg": "invalid token"}
 	self.Data["json"] = &msg

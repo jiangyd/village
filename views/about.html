@@ -1,2 +1,21 @@
-dsfasdfsa
-{{str2html .message}}
+<!DOCTYPE html>
+<html>
+{{template "public/header.html" .}}
+
+	<title>本站留言墙</title>
+	<meta charset="UTF-8">
+</head>
+<body style="margin-left: 100px">
+{{template "public/nav.html" .}}
+{{range .liuyan}}
+邮箱：{{.Email}}
+留下内容：{{str2html .Content}}
+
+<hr>
+{{end}}
+<form method="post" action="/liuyan">
+联系邮箱:<input type="text" name="email" style="height: 30px;width: 200px;"><br>
+留言内容:<textarea style="height: 100px;width: 200px;margin-top: 20px" name="content"></textarea>
+<button type="submit">提交</button>
+</body>
+</html>

@@ -14,7 +14,7 @@
                     <li class="layui-this">我的资料</li>
                     <li>头像</li>
                     <li>密码</li>
-                    <li>漏洞演示</li>
+                    <li>修改昵称</li>
                 </ul>
                 <div class="layui-tab-content" style="padding: 20px 0;">
                     <div class="layui-form layui-form-pane layui-tab-item layui-show">
@@ -97,9 +97,9 @@
                     <div class="layui-form layui-form-pane layui-tab-item">
                         <form method="post">
                             <div class="layui-form-item">
-                                <label class="layui-form-label" for="L_pass">昵称</label>
+                                <label class="layui-form-label" for="L_pass">昵称修改</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" class="layui-input" value="" autocomplete="off" lay-verify="required" required="" name="ldnickname" id="ldnickname">
+                                    <input type="text" class="layui-input" value="{{.userinfo.Nickname}}" autocomplete="off" lay-verify="required" required="" name="ldnickname" id="ldnickname" >
                                 </div>
                             </div>
                             <div class="layui-form-item">
