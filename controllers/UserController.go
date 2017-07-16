@@ -19,9 +19,11 @@ func (self *UserController) LiuYan() {
 	email, content := self.Input().Get("email"), self.Input().Get("content")
 	liuyan := models.Liuyan{Email: email, Content: content}
 	models.AddLiuYan(&liuyan)
+	self.Redirect("/about", 302)
 	msg := map[string]interface{}{"code": 0, "msg": "success"}
 	self.Data["json"] = &msg
 	self.ServeJSON()
+
 }
 
 //登录页面

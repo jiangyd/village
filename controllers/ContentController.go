@@ -30,7 +30,6 @@ func (self *ContentController) Index() {
 func (self *ContentController) About() {
 	data := models.GetLiuYan()
 	self.Data["liuyan"] = data
-	fmt.Println(data)
 	self.TplName = "about.html"
 }
 
