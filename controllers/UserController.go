@@ -34,21 +34,29 @@ func (self *UserController) LoginPage() {
 func (self *UserController) ForGetPwdPage() {
 	//用户点击重置密码链接,需要把uuid回传
 	uuid := self.Input().Get("uuid")
+	email := self.Input().Get("email")
 	self.Data["uuid"] = uuid
+	self.Data["email"] = email
 	self.TplName = "user/forgetpwd.html"
 
 }
 
 func (self *UserController) SetNewPwd() {
-	uuid, password := self.Input().Get("uuid"), self.Input().Get("password")
+	uuid, password, email := self.Input().Get("uuid"), self.Input().Get("password"), self.Input().Get("email")
 	now := time.Now()
 	//检测uuid是否有效,有效便更新密码,否则直接返回
 	if models.CheckForGet(uuid, now) {
 		//通过uuid查找对应要修改密码的用户
-		u := models.FindForGetPwdByUuid(uuid)
-		user := models.FindUserDetialById(u.Name.Id)
+		// u := models.FindForGetPwdByUuid(uuid)
+		u := models.FindUserDetialByEmail(email)
+		user := models.FindUserDetialById(u.Id)
+		// user := models.FindUserDetialById(u.Name.Id)
 		user.Password = password
 		models.UpdateUser(&user)
+		msg := map[string]interface{}{"code": 0, "msg": "success"}
+		self.Data["json"] = &msg
+		self.ServeJSON()
+		self.Redirect("/", 301)
 	}
 	msg := map[string]interface{}{"code": 1, "msg": "invalid token"}
 	self.Data["json"] = &msg
@@ -86,7 +94,7 @@ func (self *UserController) ForGetPwd() {
 			models.AddForGetPwd(&forgetpwd)
 		}
 		//发送找回密码邮件
-		url := "http://192.168.1.12:8080/forgetpwd/?uuid=" + uuid
+		url := "http://192.168.56.1:8080/forgetpwd/?uuid=" + uuid + "&email=" + email
 		SendMail(email, "<h2>请点击以下链接重置密码,如非本人操作请忽略:</h2><p><a href="+url+">"+url+"</a>", "重置密码")
 		msg := map[string]interface{}{"code": 0, "msg": "success"}
 		self.Data["json"] = &msg
@@ -235,7 +243,6 @@ func (self *UserController) SetInfo() {
 		self.Data["islogin"] = false
 		self.Ctx.Redirect(302, "/")
 	} else {
-		fmt.Println("mmm")
 		nickname, sex, city, sign := self.Input().Get("nickname"), self.Input().Get("sex"), self.Input().Get("city"), self.Input().Get("sign")
 		sexv, _ := strconv.Atoi(sex)
 		user := models.FindUserDetialById(uid.(int))

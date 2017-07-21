@@ -108,6 +108,13 @@ func FindUserByEmail(email string) (bool, User) {
 	return err != orm.ErrNoRows, user
 }
 
+func FindUserDetialByEmail(email string) User {
+	o := orm.NewOrm()
+	var user User
+	o.QueryTable(user).Filter("Email", email).One(&user)
+	return user
+}
+
 func NewUser() []*User {
 	o := orm.NewOrm()
 	var user User

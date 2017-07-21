@@ -26,6 +26,7 @@ layui.define(['layer', 'form'], function(exports) {
                 "password": data.field.password,
                 "repassword":data.field.password,
                "uuid":data.field.uuid,
+               "email":data.field.email
             },
             type: 'POST',
             success: function(text) {
